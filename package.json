@@ -1,0 +1,27 @@
+{
+  "name": "hygie-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site d'Hygie Sport Santé et Performance (Avon, 77), design system Hygie Kinétique.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "typo": "node scripts/typo-fr.mjs"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "dependencies": {
+    "next": "16.3.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "5.9.3"
+  }
+}

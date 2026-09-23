@@ -1,0 +1,53 @@
+/* Hygie Kinétique — variables.
+   Valeurs de conception mesurées à 1 280 px. Les tailles « fluides » s'écrivent calc(n * var(--u)). */
+
+:root {
+  /* Couleurs */
+  --fond: #EEEFE9;
+  --encre: #131313;
+  --brume: #D5DADC;
+  /* Couleurs du logo Hygie : les trois points */
+  --jaune: #F4C646;       /* point jaune : action principale, temps fort, pôle Sport (texte encre 11,5:1) */
+  --bleu: #688C9A;        /* point bleu : pôle Santé, panneaux (texte encre 5,1:1) */
+  --bleu-fonce: #3F6472;  /* bleu du logo assombri pour le texte et les états actifs (5,5:1 sur fond) */
+  --gris-logo: #BAB9BA;   /* point gris : pôle Récupération */
+  --voile-header: rgba(238, 239, 233, 0.3);
+  --voile-header-defile: rgba(238, 239, 233, 0.86);
+  --voile-carte: rgba(238, 239, 233, 0.45);
+  --filet-doux: rgba(19, 19, 19, 0.2);
+  --noir-article: #000000;
+  --focus: var(--encre);
+
+  /* Familles (les variables --font-anton, --font-hanken, --font-jetbrains viennent de next/font) */
+  --font-display: var(--font-anton), Anton, Impact, "Arial Narrow", sans-serif;
+  --font-texte: "Alliance No.2", var(--font-hanken), "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  /* Unité fluide : 1 px de conception */
+  --u: calc(100vw / 1280);
+
+  /* Cadre */
+  --filet: 2px;
+  --marge: calc(22 * var(--u));
+  --retrait: calc(16 * var(--u));
+  --rayon: 20px;
+  --rayon-pilule: 100px;
+  --rayon-texte: 21px;
+
+  /* Mouvement */
+  --duree-entree: 1200ms;
+  --courbe-flottement: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  --courbe-glissement: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --duree-survol: 0.4s;
+
+  /* Plans */
+  --plan-header: 54;
+  --plan-menu: 100000;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --u: calc(min(100vw, 700px) / 390);
+    --marge: calc(16 * var(--u));
+  }
+}

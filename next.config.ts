@@ -1,0 +1,104 @@
+import type { NextConfig } from 'next';
+
+/* Anciennes adresses du site Wix → nouvelles pages (redirections permanentes).
+   Les adresses accentuées sont déclarées en clair et en encodé. La cryothérapie n'existe plus : ses URL mènent à Récupération. */
+const anciennes: Array<[string, string]> = [
+  ['/activites-physiques', '/methodologie'],
+  ['/activites-physiques/offres-entreprises', '/entreprises'],
+  ['/pole-sport-sante', '/sport/sport-sante'],
+  ['/tarifs-forfait-sport', '/sport/coaching-individuel'],
+  ['/plans-pricing', '/sport/coaching-individuel'],
+  ['/plans-pricing/:path*', '/sport/coaching-individuel'],
+  ['/formulaire-renseignements', '/rendez-vous?motif=sport'],
+  ['/about-5', '/methodologie'],
+  ['/offres-clubs-sportifs', '/clubs'],
+  ['/tests-bilans', '/bilans'],
+  ['/tests-bilans/tarifs-bilans', '/bilans'],
+  ['/bilan-isocinetique', '/bilans/isocinetique'],
+  ['/bilan-fonctionnel', '/bilans/fonctionnel'],
+  ['/bilan-forces-musculaires', '/bilans/forces-musculaires'],
+  ['/recuperation-bien-etre', '/recuperation'],
+  ['/pressotherapie', '/recuperation/pressotherapie'],
+  ['/massage', '/recuperation/massages'],
+  ['/cryotherapie', '/recuperation'],
+  ['/cryothérapie', '/recuperation'],
+  ['/le-pôle-santé', '/sante'],
+  ['/kiné', '/sante/kinesitherapie'],
+  ['/etiopathe', '/sante/etiopathie'],
+  ['/copie-de-les-étiopathes', '/sante/etiopathie'],
+  ['/landing-page-étio', '/sante/etiopathie'],
+  ['/orthoptiste', '/sante/orthoptie'],
+  ['/l-équipe', '/sante'],
+  ['/nos-équipements', '/bilans'],
+  ['/seanceofferte', '/rendez-vous?motif=sport'],
+  ['/book-online', '/rendez-vous'],
+  ['/booking-calendar/:path*', '/rendez-vous'],
+  ['/service-page/:path*', '/rendez-vous'],
+  ['/gift-card', '/'],
+  ['/lp-offre-digitale', '/sport'],
+  ['/vidéo-offre-digital', '/sport'],
+  ['/webinar-registration', '/'],
+  ['/formulaire-test-physique-et-hygiène', '/'],
+  ['/testphysiquehygiene', '/'],
+  ['/inquiry-services-page', '/contact'],
+  ['/payment-request-page', '/contact'],
+  ['/politique-de-confidentialite', '/confidentialite'],
+  ['/blog', '/journal'],
+  ['/blog/:path*', '/journal'],
+  // Articles
+  ['/post/découvrez-le-coût-bilan-isocinétique-tout-ce-qu-il-faut-savoir', '/journal/cout-bilan-isocinetique'],
+  ['/post/approche-hygie-sport-santé-un-concept-révolutionnaire', '/journal/approche-hygie'],
+  ['/post/cryothérapie-le-secret-révolutionnaire-des-athlètes-pour-booster-vos-performances-et-améliorer-vot', '/recuperation'],
+  ['/post/_blog', '/journal/pressotherapie-jambes-legeres'],
+  ['/post/hyrox-le-défi-sportif-ultime-pour-transformer-votre-corps-et-votre-mental', '/journal/hyrox'],
+  ['/post/le-crossfit', '/journal/crossfit'],
+  ['/post/le-sport-en-entreprise', '/journal/sport-en-entreprise'],
+  ['/post/devenez-un-athlète-complet-la-clé-pour-briller-au-football', '/journal/football-athlete-complet'],
+  ['/post/le-test-isocinétique-c-est-quoi', '/journal/test-isocinetique'],
+  ['/post/la-mobilité-fonctionnelle', '/journal/mobilite-fonctionnelle'],
+  ['/post/découvrez-la-méthode-hygie-sport-santé-et-performance', '/journal/methode-hygie'],
+  ['/post/nouveau-sur-hygie-sport-santé-et-performance', '/journal'],
+  ['/post/:path*', '/journal'],
+];
+
+/* Échappe les caractères spéciaux de path-to-regexp dans une adresse littérale (hors paramètres :path*). */
+function echapper(source: string) {
+  return source.replace(/[()[\]{}?+!]/g, '\\$&');
+}
+
+function variantes(source: string) {
+  const encodee = source
+    .split('/')
+    .map((seg) => (seg.startsWith(':') ? seg : encodeURIComponent(seg)))
+    .join('/');
+  return encodee === source ? [source] : [source, encodee];
+}
+
+const nextConfig: NextConfig = {
+  poweredByHeader: false,
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    qualities: [75, 85],
+    // Les photos Unsplash ne passent pas par cet optimiseur : le CDN d'Unsplash les redimensionne (voir components/Photo.tsx).
+  },
+  async redirects() {
+    return anciennes.flatMap(([source, destination]) =>
+      variantes(source).map((s) => ({ source: echapper(s), destination, permanent: true })),
+    );
+  },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+        ],
+      },
+    ];
+  },
+};
+
+export default nextConfig;
