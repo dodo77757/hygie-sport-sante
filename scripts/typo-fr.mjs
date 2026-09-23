@@ -8,7 +8,13 @@ import ts from 'typescript';
 
 const RACINE = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const DOSSIERS = ['app', 'components', 'content', 'lib'];
-const EXCLUS = [path.join('app', 'api'), path.join('components', 'RevealObserver.tsx')];
+// Exclus : le code sans texte à l'écran, et le logo tracé (ses coordonnées ressemblent à des nombres à séparer).
+const EXCLUS = [
+  path.join('app', 'api'),
+  path.join('components', 'RevealObserver.tsx'),
+  path.join('components', 'LogoTrace.tsx'),
+  path.join('components', 'IconesReseaux.tsx'),
+];
 const NBSP = '\u00A0';
 const NNBSP = '\u202F';
 
@@ -66,7 +72,9 @@ function traiter(fichier) {
       const debut = node.getStart(sf, false);
       const brut = source.slice(node.pos, node.end);
       // Texte JSX qui suit une expression : « {a} : {b} » → espace insécable en tête.
-      const nouveau = fr(brut).replace(/^ :/, `${NBSP}:`).replace(/^ ([;?!])/, `${NNBSP}$1`);
+      const nouveau = fr(brut)
+        .replace(/^ :/, `${NBSP}:`)
+        .replace(/^ ([;?!])/, `${NNBSP}$1`);
       if (nouveau !== brut) edits.push([node.pos, node.end, nouveau]);
       void debut;
     } else if (ts.isStringLiteral(node)) {
@@ -75,7 +83,7 @@ function traiter(fichier) {
       if (node.parent && ts.isJsxAttribute(node.parent)) {
         const nouveau = fr(brut);
         if (nouveau !== brut) edits.push([debut, node.end, nouveau]);
-      } else if (!(node.parent && (ts.isPropertyAssignment(node.parent) && node.parent.name === node))) {
+      } else if (!(node.parent && ts.isPropertyAssignment(node.parent) && node.parent.name === node)) {
         const nouveau = fr(node.text);
         if (nouveau !== node.text) edits.push([debut, node.end, litteral(nouveau, brut[0])]);
       }

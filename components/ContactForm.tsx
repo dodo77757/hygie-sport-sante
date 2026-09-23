@@ -74,10 +74,8 @@ export function ContactForm({ type, submitLabel = 'Envoyer', motif, motifDepuisU
       <div className="hk-form__done" role="status" tabIndex={-1} ref={statusRef}>
         <p className="titre-liste">Merci, votre demande est bien partie.</p>
         <p className="courant">
-          {type === 'rappel' || type === 'rendez-vous'
-            ? 'Nous vous rappelons rapidement pour convenir d’un créneau.'
-            : 'Nous vous répondons rapidement.'}{' '}
-          Pour une réponse immédiate : <a href="tel:+33184743420">{TELEPHONE}</a>.
+          {type === 'rappel' || type === 'rendez-vous' ? 'Nous vous rappelons rapidement pour convenir d’un créneau.' : 'Nous vous répondons rapidement.'} Pour
+          une réponse immédiate : <a href="tel:+33184743420">{TELEPHONE}</a>.
         </p>
       </div>
     );
@@ -118,14 +116,7 @@ export function ContactForm({ type, submitLabel = 'Envoyer', motif, motifDepuisU
           {type === 'entreprise' ? <Field id={id('structure')} name="structure" label="Entreprise" required autoComplete="organization" /> : null}
           {type === 'club' ? <Field id={id('structure')} name="structure" label="Club" required autoComplete="organization" /> : null}
           <Field id={id('email')} name="email" type="email" label={type === 'entreprise' ? 'E-mail professionnel' : 'E-mail'} required autoComplete="email" />
-          <Field
-            id={id('telephone')}
-            name="telephone"
-            type="tel"
-            label="Téléphone"
-            required={type === 'rendez-vous'}
-            autoComplete="tel"
-          />
+          <Field id={id('telephone')} name="telephone" type="tel" label="Téléphone" required={type === 'rendez-vous'} autoComplete="tel" />
           {type === 'rendez-vous' ? (
             <>
               <div className="hk-field">
@@ -143,7 +134,9 @@ export function ContactForm({ type, submitLabel = 'Envoyer', motif, motifDepuisU
               <Field id={id('creneau')} name="creneau" label="Créneau souhaité" options={creneaux} defaultValue="indifferent" />
             </>
           ) : null}
-          {type === 'entreprise' ? <Field id={id('effectif')} name="effectif" label="Nombre de collaborateurs" options={effectifs} defaultValue="inconnu" /> : null}
+          {type === 'entreprise' ? (
+            <Field id={id('effectif')} name="effectif" label="Nombre de collaborateurs" options={effectifs} defaultValue="inconnu" />
+          ) : null}
           <Field
             id={id('message')}
             name="message"

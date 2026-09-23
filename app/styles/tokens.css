@@ -39,10 +39,16 @@
   --courbe-flottement: cubic-bezier(0.445, 0.05, 0.55, 0.95);
   --courbe-glissement: cubic-bezier(0.645, 0.045, 0.355, 1);
   --duree-survol: 0.4s;
+  --courbe-sortie: cubic-bezier(0.2, 0.7, 0.2, 1);      /* arrivée douce : mots, pages */
+  --courbe-rideau: cubic-bezier(0.76, 0, 0.24, 1);      /* rideau d'entrée */
+  --courbe-trace: cubic-bezier(0.65, 0, 0.35, 1);       /* tracé du logo */
+  --courbe-rebond: cubic-bezier(0.34, 1.56, 0.64, 1);   /* points du logo */
+  --retard-entree: 0s;                                  /* 3,65 s pendant le rideau d'entrée */
 
   /* Plans */
   --plan-header: 54;
   --plan-menu: 100000;
+  --plan-entree: 100001;
 }
 
 @media (max-width: 1023px) {

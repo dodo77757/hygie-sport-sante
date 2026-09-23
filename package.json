@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "typo": "node scripts/typo-fr.mjs"
+    "typo": "node scripts/typo-fr.mjs",
+    "place-id": "node scripts/trouver-place-id.mjs",
+    "redirections": "node scripts/verifier-redirections.mjs"
   },
   "engines": {
     "node": ">=20.9.0"

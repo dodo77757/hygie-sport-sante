@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import type { Lien } from '@/content/navigation';
 import { Button } from './ui/Button';
 
@@ -20,6 +20,38 @@ export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links
   const burgerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  // Trait jaune sous l'onglet actif : il glisse d'un onglet à l'autre quand on change de page.
+  const [trait, setTrait] = useState<{ x: number; w: number } | null>(null);
+  const [traitPret, setTraitPret] = useState(false);
+
+  useLayoutEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    const mesurer = () => {
+      const actif = nav.querySelector<HTMLElement>('a[aria-current="page"]');
+      if (!actif || !actif.offsetWidth) {
+        setTrait((t) => (t ? { ...t, w: 0 } : null));
+        return;
+      }
+      const retrait = parseFloat(getComputedStyle(actif).paddingLeft) || 0;
+      setTrait({
+        x: actif.offsetLeft + retrait,
+        w: actif.offsetWidth - 2 * retrait,
+      });
+    };
+    mesurer();
+    const ro = new ResizeObserver(mesurer);
+    ro.observe(nav);
+    return () => ro.disconnect();
+  }, [pathname]);
+
+  // Première mise en place sans glissement ; les suivantes glissent.
+  useEffect(() => {
+    if (!trait || traitPret) return;
+    const id = requestAnimationFrame(() => setTraitPret(true));
+    return () => cancelAnimationFrame(id);
+  }, [trait, traitPret]);
 
   useEffect(() => {
     const onScroll = () => setDefile(window.scrollY > 40);
@@ -69,8 +101,8 @@ export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links
         <div className="hk-header__bar">
           {logo}
           <div className="hk-header__right">
-            <nav aria-label="Navigation principale">
-              <ul className="hk-nav">
+            <nav ref={navRef} className={traitPret ? 'hk-nav-zone is-pret' : 'hk-nav-zone'} aria-label="Navigation principale">
+              <ul className={trait ? 'hk-nav a-trait' : 'hk-nav'}>
                 {links.map((l) => (
                   <li key={l.href}>
                     <Link href={l.href} aria-current={estActif(pathname, l.href) ? 'page' : undefined}>
@@ -79,6 +111,17 @@ export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links
                   </li>
                 ))}
               </ul>
+              <span
+                className="hk-nav__trait"
+                aria-hidden="true"
+                style={
+                  {
+                    '--x': `${trait?.x ?? 0}px`,
+                    width: trait?.w ?? 0,
+                    opacity: trait?.w ? 1 : 0,
+                  } as CSSProperties
+                }
+              />
             </nav>
             <Button href={cta.href} variant="jaune">
               {cta.label}

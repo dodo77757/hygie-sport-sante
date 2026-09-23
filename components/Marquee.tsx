@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-/* Bandeau défilant : deux copies de la ligne glissent de gauche à droite à 317 px de conception par seconde.
+/* Bandeau défilant : deux copies de la ligne glissent de gauche à droite à 90 px de conception par seconde (lent, lisible).
    Les mots sont séparés par les points du logo (bleu, jaune, gris). La durée suit la largeur ; pause au survol. */
 const POINTS = ['c-bleu', 'c-jaune', 'c-gris'];
-export function Marquee({ items, speed = 317 }: { items: string[]; speed?: number }) {
+export function Marquee({ items, speed = 90 }: { items: string[]; speed?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [copies, setCopies] = useState(4);
   const unitText = items.join('·');

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { site } from '@/content/site';
 import { liensLegaux, navigationPied } from '@/content/navigation';
+import { IconeReseau } from './IconesReseaux';
 import { LogoLockup } from './LogoLockup';
 
 /* Pied de page : quatre colonnes filetées ; la deuxième reste vide, comme dans le template. */
@@ -59,7 +60,7 @@ export function Footer() {
           {site.reseaux.map((r) => (
             <li key={r.nom}>
               <a href={r.url} aria-label={`${r.nom} (nouvel onglet)`} title={r.nom} target="_blank" rel="noopener noreferrer">
-                {r.court}
+                <IconeReseau reseau={r.nom} />
               </a>
             </li>
           ))}

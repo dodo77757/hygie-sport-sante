@@ -10,6 +10,7 @@ import { Tag } from '@/components/ui/Primitives';
 import { imagePartage, photos } from '@/content/images';
 import { articles, articlesTries, categories, couleursCategories, dateCourte, dateLongue, tempsDeLecture, trouverArticle } from '@/content/journal';
 import { site } from '@/content/site';
+import { Mots } from '@/components/ui/Mots';
 
 type Params = Promise<{ slug: string }>;
 
@@ -69,7 +70,9 @@ export default async function ArticlePage({ params }: { params: Params }) {
           <span aria-hidden="true">·</span>
           <span>{tempsDeLecture(a)} min de lecture</span>
         </div>
-        <h1 className="titre-article lecture__titre">{a.titre}</h1>
+        <h1 className="titre-article lecture__titre">
+          <Mots texte={a.titre} />
+        </h1>
         <p className="article lecture__chapo">{a.chapo}</p>
         {photo ? <PhotoImg className="lecture__img" photo={photo} preload quality={85} sizes="(max-width: 1023px) 92vw, 740px" /> : null}
         <Blocks blocs={a.corps} />

@@ -1,18 +1,22 @@
 /* Praticiens qui consultent au centre et leur lien de réservation.
-   Sans lien en ligne, le bouton propose d'appeler le centre (ou le praticien). */
+   Sans lien en ligne, le bouton propose d'appeler le centre (ou le praticien).
+   parcours : deux phrases rédigées d'après les présentations publiques des praticiens (Doctolib), à faire relire par chacun.
+   photo : clé dans content/images.ts (portrait 4/5 dans assets/photos/) ; sans photo, la carte affiche les initiales. */
+import type { PhotoKey } from './images';
 
-export type Discipline = 'kinesitherapie' | 'etiopathie' | 'orthoptie' | 'bien-etre';
+export type Discipline = 'kinesitherapie' | 'etiopathie' | 'orthoptie' | 'bien-etre' | 'preparation';
 
-export type Reservation =
-  | { type: 'doctolib'; url: string }
-  | { type: 'calendly'; url: string }
-  | { type: 'telephone'; affichage: string; lien: string };
+export type Reservation = { type: 'doctolib'; url: string } | { type: 'calendly'; url: string } | { type: 'telephone'; affichage: string; lien: string };
 
 export type Praticien = {
   nom: string;
   discipline: Discipline;
   fonction: string;
   specialites: string[];
+  /** Deux phrases de parcours */
+  parcours?: string;
+  langues?: string[];
+  photo?: PhotoKey;
   reservation: Reservation;
 };
 
@@ -37,7 +41,14 @@ export const disciplines: Record<Discipline, { nom: string; fiche?: string; note
     fiche: '/recuperation/massages',
     note: 'Sur rendez-vous, par téléphone.',
   },
+  preparation: {
+    nom: 'Préparation physique',
+    fiche: '/sport/coaching-individuel',
+    note: 'Première séance d’une heure offerte.',
+  },
 };
+
+const essai: Reservation = { type: 'calendly', url: '/rendez-vous?motif=sport&objet=essai' };
 
 const centre: Reservation = { type: 'telephone', affichage: '01 84 74 34 20', lien: 'tel:+33184743420' };
 
@@ -47,14 +58,20 @@ export const praticiens: Praticien[] = [
     nom: 'Naomée Addra',
     discipline: 'kinesitherapie',
     fonction: 'Kinésithérapeute',
-    specialites: ['Rééducation fonctionnelle', 'Kinésithérapie du sport', 'Adolescents'],
+    specialites: ['Kinésithérapie du sport', 'Rééducation de l’épaule', 'Enfants et adolescents'],
+    parcours:
+      'Elle reçoit tous les âges, du jeune enfant au senior, avec une attention particulière au sport et à la récupération. Formée à la technique des ventouses.',
+    langues: ['Anglais'],
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/naomee-addra' },
   },
   {
     nom: 'Gauthier Arcache',
     discipline: 'kinesitherapie',
     fonction: 'Kinésithérapeute, ostéopathe',
-    specialites: ['Rééducation fonctionnelle', 'Ostéopathie'],
+    specialites: ['Ostéopathie', 'Méthode McKenzie', 'Rééducation de l’épaule'],
+    parcours:
+      'Diplômé en kinésithérapie et en ostéopathie, il fonde chaque prise en charge sur un bilan pour fixer avec vous les objectifs du traitement. Formé à la méthode McKenzie et à l’épaule opérée.',
+    langues: ['Anglais', 'Espagnol'],
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/paris/gauthier-arcache?pid=practice-478056' },
   },
   {
@@ -68,49 +85,65 @@ export const praticiens: Praticien[] = [
     nom: 'Théo Borragini',
     discipline: 'kinesitherapie',
     fonction: 'Kinésithérapeute',
-    specialites: ['Rééducation fonctionnelle'],
+    specialites: ['Troubles musculo-squelettiques', 'Rééducation active et sportive', 'Après opération du genou'],
+    parcours:
+      'Spécialisé dans les troubles musculo-squelettiques, entorses, tendinopathies et lésions musculaires, avec un goût pour la rééducation active. Il vous accompagne aussi après une opération des ligaments croisés ou des ménisques.',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/theo-borragini' },
   },
   {
     nom: 'Romain Brelier-Murry',
     discipline: 'kinesitherapie',
     fonction: 'Kinésithérapeute',
-    specialites: ['Rééducation fonctionnelle', 'Kinésithérapie du sport'],
+    specialites: ['Kinésithérapie du sport', 'Épaule', 'Traumatologie', 'Rééducation de la cheville'],
+    parcours:
+      'Kinésithérapeute du sport, spécialisé dans les troubles articulaires et musculaires et la traumatologie, en particulier l’épaule et les atteintes nerveuses périphériques. Chaque suivi commence par un bilan et un échange approfondi.',
+    langues: ['Anglais'],
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/romain-brelier-murry' },
   },
   {
     nom: 'Thomas Crasson',
     discipline: 'kinesitherapie',
     fonction: 'Kinésithérapeute',
-    specialites: ['Rééducation fonctionnelle', 'Téléconsultation'],
+    specialites: ['Dos et cervicales', 'Blessures sportives', 'Rééducation après opération', 'Téléconsultation'],
+    parcours:
+      'Une prise en charge globale des douleurs et des blessures, fondée sur les sciences du mouvement : dos et cervicales, tendinites, entorses, rééducation après opération, troubles de la posture. Chaque suivi part d’un bilan complet.',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/thomas-crasson' },
   },
   {
     nom: 'Margot De Oliveira',
     discipline: 'kinesitherapie',
     fonction: 'Kinésithérapeute',
-    specialites: ['Rééducation fonctionnelle'],
+    specialites: ['Kinésithérapie du sport', 'Rééducation de l’épaule', 'Rééducation de la cheville'],
+    parcours:
+      'Kinésithérapeute du sport, spécialisée dans les troubles articulaires et musculaires et la traumatologie. Formée à l’optimisation du renforcement musculaire, au centre depuis 2023.',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/margot-de-oliveira' },
   },
   {
     nom: 'Pierre Becker',
     discipline: 'kinesitherapie',
     fonction: 'Kinésithérapeute',
-    specialites: ['Rééducation fonctionnelle', 'Dry needling'],
+    specialites: ['Thérapie manuelle', 'Dry needling', 'Mâchoire (dysfonction temporo-mandibulaire)', 'Kinésithérapie du sport'],
+    parcours:
+      'Spécialisé dans les thérapies manuelles et la rééducation, il accompagne ses patients vers l’autonomie : mobilité, douleurs, bien-être. Pensez à apporter votre ordonnance et votre carte de mutuelle.',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/pierre-becker' },
   },
   {
     nom: 'Jérémy Escriva',
     discipline: 'kinesitherapie',
     fonction: 'Kinésithérapeute',
-    specialites: ['Rééducation fonctionnelle'],
+    specialites: ['Orthopédie', 'Tendinopathies et lombalgies', 'Membre inférieur', 'Rééducation de l’épaule'],
+    parcours:
+      'Orienté vers l’orthopédie (entorses, déchirures, fractures) et les douleurs rhumatismales (tendinopathies, lombalgies, névralgies). Il se forme régulièrement, dernièrement sur les lésions musculaires du membre inférieur.',
+    langues: ['Anglais'],
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/jeremy-escriva' },
   },
   {
     nom: 'Maya Maurer',
     discipline: 'kinesitherapie',
     fonction: 'Kinésithérapeute',
-    specialites: ['Rééducation fonctionnelle', 'Rééducation périnéale', 'Pré et post-partum', 'Cancer du sein', 'Drainage lymphatique'],
+    specialites: ['Santé de la femme', 'Rééducation périnéale et abdominale', 'Pré et post-partum', 'Après un cancer du sein', 'Drainage lymphatique'],
+    parcours:
+      'Spécialisée en santé de la femme : rééducation périnéale et abdominale, accompagnement pré et post-partum, endométriose, suivi après un cancer du sein et drainage lymphatique. Une prise en charge avant tout individualisée.',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/maya-maurer' },
   },
 
@@ -119,14 +152,18 @@ export const praticiens: Praticien[] = [
     nom: 'Johan Pereira',
     discipline: 'etiopathie',
     fonction: 'Étiopathe, fondateur d’Hygie',
-    specialites: ['Chargé de cours à la faculté d’étiopathie de Paris', 'Sportifs'],
+    specialites: ['Sportifs', 'Biomécanique du sport'],
+    parcours:
+      'Ancien footballeur à l’ESTAC, diplômé de la faculté d’étiopathie de Paris, où il est chargé de cours. Il a complété sa formation par deux diplômes universitaires, en préparation physique et réathlétisation, puis en biomécanique du sport.',
+    photo: 'johanPereira',
     reservation: { type: 'calendly', url: 'https://calendly.com/pereira-johan/etiopatheavon' },
   },
   {
     nom: 'Aubin Salmon',
     discipline: 'etiopathie',
     fonction: 'Étiopathe',
-    specialites: ['Chargé de cours à la faculté d’étiopathie de Paris', 'Escalade'],
+    specialites: ['Grimpeurs et sportifs'],
+    parcours: 'Chargé de cours à la faculté d’étiopathie de Paris. Grimpeur, il suit en particulier les pratiquants d’escalade.',
     reservation: { type: 'calendly', url: 'https://calendly.com/aubinsalmon-etio' },
   },
 
@@ -135,7 +172,10 @@ export const praticiens: Praticien[] = [
     nom: 'Marie Couineau',
     discipline: 'orthoptie',
     fonction: 'Orthoptiste',
-    specialites: ['Bilans orthoptiques et neurovisuels', 'Rééducation', 'Commotion cérébrale'],
+    specialites: ['Bilan orthoptique', 'Bilan neurovisuel', 'Troubles des apprentissages', 'Commotion cérébrale', 'Performance visuelle'],
+    parcours:
+      'Elle dépiste et prend en charge les troubles de la vision, strabisme, amblyopie, fatigue visuelle, ainsi que les troubles des apprentissages, chez l’enfant comme chez l’adulte. Elle accompagne aussi les athlètes, de la commotion cérébrale à la performance visuelle.',
+    langues: ['Anglais'],
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/orthoptiste/avon/marie-couineau?pid=practice-466521' },
   },
 
@@ -145,7 +185,34 @@ export const praticiens: Praticien[] = [
     discipline: 'bien-etre',
     fonction: 'Massages bien-être et conseil en nutrition',
     specialites: ['Deep tissue', 'Drainages lymphatiques', 'Anti-cellulite', 'Nutrition'],
+    parcours: 'Massages bien-être en profondeur, drainages et conseil en nutrition, au centre sur rendez-vous.',
     reservation: { type: 'telephone', affichage: '06 24 11 42 19', lien: 'tel:+33624114219' },
+  },
+
+  /* Préparateurs physiques */
+  {
+    nom: 'Johan Pereira',
+    discipline: 'preparation',
+    fonction: 'Préparateur physique, étiopathe',
+    specialites: ['Réathlétisation', 'Biomécanique du sport', 'Bilans physiologiques'],
+    parcours:
+      'Ancien footballeur à l’ESTAC, diplômé en préparation physique et réathlétisation, puis en biomécanique du sport. Il a fondé Hygie pour réunir santé, sport et prévention au même endroit.',
+    photo: 'johanPereira',
+    reservation: essai,
+  },
+  {
+    nom: 'Martin Tondeur',
+    discipline: 'preparation',
+    fonction: 'Préparateur physique',
+    specialites: ['Coaching individuel', 'Cross training'],
+    reservation: essai,
+  },
+  {
+    nom: 'Jean-Etienne Boilot',
+    discipline: 'preparation',
+    fonction: 'Préparateur physique',
+    specialites: ['Coaching individuel', 'Sport-santé'],
+    reservation: essai,
   },
 ];
 
@@ -155,6 +222,16 @@ export function praticiensDe(discipline: Discipline) {
 
 export function libelleReservation(r: Reservation) {
   if (r.type === 'doctolib') return 'Réserver sur Doctolib';
-  if (r.type === 'calendly') return 'Réserver en ligne';
+  if (r.type === 'calendly') return r.url.startsWith('/') ? 'Réserver l’essai' : 'Réserver en ligne';
   return `Appeler le ${r.affichage}`;
+}
+
+/* Initiales pour la carte sans photo (deux lettres) */
+export function initiales(nom: string) {
+  return nom
+    .split(/[\s-]+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((m) => m[0]?.toUpperCase() ?? '')
+    .join('');
 }

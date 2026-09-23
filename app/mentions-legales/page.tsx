@@ -44,17 +44,20 @@ export default function MentionsLegales() {
 
       <h2>Professionnels de santé</h2>
       <p>
-        Les kinésithérapeutes, étiopathes et l’orthoptiste qui consultent au centre exercent à titre libéral, sous leur propre responsabilité. La prise de rendez-vous se fait sur leurs agendas en ligne (Doctolib, Calendly), soumis aux conditions de ces services.
+        Les kinésithérapeutes, étiopathes et l’orthoptiste qui consultent au centre exercent à titre libéral, sous leur propre responsabilité. La prise de
+        rendez-vous se fait sur leurs agendas en ligne (Doctolib, Calendly), soumis aux conditions de ces services.
       </p>
 
       <h2>Médiation de la consommation</h2>
       <p>
-        Conformément au Code de la consommation, vous pouvez recourir gratuitement à un médiateur en cas de litige non résolu : <span className="a-completer">[médiateur à compléter]</span>.
+        Conformément au Code de la consommation, vous pouvez recourir gratuitement à un médiateur en cas de litige non résolu :{' '}
+        <span className="a-completer">[médiateur à compléter]</span>.
       </p>
 
       <h2>Propriété intellectuelle</h2>
       <p>
-        La structure du site, ses textes, photographies, logos et éléments graphiques sont la propriété de l’éditeur, sauf mention contraire. Toute reproduction, même partielle, sans autorisation écrite est interdite.
+        La structure du site, ses textes, photographies, logos et éléments graphiques sont la propriété de l’éditeur, sauf mention contraire. Toute
+        reproduction, même partielle, sans autorisation écrite est interdite.
       </p>
       <p>Les courtes citations sont autorisées, avec le nom de l’auteur et un lien vers la page citée.</p>
       <p>
@@ -72,10 +75,22 @@ export default function MentionsLegales() {
           </span>
         ))}
       </p>
+      <p>
+        Icônes des réseaux sociaux :{' '}
+        <a href="https://fontawesome.com/license/free" rel="noopener">
+          Font Awesome Free
+        </a>{' '}
+        (licence CC BY 4.0). Plan d’accès :{' '}
+        <a href="https://www.openstreetmap.org/copyright" rel="noopener">
+          © les contributeurs d’OpenStreetMap
+        </a>{' '}
+        (licence ODbL).
+      </p>
 
       <h2>Responsabilité</h2>
       <p>
-        L’éditeur s’efforce de fournir des informations exactes et à jour, sans pouvoir en garantir l’exhaustivité. Les contenus du site sont informatifs : ils ne remplacent pas une consultation médicale.
+        L’éditeur s’efforce de fournir des informations exactes et à jour, sans pouvoir en garantir l’exhaustivité. Les contenus du site sont informatifs : ils
+        ne remplacent pas une consultation médicale.
       </p>
       <p>Les liens vers d’autres sites (Doctolib, Calendly, réseaux sociaux) n’engagent pas la responsabilité de l’éditeur quant à leur contenu.</p>
 

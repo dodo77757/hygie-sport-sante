@@ -16,7 +16,14 @@ type Props = {
 
 /* Bouton pilule : JetBrains Mono capitales, libellé souligné au survol. */
 export function Button({ href, variant = 'contour', form, block, type = 'button', disabled, className, onClick, children }: Props) {
-  const cls = cx('hk-btn', variant === 'solid' && 'hk-btn--solid', variant === 'jaune' && 'hk-btn--jaune', form && 'hk-btn--form', block && 'hk-btn--block', className);
+  const cls = cx(
+    'hk-btn',
+    variant === 'solid' && 'hk-btn--solid',
+    variant === 'jaune' && 'hk-btn--jaune',
+    form && 'hk-btn--form',
+    block && 'hk-btn--block',
+    className,
+  );
   const label = <span className="hk-btn__label">{children}</span>;
 
   if (href) {

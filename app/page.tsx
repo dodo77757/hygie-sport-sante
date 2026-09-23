@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ArticleCard } from '@/components/ArticleCard';
+import { AvisGoogle } from '@/components/AvisGoogle';
 import { ContactForm } from '@/components/ContactForm';
 import { CoralPanel } from '@/components/CoralPanel';
 import { Hero, HeroMedia } from '@/components/Hero';
@@ -7,8 +8,9 @@ import { JsonLd } from '@/components/JsonLd';
 import { Marquee } from '@/components/Marquee';
 import { PhotoImg } from '@/components/Photo';
 import { Button } from '@/components/ui/Button';
-import { Cell, Row } from '@/components/ui/Row';
+import { Section } from '@/components/ui/Section';
 import { Reveal } from '@/components/ui/Primitives';
+import { maisonSportSante, partenaires } from '@/content/confiance';
 import { imagePartage, photos } from '@/content/images';
 import { articlesTries, categories, couleursCategories, dateCourte } from '@/content/journal';
 import { poles as polesSoins } from '@/content/soins';
@@ -53,95 +55,6 @@ export default function Accueil() {
 
   return (
     <>
-      <Hero title="Remettez-vous en mouvement" intro={site.accroche} cta={{ label: 'Découvrir les pôles', href: '#poles' }} />
-
-      <HeroMedia
-        photo={photos.depart}
-        card={{
-          title: 'Bilans physiologiques',
-          text: 'Force, mobilité, asymétries : un état des lieux précis avant de construire votre programme.',
-          cta: { label: 'En savoir plus', href: '/bilans' },
-        }}
-      />
-
-      {/* Présentation : 2 + 1 + 1 */}
-      <Row as="section" aria-labelledby="titre-johan">
-        <Cell span={2} mobile="half">
-          <PhotoImg className="hk-media accueil-presentation__photo" photo={photos.johanPereira} sizes="(max-width: 1023px) 46vw, 46vw" />
-        </Cell>
-        <Cell mobile="first">
-          <Reveal as="h2" id="titre-johan" className="titre-section titre-section--serre">
-            Rencontrez Johan Pereira
-          </Reveal>
-        </Cell>
-        <Cell top={205} mobile="half" className="hk-cell--stack">
-          <Reveal as="p" className="courant texte-colonne">
-            Ancien footballeur devenu étiopathe et préparateur physique, Johan Pereira a fondé Hygie à Avon. Il y réunit professionnels de santé et du sport autour d’un parcours personnalisé.
-          </Reveal>
-          <Button href="/methodologie#johan-pereira">Son parcours</Button>
-        </Cell>
-      </Row>
-
-      {/* Flux : 1 + 2 + 1 */}
-      <Row as="section" id="poles" aria-labelledby="titre-poles">
-        <Cell>
-          <Reveal as="h2" id="titre-poles" className="titre-section titre-section--serre accueil-flux__h2">
-            Nos trois pôles
-          </Reveal>
-        </Cell>
-        <Cell span={2}>
-          {poles.map((p) => (
-            <ArticleCard key={p.href} href={p.href} tag={p.tag} tagCouleur={p.couleur} title={p.titre} excerpt={p.extrait} photo={p.photo} />
-          ))}
-        </Cell>
-        <Cell className="accueil-flux__cta">
-          <Button href="/soins">Voir tous les soins</Button>
-        </Cell>
-      </Row>
-
-      {/* Temps fort : bandeau, panneau jaune, bandeau */}
-      <section className="temps-fort" aria-label="Offre entreprises">
-        <Marquee items={['Santé', 'Sport', 'Récupération', 'Bilans', 'Entreprises']} />
-        <CoralPanel
-          id="rappel-entreprises"
-          title="Prenez soin de vos équipes"
-          text="Séances collectives, bilans et prévention pour vos collaborateurs. Laissez vos coordonnées professionnelles, nous vous rappelons."
-        >
-          <ContactForm type="rappel" submitLabel="Être rappelé" compact />
-        </CoralPanel>
-        <Marquee items={['Bilans', 'Entreprises', 'Santé', 'Sport', 'Récupération']} />
-      </section>
-
-      {/* Articles récents : 1 + 1 + 2 */}
-      <Row as="section" aria-labelledby="titre-journal">
-        <Cell>
-          <Reveal as="h2" id="titre-journal" className="titre-section titre-section--serre accueil-recents__h2">
-            Allez plus loin
-          </Reveal>
-        </Cell>
-        <Cell className="hk-cell--stack">
-          <Reveal as="p" className="courant accueil-recents__texte">
-            Conseils et retours d’expérience de l’équipe.
-          </Reveal>
-          <Button href="/journal">Lire le journal</Button>
-        </Cell>
-        <Cell span={2}>
-          {recents.map((a) => (
-            <ArticleCard
-              key={a.slug}
-              variant="recent"
-              href={`/journal/${a.slug}`}
-              photo={a.photo}
-              vignette={a.vignette}
-              meta={dateCourte(a.date)}
-              tag={categories[a.categorie]}
-              tagCouleur={couleursCategories[a.categorie]}
-              title={a.titre}
-            />
-          ))}
-        </Cell>
-      </Row>
-
       <JsonLd
         data={{
           '@context': 'https://schema.org',
@@ -160,6 +73,8 @@ export default function Accueil() {
             addressRegion: 'Île-de-France',
             addressCountry: 'FR',
           },
+          geo: { '@type': 'GeoCoordinates', latitude: site.coordonnees.lat, longitude: site.coordonnees.lon },
+          hasMap: site.plans.openstreetmap,
           openingHoursSpecification: site.horaires.map((h) => ({
             '@type': 'OpeningHoursSpecification',
             dayOfWeek: h.schema.jours,
@@ -170,6 +85,104 @@ export default function Accueil() {
           sameAs: site.reseaux.map((r) => r.url),
         }}
       />
+
+      <Hero title="Remettez-vous en mouvement" intro={site.accroche} cta={{ label: 'Découvrir les pôles', href: '#poles' }} />
+
+      <HeroMedia
+        photo={photos.depart}
+        card={{
+          title: 'Bilans physiologiques',
+          text: 'Force, mobilité, asymétries : un état des lieux précis avant de construire votre programme.',
+          cta: { label: 'En savoir plus', href: '/bilans' },
+        }}
+      />
+
+      {/* Présentation : titre, texte, photo */}
+      <Section
+        titre="Rencontrez Johan Pereira"
+        titreId="titre-johan"
+        photo={<PhotoImg className="hk-media accueil-presentation__photo" photo={photos.johanPereira} sizes="(max-width: 1023px) 92vw, 46vw" />}
+      >
+        <Reveal as="p" className="courant texte-colonne">
+          Ancien footballeur devenu étiopathe et préparateur physique, Johan Pereira a fondé Hygie à Avon. Il y réunit professionnels de santé et du sport
+          autour d’un parcours personnalisé.
+        </Reveal>
+        <Button href="/methodologie#johan-pereira">Son parcours</Button>
+      </Section>
+
+      {/* Les trois pôles : titre, trois cartes, bouton */}
+      <Section id="poles" titre="Nos trois pôles" titreId="titre-poles">
+        <div className="hk-grid hk-grid--3">
+          {poles.map((p) => (
+            <ArticleCard key={p.href} href={p.href} tag={p.tag} tagCouleur={p.couleur} title={p.titre} excerpt={p.extrait} photo={p.photo} />
+          ))}
+        </div>
+        <Button href="/soins">Voir tous les soins</Button>
+      </Section>
+
+      {/* Ils nous font confiance : partenariat, logos, avis Google */}
+      <Section id="confiance" titre="Ils nous font confiance" titreId="titre-confiance">
+        <Reveal as="p" className="courant texte-colonne">
+          {maisonSportSante.texte}
+        </Reveal>
+        <a className="libelle lien" href={maisonSportSante.url} target="_blank" rel="noopener noreferrer">
+          {maisonSportSante.nom}
+          <span className="sr-only"> (nouvel onglet)</span>
+        </a>
+        {partenaires.length ? (
+          <ul className="partenaires" aria-label="Partenaires">
+            {partenaires.map((p) => (
+              <li key={p.nom} className="partenaires__item">
+                {p.url ? (
+                  <a href={p.url} target="_blank" rel="noopener noreferrer" title={`${p.nom} (nouvel onglet)`}>
+                    <img src={p.logo} alt={p.nom} loading="lazy" width={240} height={96} />
+                  </a>
+                ) : (
+                  <img src={p.logo} alt={p.nom} loading="lazy" width={240} height={96} />
+                )}
+                {p.type ? <span className="partenaires__type">{p.type}</span> : null}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </Section>
+      <AvisGoogle />
+
+      {/* Temps fort : bandeau, panneau jaune, bandeau */}
+      <section className="temps-fort" aria-label="Offre entreprises">
+        <Marquee items={['Santé', 'Sport', 'Récupération', 'Bilans', 'Entreprises']} />
+        <CoralPanel
+          id="rappel-entreprises"
+          title="Prenez soin de vos équipes"
+          text="Séances collectives, bilans et prévention pour vos collaborateurs. Laissez vos coordonnées professionnelles, nous vous rappelons."
+        >
+          <ContactForm type="rappel" submitLabel="Être rappelé" compact />
+        </CoralPanel>
+        <Marquee items={['Bilans', 'Entreprises', 'Santé', 'Sport', 'Récupération']} />
+      </section>
+
+      {/* Articles récents : titre, texte, trois cartes, bouton */}
+      <Section titre="Allez plus loin" titreId="titre-journal">
+        <Reveal as="p" className="courant texte-colonne">
+          Conseils et retours d’expérience de l’équipe.
+        </Reveal>
+        <div className="hk-grid hk-grid--3">
+          {recents.map((a) => (
+            <ArticleCard
+              key={a.slug}
+              variant="recent"
+              href={`/journal/${a.slug}`}
+              photo={a.photo}
+              vignette={a.vignette}
+              meta={dateCourte(a.date)}
+              tag={categories[a.categorie]}
+              tagCouleur={couleursCategories[a.categorie]}
+              title={a.titre}
+            />
+          ))}
+        </div>
+        <Button href="/journal">Lire le journal</Button>
+      </Section>
     </>
   );
 }

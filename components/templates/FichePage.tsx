@@ -8,6 +8,7 @@ import { Tag } from '../ui/Primitives';
 import { photos } from '@/content/images';
 import { cheminSoin, poles, soinParChemin, type Soin } from '@/content/soins';
 import { site } from '@/content/site';
+import { Mots } from '../ui/Mots';
 
 /* Gabarit « Article » pour une fiche de soin ou de bilan : colonne de lecture de 740 px.
    L'essentiel (tarif ou format, action principale) est donné dès le haut de la fiche. */
@@ -16,6 +17,7 @@ export function FichePage({ soin }: { soin: Soin }) {
   const photo = soin.photo ? photos[soin.photo] : null;
   const proches = soin.proches.map(soinParChemin).filter((s): s is Soin => Boolean(s));
   const url = `${site.url}${cheminSoin(soin)}`;
+  const questions = soin.corps.flatMap((b) => (b.t === 'faq' ? b.items : []));
 
   return (
     <div className="lecture-cadre">
@@ -25,7 +27,9 @@ export function FichePage({ soin }: { soin: Soin }) {
             {pole.etiquette}
           </Tag>
         </div>
-        <h1 className="titre-article lecture__titre">{soin.nom}</h1>
+        <h1 className="titre-article lecture__titre">
+          <Mots texte={soin.nom} />
+        </h1>
         <p className="article lecture__chapo">{soin.chapo}</p>
         <div className="lecture__cle">
           <p>{soin.carte.meta}</p>
@@ -55,6 +59,19 @@ export function FichePage({ soin }: { soin: Soin }) {
         </aside>
       ) : null}
 
+      {questions.length ? (
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: questions.map((q) => ({
+              '@type': 'Question',
+              name: q.q,
+              acceptedAnswer: { '@type': 'Answer', text: q.r },
+            })),
+          }}
+        />
+      ) : null}
       <JsonLd
         data={{
           '@context': 'https://schema.org',

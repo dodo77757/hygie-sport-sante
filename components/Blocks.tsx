@@ -2,7 +2,8 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import type { Bloc } from '@/content/types';
 import { estExterne } from '@/lib/cx';
-import { ListePraticiens, ListeTarifs } from './Lists';
+import { CartesPraticiens } from './CartesPraticiens';
+import { ListeTarifs } from './Lists';
 import { Button } from './ui/Button';
 import { Quote } from './ui/Primitives';
 
@@ -98,7 +99,7 @@ export function Blocks({ blocs }: { blocs: Bloc[] }) {
           case 'praticiens':
             return (
               <div key={i}>
-                <ListePraticiens discipline={b.discipline} />
+                <CartesPraticiens discipline={b.discipline} />
               </div>
             );
           case 'actions':

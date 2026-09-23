@@ -3,6 +3,7 @@ import type { Photo } from '@/content/images';
 import { Button } from './ui/Button';
 import { PhotoImg } from './Photo';
 import { PointsLogo } from './ui/Primitives';
+import { Mots } from './ui/Mots';
 
 /* Hero d'accueil : intro à gauche, H1 italique centré, bouton à droite. Pas d'entrée animée. */
 export function Hero({ title, intro, cta }: { title: string; intro: string; cta?: { label: string; href: string } }) {
@@ -13,7 +14,7 @@ export function Hero({ title, intro, cta }: { title: string; intro: string; cta?
         <p className="courant">{intro}</p>
       </div>
       <h1 id="titre-accueil" className="hk-hero__title titre-hero titre-hero--serre">
-        {title}
+        <Mots texte={title} />
       </h1>
       {cta ? (
         <div className="hk-hero__cta">
@@ -45,7 +46,9 @@ export function GlassCard({ title, text, cta, drift = true }: { title: string; t
 export function HeroMedia({ photo, card }: { photo: Photo; card?: { title: string; text?: ReactNode; cta?: { label: string; href: string } } }) {
   return (
     <section className="hk-hero-media" aria-label="À la une">
-      <PhotoImg className="hk-hero-media__img" photo={photo} preload quality={85} sizes="(max-width: 1023px) 92vw, 94vw" />
+      <div className="hk-hero-media__cadre">
+        <PhotoImg className="hk-hero-media__img" photo={photo} preload quality={85} sizes="(max-width: 1023px) 92vw, 94vw" />
+      </div>
       {card ? <GlassCard {...card} /> : null}
     </section>
   );

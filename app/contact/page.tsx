@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { ContactForm } from '@/components/ContactForm';
+import { PlanAcces } from '@/components/PlanAcces';
 import { ContactGabarit } from '@/components/templates/ContactGabarit';
 import { Button } from '@/components/ui/Button';
-import { Cell, Row } from '@/components/ui/Row';
+import { Section } from '@/components/ui/Section';
 import { Reveal } from '@/components/ui/Primitives';
 import { site } from '@/content/site';
 
@@ -52,29 +53,28 @@ export default function Contact() {
                 </span>
               ))}
             </p>
-            <p>Parking à proximité et accès facile en transports.</p>
           </>
         }
         colonne4={<ContactForm type="contact" />}
       />
 
-      <Row as="section" aria-labelledby="titre-rdv-contact">
-        <Cell span={2}>
-          <Reveal as="h2" id="titre-rdv-contact" className="titre-section">
-            Réserver directement
-          </Reveal>
-        </Cell>
-        <Cell>
-          <Reveal as="p" className="courant texte-colonne">
-            Kinésithérapeutes, étiopathes, orthoptiste et bilans se réservent en ligne, sans attendre notre réponse.
-          </Reveal>
-        </Cell>
-        <Cell>
-          <Button href="/rendez-vous" variant="solid">
-            Prendre rendez-vous
-          </Button>
-        </Cell>
-      </Row>
+      {/* Plan d'accès : titre, adresse, carte */}
+      <Section titre="Plan d’accès" titreId="titre-plan">
+        <Reveal as="p" className="courant texte-colonne">
+          {site.acces}
+        </Reveal>
+        <PlanAcces />
+      </Section>
+
+      {/* Réserver directement : titre, texte, bouton */}
+      <Section titre="Réserver en ligne" titreId="titre-rdv-contact">
+        <Reveal as="p" className="courant texte-colonne">
+          Kinésithérapeutes, étiopathes, orthoptiste et bilans se réservent en ligne, sans attendre notre réponse.
+        </Reveal>
+        <Button href="/rendez-vous" variant="solid">
+          Prendre rendez-vous
+        </Button>
+      </Section>
     </>
   );
 }

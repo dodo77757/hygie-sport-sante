@@ -30,7 +30,13 @@ export function ArticleCard({ href, title, excerpt, tag, tagCouleur = 'encre', m
   return (
     <Link
       href={href}
-      className={cx('hk-card', variant === 'blog' && 'hk-card--blog', variant === 'recent' && 'hk-card--recent', variant === 'mini' && 'hk-card--mini')}
+      className={cx(
+        'hk-card hk-reveal',
+        variant === 'blog' && 'hk-card--blog',
+        variant === 'recent' && 'hk-card--recent',
+        variant === 'mini' && 'hk-card--mini',
+      )}
+      data-effect="carte"
     >
       {p ? (
         <PhotoImg className="hk-card__img" photo={p} decorative sizes={sizes ?? defaultSizes} />

@@ -19,7 +19,20 @@ type FieldProps = {
 };
 
 /* Champ de formulaire : libellé 14 px, champ pilule 35 px (zone de texte arrondie 21 px). */
-export function Field({ id, name, label, type = 'text', required, placeholder, autoComplete, multiline, options, defaultValue, variant, maxLength }: FieldProps) {
+export function Field({
+  id,
+  name,
+  label,
+  type = 'text',
+  required,
+  placeholder,
+  autoComplete,
+  multiline,
+  options,
+  defaultValue,
+  variant,
+  maxLength,
+}: FieldProps) {
   let input: ReactNode;
   if (options) {
     input = (

@@ -5,6 +5,7 @@ import { PhotoImg } from '@/components/Photo';
 import { ContactGabarit } from '@/components/templates/ContactGabarit';
 import { Button } from '@/components/ui/Button';
 import { Cell, Row } from '@/components/ui/Row';
+import { Section } from '@/components/ui/Section';
 import { Reveal } from '@/components/ui/Primitives';
 import { photos } from '@/content/images';
 import { site } from '@/content/site';
@@ -65,7 +66,8 @@ export default function Entreprises() {
         infos={
           <>
             <p>
-              La performance d’une entreprise passe aussi par la santé de ses équipes. Nous construisons avec vous un programme d’activité physique adapté à vos collaborateurs.
+              La performance d’une entreprise passe aussi par la santé de ses équipes. Nous construisons avec vous un programme d’activité physique adapté à vos
+              collaborateurs.
             </p>
             <p>
               Votre interlocuteur : Johan Pereira, fondateur
@@ -79,45 +81,33 @@ export default function Entreprises() {
         colonne4={<ContactForm type="entreprise" submitLabel="Demander un devis" />}
       />
 
-      {/* Activités : 1 + 1 + 2 */}
-      <Row as="section" aria-labelledby="titre-activites">
-        <Cell>
-          <Reveal as="h2" id="titre-activites" className="titre-section">
-            Nos activités
-          </Reveal>
-        </Cell>
-        <Cell className="hk-cell--stack">
-          <Reveal as="p" className="courant texte-colonne">
-            Des séances encadrées par nos préparateurs physiques, pour un environnement de travail sain et dynamique. Vos collaborateurs gagnent en motivation et en cohésion.
-          </Reveal>
-          <ul className="puces courant">
-            {activites.map((a) => (
-              <li key={a}>{a}</li>
-            ))}
-          </ul>
-        </Cell>
-        <Cell span={2}>
-          <PhotoImg className="hk-media apropos-photo apropos-photo--paysage" photo={photos.groupe} sizes="(max-width: 1023px) 92vw, 46vw" />
-        </Cell>
-      </Row>
+      {/* Activités : titre, texte, photo */}
+      <Section
+        titre="Nos activités"
+        titreId="titre-activites"
+        photo={<PhotoImg className="hk-media apropos-photo apropos-photo--paysage" photo={photos.groupe} sizes="(max-width: 1023px) 92vw, 46vw" />}
+      >
+        <Reveal as="p" className="courant texte-colonne">
+          Des séances encadrées par nos préparateurs physiques, pour un environnement de travail sain et dynamique. Vos collaborateurs gagnent en motivation et
+          en cohésion.
+        </Reveal>
+        <ul className="puces courant">
+          {activites.map((a) => (
+            <li key={a}>{a}</li>
+          ))}
+        </ul>
+      </Section>
 
-      {/* Forfaits : titre, puis 1 + 1 + 1 + 1 */}
-      <Row as="section" aria-labelledby="titre-forfaits">
-        <Cell span={2}>
-          <Reveal as="h2" id="titre-forfaits" className="titre-section">
-            Nos forfaits
-          </Reveal>
-        </Cell>
-        <Cell span={2}>
-          <Reveal as="p" className="courant texte-large">
-            Tarifs indicatifs par collaborateur, pour une séance par semaine. Nous établissons un devis selon votre organisation.
-          </Reveal>
-        </Cell>
-      </Row>
+      {/* Forfaits : titre, texte, puis les quatre offres */}
+      <Section titre="Nos forfaits" titreId="titre-forfaits">
+        <Reveal as="p" className="courant texte-colonne">
+          Tarifs indicatifs par collaborateur, pour une séance par semaine. Nous établissons un devis selon votre organisation.
+        </Reveal>
+      </Section>
       <Row>
         {forfaits.map((f) => (
           <Cell key={f.nom} className="hk-cell--pad">
-            <div className="offre">
+            <Reveal effect="carte" className="offre">
               <p className="offre__effectif">{f.effectif}</p>
               <h3 className="titre-bloc">{f.nom}</h3>
               <p className="courant">{f.texte}</p>
@@ -130,32 +120,19 @@ export default function Entreprises() {
                 {f.prix}
                 <small>par collaborateur</small>
               </p>
-            </div>
+            </Reveal>
           </Cell>
         ))}
       </Row>
 
-      {/* Bilan salarié : 1 + 1 + 1 + 1 */}
-      <Row as="section" aria-labelledby="titre-bilan-salarie" aere>
-        <Cell>
-          <Reveal as="h2" id="titre-bilan-salarie" className="titre-section">
-            Le bilan salarié
-          </Reveal>
-        </Cell>
-        <Cell>
-          <Reveal as="p" className="courant texte-colonne">
-            Nos kinésithérapeutes proposent à vos salariés un bilan complet : état de forme, poids et composition corporelle, mobilité fonctionnelle, force musculaire.
-          </Reveal>
-        </Cell>
-        <Cell>
-          <Reveal as="p" className="courant texte-colonne">
-            Un levier de santé au travail à la fois humain, mesurable et valorisant pour l’entreprise. Les bilans suivants montrent les progrès.
-          </Reveal>
-        </Cell>
-        <Cell>
-          <Button href="#formulaire">Demander un devis</Button>
-        </Cell>
-      </Row>
+      {/* Bilan salarié : titre, texte, bouton */}
+      <Section titre="Le bilan salarié" titreId="titre-bilan-salarie" aere>
+        <Reveal as="p" className="courant texte-colonne">
+          Nos kinésithérapeutes proposent à vos salariés un bilan complet : état de forme, poids et composition corporelle, mobilité fonctionnelle, force
+          musculaire. Un levier de santé au travail à la fois humain, mesurable et valorisant pour l’entreprise. Les bilans suivants montrent les progrès.
+        </Reveal>
+        <Button href="#formulaire">Demander un devis</Button>
+      </Section>
 
       {/* FAQ : 1 + 3 */}
       <Row as="section" aria-labelledby="titre-faq" aere>
@@ -197,22 +174,13 @@ export default function Entreprises() {
         </Cell>
       </Row>
 
-      {/* Clubs : 2 + 1 + 1 */}
-      <Row as="section" aria-labelledby="titre-clubs-ent">
-        <Cell span={2}>
-          <Reveal as="h2" id="titre-clubs-ent" className="titre-section">
-            Vous êtes un club
-          </Reveal>
-        </Cell>
-        <Cell>
-          <Reveal as="p" className="courant texte-colonne">
-            Bilans de saison, stages et préparation physique pour vos joueuses et joueurs.
-          </Reveal>
-        </Cell>
-        <Cell>
-          <Button href="/clubs">Offres clubs</Button>
-        </Cell>
-      </Row>
+      {/* Clubs : titre, texte, bouton */}
+      <Section titre="Vous êtes un club" titreId="titre-clubs-ent">
+        <Reveal as="p" className="courant texte-colonne">
+          Bilans de saison, stages et préparation physique pour vos joueuses et joueurs.
+        </Reveal>
+        <Button href="/clubs">Offres clubs</Button>
+      </Section>
     </>
   );
 }

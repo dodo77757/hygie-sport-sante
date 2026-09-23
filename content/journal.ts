@@ -49,11 +49,16 @@ export const articles: Article[] = [
     auteur: johan,
     photo: 'extensionJambe',
     vignette: 'Isocinétique',
-    chapo: 'Le bilan isocinétique évalue avec précision la force musculaire et le fonctionnement d’une articulation. Voici ce que comprend son prix, et ce qu’il vous apporte.',
+    chapo:
+      'Le bilan isocinétique évalue avec précision la force musculaire et le fonctionnement d’une articulation. Voici ce que comprend son prix, et ce qu’il vous apporte.',
     description: 'Combien coûte un bilan isocinétique, que comprend le tarif et comment le préparer ? Les réponses de Johan Pereira, au centre Hygie d’Avon.',
     corps: [
       { t: 'h2', texte: 'Ce que comprend le tarif' },
-      { t: 'p', texte: 'Le prix d’un bilan isocinétique varie selon les centres et la complexité des tests : il se situe en général entre 80 et 200 euros. Il comprend le plus souvent :' },
+      {
+        t: 'p',
+        texte:
+          'Le prix d’un bilan isocinétique varie selon les centres et la complexité des tests : il se situe en général entre 80 et 200 euros. Il comprend le plus souvent :',
+      },
       {
         t: 'ul',
         items: [
@@ -63,7 +68,7 @@ export const articles: Article[] = [
           'un compte-rendu détaillé, avec des recommandations personnalisées',
         ],
       },
-      { t: 'p', texte: 'Chez Hygie, le bilan isocinétique coûte 80 euros pour une séance d\'1 h 30. Il n’est pas pris en charge par la Sécurité sociale.' },
+      { t: 'p', texte: "Chez Hygie, le bilan isocinétique coûte 80 euros pour une séance d'1 h 30. Il n’est pas pris en charge par la Sécurité sociale." },
       { t: 'h2', texte: 'Pourquoi le faire' },
       {
         t: 'ul',
@@ -75,7 +80,11 @@ export const articles: Article[] = [
         ],
       },
       { t: 'h2', texte: 'Comment il se déroule' },
-      { t: 'p', texte: 'Installé sur un dynamomètre isocinétique, vous réalisez des flexions et des extensions à différentes vitesses. L’appareil mesure la force produite et révèle les déséquilibres ; le test est indolore et non invasif.' },
+      {
+        t: 'p',
+        texte:
+          'Installé sur un dynamomètre isocinétique, vous réalisez des flexions et des extensions à différentes vitesses. L’appareil mesure la force produite et révèle les déséquilibres ; le test est indolore et non invasif.',
+      },
       { t: 'h2', texte: 'Pour qui' },
       {
         t: 'ul',
@@ -118,12 +127,20 @@ export const articles: Article[] = [
     auteur: johan,
     photo: 'course',
     vignette: 'Approche',
-    chapo: 'Allier activité physique et hygiène de vie pour préserver sa santé globale : c’est le principe de l’approche Hygie, ouverte à tous les âges et à tous les niveaux.',
+    chapo:
+      'Allier activité physique et hygiène de vie pour préserver sa santé globale : c’est le principe de l’approche Hygie, ouverte à tous les âges et à tous les niveaux.',
     description: 'Évaluation, programmation, nutrition, suivi : les quatre piliers de l’approche Hygie pour progresser sans risque, à tout âge.',
     corps: [
       { t: 'h2', texte: 'Un équilibre entre sport et santé' },
-      { t: 'p', texte: 'L’approche Hygie ne se limite pas à la pratique sportive. Elle réunit l’entraînement, les conseils en nutrition, la récupération et un suivi personnalisé, pour progresser sans risque et dans le respect de votre corps.' },
-      { t: 'p', texte: 'Elle s’appuie sur des outils de mesure habituellement réservés aux sportifs professionnels, mis à la portée de tous dans un cadre sécurisé.' },
+      {
+        t: 'p',
+        texte:
+          'L’approche Hygie ne se limite pas à la pratique sportive. Elle réunit l’entraînement, les conseils en nutrition, la récupération et un suivi personnalisé, pour progresser sans risque et dans le respect de votre corps.',
+      },
+      {
+        t: 'p',
+        texte: 'Elle s’appuie sur des outils de mesure habituellement réservés aux sportifs professionnels, mis à la portée de tous dans un cadre sécurisé.',
+      },
       { t: 'h2', texte: 'Quatre piliers' },
       {
         t: 'ul',
@@ -158,7 +175,11 @@ export const articles: Article[] = [
           'suivez vos progrès pour ajuster votre programme',
         ],
       },
-      { t: 'p', texte: 'La qualité compte plus que la quantité : vous apprenez à écouter votre corps et à progresser à votre rythme. Pour commencer, découvrez [la méthode Hygie](/methodologie).' },
+      {
+        t: 'p',
+        texte:
+          'La qualité compte plus que la quantité : vous apprenez à écouter votre corps et à progresser à votre rythme. Pour commencer, découvrez [la méthode Hygie](/methodologie).',
+      },
     ],
   },
   {
@@ -169,11 +190,16 @@ export const articles: Article[] = [
     auteur: johan,
     photo: 'pressotherapie',
     vignette: 'Pressothérapie',
-    chapo: 'Longtemps réservée aux athlètes, la pressothérapie a trouvé sa place dans la récupération de tous les sportifs. Voici comment elle fonctionne et ce que vous pouvez en attendre.',
+    chapo:
+      'Longtemps réservée aux athlètes, la pressothérapie a trouvé sa place dans la récupération de tous les sportifs. Voici comment elle fonctionne et ce que vous pouvez en attendre.',
     description: 'Comment fonctionne la pressothérapie, ce qu’elle apporte aux sportifs et à ceux qui ont les jambes lourdes, et les précautions à connaître.',
     corps: [
       { t: 'h2', texte: 'Comment ça marche' },
-      { t: 'p', texte: 'Des bottes gonflables exercent une pression séquentielle sur les jambes, du pied vers la cuisse. Cette compression stimule le retour veineux et la circulation lymphatique.' },
+      {
+        t: 'p',
+        texte:
+          'Des bottes gonflables exercent une pression séquentielle sur les jambes, du pied vers la cuisse. Cette compression stimule le retour veineux et la circulation lymphatique.',
+      },
       { t: 'h2', texte: 'Pour les sportifs' },
       {
         t: 'ul',
@@ -184,9 +210,17 @@ export const articles: Article[] = [
         ],
       },
       { t: 'h2', texte: 'Pour tous' },
-      { t: 'p', texte: 'Nul besoin d’être sportif pour en profiter. Les personnes qui ont souvent les jambes lourdes y trouvent un soulagement, et la séance, allongé au calme, est un vrai moment de détente.' },
+      {
+        t: 'p',
+        texte:
+          'Nul besoin d’être sportif pour en profiter. Les personnes qui ont souvent les jambes lourdes y trouvent un soulagement, et la séance, allongé au calme, est un vrai moment de détente.',
+      },
       { t: 'h2', texte: 'Précautions' },
-      { t: 'p', texte: 'La pressothérapie ne convient pas à tout le monde : certains troubles circulatoires, cardiaques ou cutanés la contre-indiquent. Un questionnaire est donc à remplir avant la première séance.' },
+      {
+        t: 'p',
+        texte:
+          'La pressothérapie ne convient pas à tout le monde : certains troubles circulatoires, cardiaques ou cutanés la contre-indiquent. Un questionnaire est donc à remplir avant la première séance.',
+      },
       { t: 'p', texte: 'Au centre, une [séance de 30 minutes coûte 20 euros](/recuperation/pressotherapie).' },
     ],
   },
@@ -202,7 +236,11 @@ export const articles: Article[] = [
     description: 'Les huit épreuves du Hyrox, les qualités qu’il développe et la façon de s’y préparer avec les préparateurs physiques d’Hygie, à Avon.',
     corps: [
       { t: 'h2', texte: 'Une discipline hybride' },
-      { t: 'p', texte: 'Né en Allemagne en 2017, le Hyrox se situe entre les courses d’obstacles et les compétitions de fitness fonctionnel. Il enchaîne 8 kilomètres de course et 8 épreuves, avec un kilomètre de course avant chacune.' },
+      {
+        t: 'p',
+        texte:
+          'Né en Allemagne en 2017, le Hyrox se situe entre les courses d’obstacles et les compétitions de fitness fonctionnel. Il enchaîne 8 kilomètres de course et 8 épreuves, avec un kilomètre de course avant chacune.',
+      },
       { t: 'p', texte: 'Des catégories existent pour tous les niveaux, du débutant à l’élite, en solo comme en duo.' },
       { t: 'h2', texte: 'Les huit épreuves' },
       {
@@ -237,7 +275,11 @@ export const articles: Article[] = [
           'le suivi régulier de votre coach tout au long de la préparation',
         ],
       },
-      { t: 'p', texte: 'Les séances de [cross training](/sport/cross-training) en petit groupe recréent l’esprit du Hyrox ; le [coaching individuel](/sport/coaching-individuel) permet un travail plus précis. Votre première séance est offerte.' },
+      {
+        t: 'p',
+        texte:
+          'Les séances de [cross training](/sport/cross-training) en petit groupe recréent l’esprit du Hyrox ; le [coaching individuel](/sport/coaching-individuel) permet un travail plus précis. Votre première séance est offerte.',
+      },
     ],
   },
   {
@@ -248,11 +290,16 @@ export const articles: Article[] = [
     auteur: bryan,
     photo: 'souleve',
     vignette: 'CrossFit',
-    chapo: 'Le CrossFit est bien plus qu’une tendance : une discipline complète qui travaille toutes les qualités physiques. Voici ses bienfaits, et comment le pratiquer sans vous blesser.',
+    chapo:
+      'Le CrossFit est bien plus qu’une tendance : une discipline complète qui travaille toutes les qualités physiques. Voici ses bienfaits, et comment le pratiquer sans vous blesser.',
     description: 'Les bienfaits du CrossFit pour le corps et le mental, et nos conseils pour bien commencer, par l’équipe Hygie Sport Santé et Performance.',
     corps: [
       { t: 'h2', texte: 'Une approche globale' },
-      { t: 'p', texte: 'Le CrossFit associe des exercices fonctionnels variés, exécutés à haute intensité. Il développe l’endurance, la force, la souplesse, la puissance, la vitesse, la coordination et l’équilibre, ce qui le rend adaptable à tous les profils.' },
+      {
+        t: 'p',
+        texte:
+          'Le CrossFit associe des exercices fonctionnels variés, exécutés à haute intensité. Il développe l’endurance, la force, la souplesse, la puissance, la vitesse, la coordination et l’équilibre, ce qui le rend adaptable à tous les profils.',
+      },
       { t: 'h2', texte: 'Les bienfaits pour le corps' },
       {
         t: 'ul',
@@ -303,11 +350,17 @@ export const articles: Article[] = [
     auteur: johan,
     photo: 'groupeExterieur',
     vignette: 'Entreprises',
-    chapo: 'Intégrer le sport à la vie professionnelle améliore la santé des salariés, la cohésion des équipes et l’image de l’entreprise. Voici pourquoi, et comment s’y prendre.',
-    description: 'Santé des salariés, cohésion, marque employeur : ce que le sport apporte à l’entreprise, et comment Hygie construit un programme sur mesure à Avon.',
+    chapo:
+      'Intégrer le sport à la vie professionnelle améliore la santé des salariés, la cohésion des équipes et l’image de l’entreprise. Voici pourquoi, et comment s’y prendre.',
+    description:
+      'Santé des salariés, cohésion, marque employeur : ce que le sport apporte à l’entreprise, et comment Hygie construit un programme sur mesure à Avon.',
     corps: [
       { t: 'h2', texte: 'Ce que le sport apporte aux salariés' },
-      { t: 'p', texte: 'L’activité physique réduit le stress, améliore le sommeil et aide à prévenir les troubles musculo-squelettiques, fréquents au bureau. Des séances de renforcement ciblées corrigent les postures et soulagent les douleurs.' },
+      {
+        t: 'p',
+        texte:
+          'L’activité physique réduit le stress, améliore le sommeil et aide à prévenir les troubles musculo-squelettiques, fréquents au bureau. Des séances de renforcement ciblées corrigent les postures et soulagent les douleurs.',
+      },
       { t: 'p', texte: 'Le sport favorise aussi l’humeur et la concentration : une pause active dans la journée aide à repartir l’esprit plus clair.' },
       { t: 'h2', texte: 'Ce qu’il apporte à l’entreprise' },
       {
@@ -330,7 +383,11 @@ export const articles: Article[] = [
         ],
       },
       { t: 'h2', texte: 'Comment commencer' },
-      { t: 'p', texte: 'Contactez-nous pour parler de vos besoins : nous construisons avec vous un programme adapté à la culture de votre entreprise. Une séance d’essai permet à vos collaborateurs de découvrir le centre et la méthode.' },
+      {
+        t: 'p',
+        texte:
+          'Contactez-nous pour parler de vos besoins : nous construisons avec vous un programme adapté à la culture de votre entreprise. Une séance d’essai permet à vos collaborateurs de découvrir le centre et la méthode.',
+      },
       { t: 'p', texte: 'Découvrez [nos forfaits entreprises](/entreprises).' },
     ],
   },
@@ -342,11 +399,17 @@ export const articles: Article[] = [
     auteur: johan,
     photo: 'dribble',
     vignette: 'Football',
-    chapo: 'Pour briller sur le terrain, la technique ne suffit plus. Voici pourquoi les jeunes footballeurs ont intérêt à travailler leur condition physique en dehors du club.',
-    description: 'Proprioception, coordination, prévention des blessures : pourquoi et comment un jeune footballeur travaille sa condition physique avec Hygie, à Avon.',
+    chapo:
+      'Pour briller sur le terrain, la technique ne suffit plus. Voici pourquoi les jeunes footballeurs ont intérêt à travailler leur condition physique en dehors du club.',
+    description:
+      'Proprioception, coordination, prévention des blessures : pourquoi et comment un jeune footballeur travaille sa condition physique avec Hygie, à Avon.',
     corps: [
       { t: 'h2', texte: 'Au-delà de la technique' },
-      { t: 'p', texte: 'Le football demande de la force, de l’explosivité, de la coordination et une bonne résistance aux blessures. Travailler ces qualités change votre jeu.' },
+      {
+        t: 'p',
+        texte:
+          'Le football demande de la force, de l’explosivité, de la coordination et une bonne résistance aux blessures. Travailler ces qualités change votre jeu.',
+      },
       {
         t: 'ul',
         items: [
@@ -366,7 +429,10 @@ export const articles: Article[] = [
           'un environnement motivant, avec d’autres joueurs qui partagent vos ambitions',
         ],
       },
-      { t: 'p', texte: 'Réservez votre [séance d’essai](/rendez-vous?motif=sport&objet=essai). Vous êtes un club ? Découvrez [nos offres pour les clubs](/clubs).' },
+      {
+        t: 'p',
+        texte: 'Réservez votre [séance d’essai](/rendez-vous?motif=sport&objet=essai). Vous êtes un club ? Découvrez [nos offres pour les clubs](/clubs).',
+      },
     ],
   },
   {
@@ -377,11 +443,17 @@ export const articles: Article[] = [
     auteur: johan,
     photo: 'presseJambes',
     vignette: 'Isocinétique',
-    chapo: 'Rééducation, prévention des blessures, performance : le test isocinétique est devenu un outil de référence. À Avon, Hygie le met à la portée des patients comme des sportifs.',
-    description: 'Principe, intérêts et indications du test isocinétique, outil de référence de la rééducation et de la prévention des blessures, au centre Hygie d’Avon.',
+    chapo:
+      'Rééducation, prévention des blessures, performance : le test isocinétique est devenu un outil de référence. À Avon, Hygie le met à la portée des patients comme des sportifs.',
+    description:
+      'Principe, intérêts et indications du test isocinétique, outil de référence de la rééducation et de la prévention des blessures, au centre Hygie d’Avon.',
     corps: [
       { t: 'h2', texte: 'Le principe' },
-      { t: 'p', texte: 'Le test mesure la force musculaire à vitesse constante. Comme la machine maintient cette vitesse tout au long du mouvement, les résultats sont fiables et comparables d’un test à l’autre.' },
+      {
+        t: 'p',
+        texte:
+          'Le test mesure la force musculaire à vitesse constante. Comme la machine maintient cette vitesse tout au long du mouvement, les résultats sont fiables et comparables d’un test à l’autre.',
+      },
       { t: 'h2', texte: 'Ce qu’il apporte' },
       {
         t: 'ul',
@@ -403,7 +475,11 @@ export const articles: Article[] = [
         ],
       },
       { t: 'h2', texte: 'Au centre Hygie' },
-      { t: 'p', texte: 'Le centre est équipé pour réaliser des tests isocinétiques dans de bonnes conditions, encadrés par des professionnels qualifiés. La [réservation se fait en ligne](/bilans/isocinetique).' },
+      {
+        t: 'p',
+        texte:
+          'Le centre est équipé pour réaliser des tests isocinétiques dans de bonnes conditions, encadrés par des professionnels qualifiés. La [réservation se fait en ligne](/bilans/isocinetique).',
+      },
     ],
   },
   {
@@ -414,11 +490,16 @@ export const articles: Article[] = [
     auteur: johan,
     photo: 'etirement',
     vignette: 'Mobilité',
-    chapo: 'La mobilité fonctionnelle désigne la capacité à bouger efficacement et sans douleur. Souvent négligée, elle conditionne pourtant la performance et la prévention des blessures.',
+    chapo:
+      'La mobilité fonctionnelle désigne la capacité à bouger efficacement et sans douleur. Souvent négligée, elle conditionne pourtant la performance et la prévention des blessures.',
     description: 'Ce qu’est la mobilité fonctionnelle, pourquoi elle compte pour la performance et la prévention des blessures, et comment l’améliorer.',
     corps: [
       { t: 'h2', texte: 'Plus que de la souplesse' },
-      { t: 'p', texte: 'La mobilité fonctionnelle réunit souplesse, force et coordination. Là où la souplesse mesure l’amplitude d’une articulation, la mobilité évalue votre capacité à utiliser cette amplitude dans les gestes de votre sport.' },
+      {
+        t: 'p',
+        texte:
+          'La mobilité fonctionnelle réunit souplesse, force et coordination. Là où la souplesse mesure l’amplitude d’une articulation, la mobilité évalue votre capacité à utiliser cette amplitude dans les gestes de votre sport.',
+      },
       { t: 'h2', texte: 'Pourquoi elle compte' },
       {
         t: 'ul',
@@ -438,7 +519,10 @@ export const articles: Article[] = [
           'les techniques de mobilisation : rouleau, balle de massage, relâchement myofascial',
         ],
       },
-      { t: 'p', texte: 'Le [bilan fonctionnel](/bilans/fonctionnel) mesure vos restrictions de mobilité et oriente le travail d’étirement et de renforcement.' },
+      {
+        t: 'p',
+        texte: 'Le [bilan fonctionnel](/bilans/fonctionnel) mesure vos restrictions de mobilité et oriente le travail d’étirement et de renforcement.',
+      },
     ],
   },
   {
@@ -449,7 +533,8 @@ export const articles: Article[] = [
     auteur: johan,
     photo: 'coachTablette',
     vignette: 'Méthode',
-    chapo: 'Et si chacun s’entraînait comme un sportif de haut niveau ? C’est le principe de la méthode Hygie : partir d’un bilan physiologique complet pour construire un accompagnement sur mesure.',
+    chapo:
+      'Et si chacun s’entraînait comme un sportif de haut niveau ? C’est le principe de la méthode Hygie : partir d’un bilan physiologique complet pour construire un accompagnement sur mesure.',
     description: 'Bilan de départ, accompagnement individualisé, objectifs variés : comment fonctionne la méthode Hygie Sport Santé et Performance, à Avon.',
     corps: [
       { t: 'h2', texte: 'Un bilan de départ complet' },
@@ -465,7 +550,11 @@ export const articles: Article[] = [
         ],
       },
       { t: 'h2', texte: 'Un accompagnement individualisé' },
-      { t: 'p', texte: 'À partir des résultats et de vos objectifs, nos préparateurs physiques conçoivent vos séances. Chaque programme est unique, parce que chaque corps l’est.' },
+      {
+        t: 'p',
+        texte:
+          'À partir des résultats et de vos objectifs, nos préparateurs physiques conçoivent vos séances. Chaque programme est unique, parce que chaque corps l’est.',
+      },
       { t: 'h2', texte: 'Des objectifs variés' },
       {
         t: 'ul',
@@ -491,7 +580,10 @@ export function trouverArticle(slug: string) {
 }
 
 export function tempsDeLecture(a: Article) {
-  const texte = [a.chapo, ...a.corps.flatMap((b) => ('texte' in b ? [b.texte] : 'items' in b && Array.isArray(b.items) ? b.items.map((i) => (typeof i === 'string' ? i : '')) : []))].join(' ');
+  const texte = [
+    a.chapo,
+    ...a.corps.flatMap((b) => ('texte' in b ? [b.texte] : 'items' in b && Array.isArray(b.items) ? b.items.map((i) => (typeof i === 'string' ? i : '')) : [])),
+  ].join(' ');
   const mots = texte.split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(mots / 200));
 }

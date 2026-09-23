@@ -2,7 +2,19 @@ import type { ReactNode } from 'react';
 import { Reveal } from './ui/Primitives';
 
 /* Panneau temps fort, aux couleurs du logo (jaune par défaut, ou bleu) : une fois par page, titre par glissement masqué. */
-export function CoralPanel({ id, title, text, couleur = 'jaune', children }: { id?: string; title: string; text?: ReactNode; couleur?: 'jaune' | 'bleu'; children?: ReactNode }) {
+export function CoralPanel({
+  id,
+  title,
+  text,
+  couleur = 'jaune',
+  children,
+}: {
+  id?: string;
+  title: string;
+  text?: ReactNode;
+  couleur?: 'jaune' | 'bleu';
+  children?: ReactNode;
+}) {
   const titreId = id ? `${id}-titre` : undefined;
   return (
     <section className={couleur === 'bleu' ? 'hk-panel hk-panel--bleu' : 'hk-panel'} id={id} aria-labelledby={titreId}>

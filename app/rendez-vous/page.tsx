@@ -80,7 +80,8 @@ export default function RendezVous() {
         <Cell className="hk-cell--stack">
           <h2 className="titre-bloc">Séances de sport</h2>
           <p className="courant texte-colonne">
-            Séance d’essai offerte, coaching individuel, sport-santé ou cross training : appelez-nous ou laissez vos coordonnées, nous vous rappelons pour fixer le créneau.
+            Séance d’essai offerte, coaching individuel, sport-santé ou cross training : appelez-nous ou laissez vos coordonnées, nous vous rappelons pour fixer
+            le créneau.
           </p>
           {telephone}
         </Cell>
@@ -110,7 +111,9 @@ export default function RendezVous() {
         <Row className="rdv-groupe">
           <Cell className="hk-cell--stack">
             <h2 className="titre-bloc">Pressothérapie</h2>
-            <p className="courant texte-colonne">20 € la séance de 30 minutes. Un questionnaire de contre-indications est à remplir avant la première séance.</p>
+            <p className="courant texte-colonne">
+              20 € la séance de 30 minutes. Un questionnaire de contre-indications est à remplir avant la première séance.
+            </p>
             {telephone}
           </Cell>
           <Cell span={2}>
@@ -125,7 +128,9 @@ export default function RendezVous() {
       <Row className="rdv-groupe">
         <Cell className="hk-cell--stack">
           <h2 className="titre-bloc">Entreprises et clubs</h2>
-          <p className="courant texte-colonne">Séances pour vos équipes, bilans de saison, stages : décrivez votre projet, nous revenons vers vous avec un devis.</p>
+          <p className="courant texte-colonne">
+            Séances pour vos équipes, bilans de saison, stages : décrivez votre projet, nous revenons vers vous avec un devis.
+          </p>
         </Cell>
         <Cell className="hk-cell--stack">
           <p className="etiquette">Entreprises</p>

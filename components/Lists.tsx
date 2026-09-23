@@ -19,7 +19,10 @@ export function ListePraticiens({ discipline, fluide, titreNiveau = 'h3' }: { di
             </p>
           </div>
           <div className="liste__fin">
-            <Button href={p.reservation.type === 'telephone' ? p.reservation.lien : p.reservation.url} variant={p.reservation.type === 'telephone' ? 'contour' : 'solid'}>
+            <Button
+              href={p.reservation.type === 'telephone' ? p.reservation.lien : p.reservation.url}
+              variant={p.reservation.type === 'telephone' ? 'contour' : 'solid'}
+            >
               {libelleReservation(p.reservation)}
             </Button>
           </div>
