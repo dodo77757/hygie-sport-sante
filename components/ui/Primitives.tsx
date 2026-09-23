@@ -41,7 +41,7 @@ export function Reveal({
   children,
 }: {
   as?: ElementType;
-  effect?: 'float' | 'slide-up' | 'slide-left' | 'carte';
+  effect?: 'float' | 'slide-up' | 'slide-left';
   className?: string;
   id?: string;
   children: ReactNode;

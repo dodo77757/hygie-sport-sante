@@ -19,7 +19,7 @@ export function RevealObserver() {
     const root = document.documentElement;
     const elements = Array.from(document.querySelectorAll<HTMLElement>('.hk-reveal:not(.is-in)'));
     // Chargement lent : le secours CSS a déjà affiché les éléments, on les laisse en place sans animation.
-    if (premierPassage && performance.now() > 3800) elements.forEach((el) => el.classList.add('is-in', 'hk-reveal--direct'));
+    if (premierPassage && performance.now() > 4000) elements.forEach((el) => el.classList.add('is-in', 'hk-reveal--direct'));
     premierPassage = false;
     root.classList.add('reveal-ready');
 
@@ -43,7 +43,7 @@ export function RevealObserver() {
     let secours = 0;
     if (document.getElementById('entree') && root.dataset.rideau !== 'leve') {
       window.addEventListener(RIDEAU_LEVE, observer, { once: true });
-      secours = window.setTimeout(observer, 3000);
+      secours = window.setTimeout(observer, 4200); // secours si l’événement du rideau (3,4 s) ne vient pas
     } else {
       observer();
     }

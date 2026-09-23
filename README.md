@@ -81,7 +81,7 @@ Les anciennes adresses du site Wix redirigent en 308 vers les nouvelles pages (`
 | `/contact` | Contact | coordonnées, itinéraire, formulaire, plan d'accès OpenStreetMap |
 | `/mentions-legales`, `/confidentialite` | Mentions | colonne sans cadre |
 
-**Mise en page.** Chaque section suit le même ordre (`components/ui/Section.tsx`) : le titre dans la première colonne, puis le texte, les boutons, les cartes ou la photo empilés dans les trois colonnes de droite. Les pages de tête (accueil, pôles, journal, fiches, contact) gardent leur gabarit propre. La barre du header est collée en haut de l'écran, pleine largeur, séparée de la page par un filet.
+**Mise en page.** Chaque section suit le même ordre (`components/ui/Section.tsx`) : le titre dans la première colonne, puis le texte, les boutons, les cartes ou la photo empilés dans les trois colonnes de droite. Les pages de tête (accueil, pôles, journal, fiches, contact) gardent leur gabarit propre. La barre du header est collée en haut de l'écran, pleine largeur, séparée de la page par un filet. Le pied de page est un bloc encre, séparé de la page par un trait jaune : logo en traits clairs, horaires, navigation, contact et bouton de rendez-vous.
 
 **Navigation.** Le menu compte six entrées (Méthode, Santé, Sport, Récupération, Bilans, Entreprises) et un seul bouton, « Prendre rendez-vous », en jaune. Aucune page ne répète le menu : on revient au pôle par l'étiquette de couleur en haut de chaque fiche. Le journal, les clubs et le contact sont dans le pied de page et sur l'accueil.
 
@@ -118,7 +118,7 @@ Règles de rédaction du design system :
 - `components/` : les composants du design system en TSX.
   - Mise en page et actions : `Row`/`Cell`, `Section` (titre à gauche, reste à droite), `Header` et menu mobile, `LogoLockup`, `Footer`, `Button`, `Tag`, `PointsLogo`.
   - Accueil et contenus : `Hero`, `HeroMedia`, `GlassCard`, `ArticleCard`, `Marquee`, `CoralPanel` (panneau jaune ou bleu), `Quote`, `PhotoImg`, `Mots`.
-  - Mouvement : `Entree` et `LogoTrace` (rideau d'entrée), `TransitionPage` (transitions entre les pages), `Cartes3D` (cartes inclinées au survol).
+  - Mouvement : `Entree` et `LogoTrace` (rideau d'entrée), `TransitionPage` (transitions entre les pages).
   - Formulaires : `Field`, `Checkbox`.
   - Entrées au défilement : `Reveal` et `RevealObserver`.
   - Spécifiques au site : `ContactForm`, `BookingTabs` (prise de rendez-vous), `Blocks` (fiches et articles), `CartesPraticiens`, `AvisGoogle`, `PlanAcces` (OpenStreetMap), `BarreMobile` (bouton fixé en bas sur mobile), `Audience` (Umami ou Plausible), `IconesReseaux`, `templates/` (gabarits).
@@ -130,14 +130,13 @@ Règles de rédaction du design system :
   - données structurées : centre (HealthClub, avec ses coordonnées), fil d'Ariane et questions fréquentes (FAQPage) des fiches, articles.
 
 **Mouvement**
-- **Rideau d'entrée** (`components/Entree.tsx`, `components/LogoTrace.tsx`) : à la première page de la visite, le logo se trace trait par trait sur fond encre (2,1 s), les trois points et les pastilles apparaissent, le logo respire un instant, puis le rideau se lève (encre, puis jaune, à 3,4 s) et le titre de la page monte mot par mot. 4,5 s en tout, une seule fois par visite (`sessionStorage`, lu avant le premier affichage par un script du layout) et jamais en passant d'une page à l'autre. Le logo tracé est redessiné en traits d'après le fichier d'origine.
-- **Transitions entre les pages** (`components/TransitionPage.tsx`, composant `ViewTransition` de React, élément `.rideau-page` du layout) : un rideau jaune balaie l'écran de bas en haut en une seconde, la page quittée recule et s'efface sous lui, la nouvelle monte derrière, puis son titre entre mot par mot ; la barre du header reste en place au-dessus. Chrome, Edge, Safari 18 et Firefox récents ; ailleurs, la page change sans animation.
+- **Rideau d'entrée** (`components/Entree.tsx`, `components/LogoTrace.tsx`) : à l'arrivée sur le site, le logo se trace trait par trait sur fond encre (2,1 s), les trois points et les pastilles apparaissent, le logo respire un instant, puis le rideau se lève (encre, puis jaune, à 3,4 s) et le titre de la page monte mot par mot. 4,5 s en tout, à chaque chargement du site (rechargement compris), jamais en passant d'une page à l'autre. Le logo tracé est redessiné en traits d'après le fichier d'origine.
+- **Transitions entre les pages** (`components/TransitionPage.tsx`, composant `ViewTransition` de React, `content/pages.ts`) : un rideau à la couleur de la page d'arrivée (Santé bleu, Sport jaune, Récupération gris, Bilans encre…) balaie l'écran de bas en haut, s'arrête un instant avec le nom de l'onglet dans la typographie des titres de page (Anton italique, point de couleur), puis découvre la nouvelle page, dont le titre entre mot par mot ; la page quittée a reculé et s'est effacée sous lui, la barre du header reste en place au-dessus. 1,3 s. Chrome, Edge, Safari 18 et Firefox récents ; ailleurs, la page change sans animation.
 - **Onglets** : un trait jaune glisse sous l'onglet actif, dans le menu comme dans la prise de rendez-vous ; les panneaux de rendez-vous glissent dans le sens du changement, rangée après rangée, avec un léger flou.
-- **Cartes en 3D** (`components/Cartes3D.tsx`) : les cartes d'articles, de pôles, de praticiens et d'avis entrent basculées vers l'arrière puis se redressent, l'une après l'autre ; au survol, elles s'inclinent vers le pointeur avec un reflet qui le suit. Rien au toucher.
 - **Titres** : chaque H1 monte mot par mot (`components/ui/Mots.tsx`).
 - Entrées « flottement » et « glissement » au défilement, dérive de la carte en verre, bandeau à 90 px par seconde (pause au survol).
 
-Tout est coupé si le visiteur a choisi de réduire les animations. Sans JavaScript, le rideau se lève quand même. Pour revoir l'entrée en développement : ouvrir un nouvel onglet, ou `sessionStorage.removeItem('hygie-entree')` dans la console puis recharger.
+Tout est coupé si le visiteur a choisi de réduire les animations. Sans JavaScript, le rideau se lève quand même.
 
 ## À compléter avant la mise en ligne
 

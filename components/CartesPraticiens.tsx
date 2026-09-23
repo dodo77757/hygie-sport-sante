@@ -31,7 +31,7 @@ export function CartesPraticiens({
   return (
     <ul className={cx('praticiens', colonnes === 3 && 'praticiens--grille')}>
       {liste.map((p: Praticien) => (
-        <li className={cx('praticien', colonnes === 3 && 'hk-reveal')} data-effect={colonnes === 3 ? 'carte' : undefined} key={p.nom}>
+        <li className="praticien" key={p.nom}>
           <div className={cx('praticien__portrait', !p.photo && `praticien__portrait--${couleur}`)} aria-hidden={p.photo ? undefined : true}>
             {p.photo ? (
               <PhotoImg className="praticien__img" photo={photos[p.photo]} sizes={colonnes === 3 ? '(max-width: 1023px) 92vw, 30vw' : '128px'} quality={75} />

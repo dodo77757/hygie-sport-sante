@@ -1,5 +1,3 @@
-import { Reveal } from './ui/Primitives';
-
 /* Avis Google du centre, lus par l'API Places (New) et affichés tels quels, avec le nom de leur auteur et le lien vers Google.
    Sans GOOGLE_PLACES_API_KEY et GOOGLE_PLACE_ID dans l'environnement, le bloc ne s'affiche pas.
    Google renvoie au plus cinq avis, mis en cache un jour (revalidate) : aucun appel à chaque visite, aucun script ni cookie côté visiteur. */
@@ -72,7 +70,7 @@ export async function AvisGoogle() {
       </div>
       <ul className="avis__liste">
         {avis.map((a, i) => (
-          <Reveal as="li" effect="carte" key={`${a.authorAttribution.displayName}-${a.publishTime ?? i}`} className="avis__item">
+          <li key={`${a.authorAttribution.displayName}-${a.publishTime ?? i}`} className="avis__item">
             <Etoiles note={a.rating} />
             <blockquote className="avis__texte">
               <p>{a.text?.text ?? a.originalText?.text}</p>
@@ -87,7 +85,7 @@ export async function AvisGoogle() {
               )}
               {a.relativePublishTimeDescription ? <span> · {a.relativePublishTimeDescription}</span> : null}
             </p>
-          </Reveal>
+          </li>
         ))}
       </ul>
       <p className="avis__source">Avis publiés sur Google, reproduits sans modification.</p>

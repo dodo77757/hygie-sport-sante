@@ -434,45 +434,62 @@ select.hk-field__input {
 .hk-form__note { font: 400 12px/1.4 var(--font-texte); }
 .hk-hp { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
 
-/* ---------- Pied de page ---------- */
+/* ---------- Pied de page ----------
+   Bloc encre, nettement séparé de la page par un trait jaune ; texte clair, titres de colonnes en jaune, logo en traits clairs. */
+.hk-footer-cadre {
+  --filet-pied: rgba(238, 239, 233, 0.22);
+  margin-top: calc(24 * var(--u));
+  border-top: 4px solid var(--jaune);
+  background: var(--encre);
+  color: var(--fond);
+}
 .hk-footer {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-inline: var(--marge);
-  min-height: calc(447 * var(--u));
-  border-right: var(--filet) solid var(--encre);
+  min-height: calc(420 * var(--u));
+  border-right: 1px solid var(--filet-pied);
 }
 .hk-footer__col {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   min-width: 0;
-  padding: calc(11 * var(--u)) calc(21 * var(--u)) calc(46 * var(--u));
-  border-left: var(--filet) solid var(--encre);
+  padding: calc(40 * var(--u)) calc(21 * var(--u)) calc(46 * var(--u));
+  border-left: 1px solid var(--filet-pied);
 }
-.hk-footer__col:first-child { padding: calc(14 * var(--u)) var(--retrait) calc(46 * var(--u)); }
-.hk-footer__tagline { margin-top: calc(28 * var(--u)); max-width: calc(237 * var(--u)); }
-.hk-footer__list { list-style: none; margin: calc(8 * var(--u)) 0 0; padding: 0; }
-.hk-footer__list a { display: inline-block; padding: 4px 0; color: var(--encre); text-decoration: none; }
-.hk-footer__list a:hover, .hk-footer__list a[aria-current="page"] { text-decoration: underline; }
-.hk-footer__spaced { margin-top: calc(44 * var(--u)); }
+.hk-footer__col:first-child { padding: calc(40 * var(--u)) var(--retrait) calc(46 * var(--u)); }
+.hk-footer__logo { display: inline-flex; align-items: center; gap: calc(14 * var(--u)); color: var(--fond); text-decoration: none; }
+.hk-footer__marque { display: block; width: calc(120 * var(--u)); height: auto; }
+.hk-footer__marque .p--bleu { fill: var(--bleu); }
+.hk-footer__marque .p--jaune { fill: var(--jaune); }
+.hk-footer__marque .p--gris { fill: var(--gris-logo); }
+.hk-footer .hk-pill { border-color: rgba(238, 239, 233, 0.6); color: var(--fond); }
+.hk-footer .titre-pied { color: var(--jaune); }
+.hk-footer__tagline { margin-top: calc(28 * var(--u)); max-width: calc(237 * var(--u)); color: rgba(238, 239, 233, 0.8); }
+.hk-footer__list { list-style: none; margin: calc(12 * var(--u)) 0 0; padding: 0; }
+.hk-footer__list strong { font-weight: 400; color: var(--fond); }
+.hk-footer__list + .hk-footer__list { margin-top: calc(18 * var(--u)); }
+.hk-footer__list a { display: inline-block; padding: 4px 0; color: var(--fond); text-decoration: none; }
+.hk-footer__list a:hover, .hk-footer__list a[aria-current="page"] { color: var(--jaune); text-decoration: underline; }
+.hk-footer__cta { margin-top: calc(20 * var(--u)); }
+.hk-footer__spaced { margin-top: calc(36 * var(--u)); }
 .hk-footer__socials { display: flex; gap: calc(13 * var(--u)); margin: calc(15 * var(--u)) 0 0; padding: 0; list-style: none; }
 .hk-footer__socials a {
   display: grid;
   place-content: center;
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--encre);
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(238, 239, 233, 0.6);
   border-radius: 50%;
-  color: var(--encre);
+  color: var(--fond);
   text-decoration: none;
-  font: 400 10px/1 var(--font-mono);
-  text-transform: uppercase;
+  transition: background-color 0.3s var(--courbe-sortie), color 0.3s var(--courbe-sortie), border-color 0.3s var(--courbe-sortie);
 }
-.hk-footer__socials a:hover { background: var(--encre); color: var(--fond); }
-.hk-footer__legal { margin-top: auto; padding-top: calc(28 * var(--u)); }
+.hk-footer__socials a:hover { background: var(--jaune); border-color: var(--jaune); color: var(--encre); }
+.hk-footer__legal { margin-top: auto; padding-top: calc(28 * var(--u)); color: rgba(238, 239, 233, 0.7); }
 .hk-footer__legal a { display: inline-block; padding: 4px 0; color: inherit; text-decoration: none; }
-.hk-footer__legal a:hover { text-decoration: underline; }
+.hk-footer__legal a:hover { color: var(--jaune); text-decoration: underline; }
 
 /* ---------- Filtre de catégories ---------- */
 .hk-filter { display: flex; flex-wrap: wrap; gap: 8px 40px; list-style: none; margin: 0; padding: 28px 0; }
@@ -508,16 +525,6 @@ select.hk-field__input {
 .hk-reveal.is-in[data-effect="float"] { animation: hk-float var(--duree-entree) var(--courbe-flottement) both; }
 .hk-reveal.is-in[data-effect="slide-up"] { animation: hk-slide-up var(--duree-entree) var(--courbe-glissement) both; }
 .hk-reveal.is-in[data-effect="slide-left"] { animation: hk-slide-left var(--duree-entree) var(--courbe-glissement) both; }
-/* Cartes : entrée en 3D, basculées vers l'arrière puis redressées ; en grille, l'une après l'autre.
-   Remplissage « backwards » seulement : une fois entrée, la carte est libre pour l'inclinaison au survol. */
-.hk-reveal.is-in[data-effect="carte"] { animation: hk-carte-entree 1s var(--courbe-sortie) calc(var(--i, 0) * 110ms) backwards; transform-origin: 50% 100%; }
-:is(.hk-grid, .praticiens--grille, .avis__liste, .hk-row) > .hk-reveal[data-effect="carte"]:nth-child(2), :is(.hk-grid, .praticiens--grille, .avis__liste, .hk-row) > :nth-child(2) > .hk-reveal[data-effect="carte"] { --i: 1; }
-:is(.hk-grid, .praticiens--grille, .avis__liste, .hk-row) > .hk-reveal[data-effect="carte"]:nth-child(3), :is(.hk-grid, .praticiens--grille, .avis__liste, .hk-row) > :nth-child(3) > .hk-reveal[data-effect="carte"] { --i: 2; }
-:is(.hk-grid, .praticiens--grille, .avis__liste, .hk-row) > .hk-reveal[data-effect="carte"]:nth-child(4), :is(.hk-grid, .praticiens--grille, .avis__liste, .hk-row) > :nth-child(4) > .hk-reveal[data-effect="carte"] { --i: 3; }
-@keyframes hk-carte-entree {
-  from { opacity: 0; transform: perspective(1000px) rotateX(16deg) translateY(calc(40 * var(--u))); }
-  to { opacity: 1; transform: perspective(1000px) rotateX(0) translateY(0); }
-}
 @keyframes hk-float {
   from { opacity: 0; transform: translateY(calc(60 * var(--u))); }
   to { opacity: 1; transform: none; }
@@ -695,34 +702,6 @@ ol.prose-liste > li::before { content: counter(n) "."; }
 .intro-colonne { display: flex; flex-direction: column; align-items: flex-start; gap: calc(20 * var(--u)); }
 .page-404 { min-height: 70vh; }
 
-/* ---------- Cartes en 3D au survol (Cartes3D.tsx pose --rx, --ry, --mx, --my et is-3d) : cartes d'articles, de praticiens, d'avis ---------- */
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .hk-card, .praticiens--grille .praticien, .avis__item {
-    position: relative;
-    transform: perspective(1000px) rotateX(0) rotateY(0);
-    transition: transform 0.6s var(--courbe-sortie), box-shadow 0.6s var(--courbe-sortie);
-    will-change: transform;
-  }
-  .hk-card.is-3d, .praticiens--grille .praticien.is-3d, .avis__item.is-3d {
-    transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(10px);
-    box-shadow: 0 30px 50px -28px rgba(19, 19, 19, 0.45);
-    transition: transform 0.12s linear, box-shadow 0.6s var(--courbe-sortie);
-    z-index: 1;
-  }
-  /* Reflet qui suit le pointeur */
-  :is(.hk-card, .praticiens--grille .praticien, .avis__item)::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0) 62%);
-    opacity: 0;
-    transition: opacity 0.4s var(--courbe-sortie);
-    pointer-events: none;
-  }
-  :is(.hk-card, .praticiens--grille .praticien, .avis__item).is-3d::after { opacity: 1; }
-}
-
 /* ---------- Sections ordonnées : titre à gauche, tout le reste à droite ---------- */
 .section__tete .titre-section { font-size: calc(54 * var(--u)); }
 .section__sous-titre { margin-top: calc(20 * var(--u)); }
@@ -896,7 +875,7 @@ main:focus { outline: none; }
 /* ---------- Rideau d'entrée ----------
    0,15 s → 2,1 s : le logo se trace (les délais de LogoTrace sont multipliés par --k), puis les points (bleu, jaune, gris)
    et les pastilles apparaissent jusqu'à 2,7 s. Pause sur le logo complet, puis, à 3,4 s, le rideau encre se lève,
-   le jaune suit 0,12 s après. Tout est fini à 4,5 s. Joué une fois par visite (sessionStorage, voir Entree.tsx). */
+   le jaune suit 0,12 s après. Tout est fini à 4,5 s. Joué à chaque chargement (voir Entree.tsx). */
 #entree {
   position: fixed;
   inset: 0;
@@ -905,8 +884,6 @@ main:focus { outline: none; }
   animation: hk-entree-fin 0s linear 4.5s forwards;
 }
 html:has(#entree) { --retard-entree: 3.65s; }
-html.entree-vue #entree { display: none; }
-html.entree-vue { --retard-entree: 0s; }
 .entree__rideau { position: absolute; inset: 0; will-change: transform; }
 .entree__rideau--jaune { background: var(--jaune); animation: hk-rideau 0.95s var(--courbe-rideau) 3.52s forwards; }
 .entree__rideau--encre {
@@ -966,34 +943,59 @@ html.entree-vue { --retard-entree: 0s; }
 @keyframes hk-photo { from { transform: scale(1.08); } to { transform: none; } }
 
 /* ---------- Transitions entre les pages ----------
-   Un rideau jaune balaie l'écran de bas en haut (1 s) : la page quittée recule et s'efface sous lui,
-   la nouvelle monte derrière lui, puis son titre entre mot par mot. La barre du header reste en place, au-dessus.
-   Le rideau est un élément réel, hors écran (.rideau-page) ; c'est son groupe de transition qui traverse l'écran.
+   Un rideau à la couleur de la page cible balaie l'écran de bas en haut (1,3 s), s'arrête un instant au centre avec
+   le nom de l'onglet en Anton : la page quittée recule et s'efface sous lui, la nouvelle monte derrière lui,
+   puis son titre entre mot par mot. La barre du header reste en place, au-dessus.
+   Le rideau est un élément réel, hors écran (.rideau-page, rendu par TransitionPage) ; c'est son groupe de transition qui traverse l'écran.
    Le nom du header est posé sur la barre elle-même (sur le header, il couperait le flou de la barre). */
 .hk-header__bar { view-transition-name: entete; }
 .rideau-page {
   position: fixed;
   inset: 0;
   z-index: var(--plan-header);
-  background: var(--jaune);
+  display: grid;
+  place-items: center;
+  background: var(--rideau-fond, var(--jaune));
+  color: var(--rideau-texte, var(--encre));
   transform: translateY(100%);
   pointer-events: none;
   view-transition-name: rideau-page;
 }
+/* Le nom de l'onglet, dans la typographie des titres de page (Anton italique), terminé par un point de couleur */
+.rideau-page__nom {
+  font: italic 400 clamp(64px, calc(150 * var(--u)), 210px)/0.95 var(--font-display);
+  letter-spacing: 0;
+  text-wrap: balance;
+  text-align: center;
+  padding: 0 var(--marge);
+  animation: hk-rideau-nom 1.3s var(--courbe-sortie) both;
+}
+.rideau-page__point { display: inline-block; width: 0.19em; height: 0.19em; margin-left: 0.06em; border-radius: 50%; background: var(--rideau-point, var(--jaune)); }
 ::view-transition { pointer-events: none; }
 ::view-transition-group(entete) { animation: none; z-index: 4; }
 ::view-transition-old(entete) { display: none; }
 ::view-transition-new(entete) { animation: none; }
-::view-transition-group(rideau-page) { z-index: 3; animation: hk-balayage 1s var(--courbe-rideau) both; }
+::view-transition-group(rideau-page) { z-index: 3; animation: hk-balayage 1.3s linear both; }
 ::view-transition-old(rideau-page) { display: none; }
 ::view-transition-new(rideau-page) { animation: none; }
 ::view-transition-group(.page-sortie) { z-index: 1; }
 ::view-transition-group(.page-entree) { z-index: 2; }
-::view-transition-old(.page-sortie) { animation: hk-page-recule 0.55s var(--courbe-sortie) both; transform-origin: 50% 30%; }
-::view-transition-new(.page-entree) { animation: hk-page-monte 0.7s var(--courbe-sortie) 0.45s both; }
+::view-transition-old(.page-sortie) { animation: hk-page-recule 0.45s var(--courbe-sortie) both; transform-origin: 50% 30%; }
+::view-transition-new(.page-entree) { animation: hk-page-monte 0.7s var(--courbe-sortie) 0.72s both; }
 /* Pendant la transition, le titre de la nouvelle page attend le passage du rideau pour monter mot par mot */
 html:active-view-transition :is(.w, .titre-point, .hk-hero__intro, .hk-hero__cta, .hk-hero-media__img) { animation-play-state: paused; }
-@keyframes hk-balayage { from { transform: translateY(100vh); } to { transform: translateY(-100vh); } }
+@keyframes hk-balayage {
+  0% { transform: translateY(100vh); animation-timing-function: var(--courbe-rideau); }
+  32% { transform: translateY(0); animation-timing-function: linear; }
+  58% { transform: translateY(0); animation-timing-function: var(--courbe-rideau); }
+  100% { transform: translateY(-100vh); }
+}
+@keyframes hk-rideau-nom {
+  0% { opacity: 0; transform: translateY(0.35em); }
+  30% { opacity: 1; transform: translateY(0); }
+  62% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-0.35em); }
+}
 @keyframes hk-page-recule { to { opacity: 0; transform: scale(0.94) translateY(calc(-24 * var(--u))); } }
 @keyframes hk-page-monte { from { opacity: 0; transform: translateY(calc(56 * var(--u))); } }
 
@@ -1050,7 +1052,7 @@ html:active-view-transition :is(.w, .titre-point, .hk-hero__intro, .hk-hero__cta
   .avis__liste { grid-template-columns: 1fr; }
   .barre-mobile { display: grid; }
   .plan__carte { aspect-ratio: 4 / 3; }
-  body:has(.barre-mobile) .hk-footer { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+  body:has(.barre-mobile) .hk-footer-cadre { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   .praticiens--grille .praticien__portrait { aspect-ratio: 4 / 3; }
   .titre-hero { font-size: calc(72 * var(--u)); }
   .titre-section { font-size: calc(36 * var(--u)); }
@@ -1121,7 +1123,7 @@ html:active-view-transition :is(.w, .titre-point, .hk-hero__intro, .hk-hero__cta
 
   .hk-footer { grid-template-columns: 1fr; min-height: 0; }
   .hk-footer__col, .hk-footer__col:first-child { padding: calc(24 * var(--u)) var(--retrait) calc(32 * var(--u)); }
-  .hk-footer__col--vide { display: none; }
+  .hk-footer__marque { width: calc(100 * var(--u)); }
   .hk-footer__tagline { max-width: none; margin-top: calc(20 * var(--u)); }
   .hk-footer__legal { padding-top: calc(24 * var(--u)); }
 

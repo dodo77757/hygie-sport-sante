@@ -107,7 +107,7 @@ export default function Entreprises() {
       <Row>
         {forfaits.map((f) => (
           <Cell key={f.nom} className="hk-cell--pad">
-            <Reveal effect="carte" className="offre">
+            <div className="offre">
               <p className="offre__effectif">{f.effectif}</p>
               <h3 className="titre-bloc">{f.nom}</h3>
               <p className="courant">{f.texte}</p>
@@ -120,7 +120,7 @@ export default function Entreprises() {
                 {f.prix}
                 <small>par collaborateur</small>
               </p>
-            </Reveal>
+            </div>
           </Cell>
         ))}
       </Row>

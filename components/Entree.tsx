@@ -6,15 +6,13 @@ import { LogoTrace } from './LogoTrace';
 
 /* Rideau d'entrée : sur fond encre, le logo se trace trait par trait, les trois points apparaissent, courte pause,
    puis le rideau se lève (encre, puis jaune) et découvre la page, dont le titre monte mot par mot. 4,5 s en tout.
-   Joué une fois par visite (sessionStorage, lu avant le premier affichage par le script de app/layout.tsx),
-   jamais lors de la navigation entre les pages.
+   Joué à chaque chargement du site (rechargement compris), jamais lors de la navigation entre les pages.
    Tout est en CSS (hygie.css, « Rideau d'entrée ») : sans JavaScript, le rideau se lève quand même.
    Coupé si le visiteur a choisi de réduire les animations. */
 
 const LEVEE = 3400; // ms : début de la levée du rideau (délai de hk-rideau dans hygie.css)
 const RETRAIT = 5800; // ms : retrait du rideau, quand le titre de la première page a fini d'entrer
 export const RIDEAU_LEVE = 'hygie:rideau-leve';
-export const CLE_SESSION = 'hygie-entree';
 
 let dejaJoue = false;
 
@@ -33,14 +31,7 @@ export function Entree() {
     if (!present) return;
     dejaJoue = true;
     const el = ref.current;
-    let dejaVu = false;
-    try {
-      dejaVu = document.documentElement.classList.contains('entree-vue') || sessionStorage.getItem(CLE_SESSION) === '1';
-      sessionStorage.setItem(CLE_SESSION, '1');
-    } catch {
-      /* stockage indisponible : l'entrée se joue */
-    }
-    if (!el || dejaVu || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       signalerLevee();
       setPresent(false);
       return;
