@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { BookingTabs } from '@/components/BookingTabs';
 import { ContactForm } from '@/components/ContactForm';
-import { ListePraticiens, ListeTarifs } from '@/components/Lists';
+import { CartesPraticiens } from '@/components/CartesPraticiens';
+import { ListeTarifs } from '@/components/Lists';
 import { ContactGabarit } from '@/components/templates/ContactGabarit';
 import { Button } from '@/components/ui/Button';
 import { Cell, Row } from '@/components/ui/Row';
@@ -31,7 +32,7 @@ function GroupeDiscipline({ discipline, titre }: { discipline: Discipline; titre
         ) : null}
       </Cell>
       <Cell span={3}>
-        <ListePraticiens discipline={discipline} fluide />
+        <CartesPraticiens discipline={discipline} compacte />
       </Cell>
     </Row>
   );

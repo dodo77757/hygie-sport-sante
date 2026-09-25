@@ -98,7 +98,7 @@ export function Blocks({ blocs }: { blocs: Bloc[] }) {
             );
           case 'praticiens':
             return (
-              <div key={i}>
+              <div key={i} className="bloc-large">
                 <CartesPraticiens discipline={b.discipline} />
               </div>
             );

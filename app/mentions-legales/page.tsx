@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { creditsAthletes } from '@/content/athletes';
+import { creditsAthletes, photosHygie } from '@/content/athletes';
 import { creditsPhotos } from '@/content/images';
 import { site } from '@/content/site';
 
@@ -77,7 +77,8 @@ export default function MentionsLegales() {
         ))}
       </p>
       <p>
-        Photos des sportifs suivis par Johan Pereira : Wikimedia Commons, sous licence libre.{' '}
+        Photos des sportifs suivis par Johan Pereira : {photosHygie().join(', ')}, publications d’Hygie Sport Santé et Performance ; les autres viennent de
+        Wikimedia Commons, sous licence libre.{' '}
         {creditsAthletes().map((c, i, liste) => (
           <span key={c.nom}>
             {c.nom} par{' '}

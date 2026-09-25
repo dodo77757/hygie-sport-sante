@@ -2,7 +2,8 @@
    Sans lien en ligne, le bouton propose d'appeler le centre (ou le praticien).
    parcours : deux phrases rédigées d'après les présentations publiques des praticiens (Doctolib), à faire relire par chacun.
       photo : clé dans content/images.ts (portraits dans assets/photos/equipe/) ; sans photo, la carte affiche les initiales.
-   Portraits manquants : Alexis Ballard, Antoine Gras, Jérémy Escriva, Malika Pereira (à demander au centre). */
+      Portraits d'Alexis Ballard, Antoine Gras et Jérémy Escriva : leur photo de profil Doctolib ; Malika Pereira : présentation de l'équipe
+   publiée par Hygie sur Instagram (fond uniformisé). À faire valider par chacun. */
 import type { PhotoKey } from './images';
 
 export type Discipline = 'kinesitherapie' | 'etiopathie' | 'orthoptie' | 'bien-etre' | 'preparation';
@@ -79,14 +80,20 @@ export const praticiens: Praticien[] = [
     nom: 'Alexis Ballard',
     discipline: 'kinesitherapie',
     fonction: 'Kinésithérapeute',
-    specialites: ['Rééducation fonctionnelle'],
+    specialites: ['Kinésithérapie du sport', 'Main et poignet', 'Course à pied'],
+    parcours:
+      'Il accompagne surtout les troubles musculo-squelettiques, avec une expertise en rééducation de la main et du poignet et dans les pathologies de la course à pied. Il se forme régulièrement pour une prise en charge fondée sur les connaissances actuelles.',
+    photo: 'alexisBallard',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/alexis-ballard' },
   },
   {
     nom: 'Antoine Gras',
     discipline: 'kinesitherapie',
     fonction: 'Kinésithérapeute',
-    specialites: ['Rééducation fonctionnelle'],
+    specialites: ['Kinésithérapie du sport', 'Rééducation post-opératoire', 'Massage thérapeutique', 'Réathlétisation'],
+    parcours:
+      'Il prend en charge les douleurs du dos, du cou, de l’épaule, du genou, de la cheville et de la hanche, la rééducation orthopédique et post-opératoire (fractures, prothèses, chirurgie ligamentaire) et la récupération sportive.',
+    photo: 'antoineGras',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/paris/antoine-gras' },
   },
 
@@ -139,6 +146,7 @@ export const praticiens: Praticien[] = [
     parcours:
       'Orienté vers l’orthopédie (entorses, déchirures, fractures) et les douleurs rhumatismales (tendinopathies, lombalgies, névralgies). Il se forme régulièrement, dernièrement sur les lésions musculaires du membre inférieur.',
     langues: ['Anglais'],
+    photo: 'jeremyEscriva',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/jeremy-escriva' },
   },
   {
@@ -193,6 +201,7 @@ export const praticiens: Praticien[] = [
     fonction: 'Massages bien-être et conseil en nutrition',
     specialites: ['Deep tissue', 'Drainages lymphatiques', 'Anti-cellulite', 'Nutrition'],
     parcours: 'Massages bien-être en profondeur, drainages et conseil en nutrition, au centre sur rendez-vous.',
+    photo: 'malikaPereira',
     reservation: { type: 'telephone', affichage: '06 24 11 42 19', lien: 'tel:+33624114219' },
   },
 

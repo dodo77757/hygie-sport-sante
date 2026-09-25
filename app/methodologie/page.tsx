@@ -282,7 +282,7 @@ export default function Methodologie() {
         <Reveal as="p" className="courant texte-colonne">
           Trois préparateurs physiques, diplômés, qui construisent chaque programme à partir d’un bilan. La première séance d’une heure est offerte.
         </Reveal>
-        <CartesPraticiens discipline="preparation" colonnes={3} />
+        <CartesPraticiens discipline="preparation" />
         <p className="courant texte-large">
           Au centre, ils travaillent avec les kinésithérapeutes, les étiopathes, l’orthoptiste et la praticienne en massages et nutrition. Découvrez le{' '}
           <Link className="lien" href="/sante">

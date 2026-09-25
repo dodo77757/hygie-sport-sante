@@ -169,7 +169,7 @@ a.hk-tag--bleu:hover, a.hk-tag--jaune:hover, a.hk-tag--gris:hover { background: 
 .hk-header {
   position: fixed;
   top: 0; left: 0; right: 0;
-  height: calc(76 * var(--u));
+  height: var(--hauteur-header);
   z-index: var(--plan-header);
   pointer-events: none;
 }
@@ -645,21 +645,6 @@ ol.prose-liste > li::before { content: counter(n) "."; }
 .liste--fluide .liste__nom { font-size: max(20px, calc(24 * var(--u))); }
 .liste--fluide .liste__detail { font-size: max(13px, calc(14 * var(--u))); }
 
-/* Liste de praticiens : un portrait devant le nom */
-.liste--praticiens .liste__item { grid-template-columns: 64px minmax(0, 1fr) auto; }
-.liste__portrait {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 64px;
-  aspect-ratio: 4 / 5;
-  border-radius: var(--rayon);
-  overflow: hidden;
-  background: var(--brume);
-  font: 400 20px/1 var(--font-display);
-  letter-spacing: 0.04em;
-}
-.liste__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
 /* ---------- Offres en colonnes (forfaits) ---------- */
 .offre { display: flex; flex-direction: column; align-items: flex-start; gap: calc(14 * var(--u)); height: 100%; }
@@ -876,50 +861,37 @@ ol.prose-liste > li::before { content: counter(n) "."; }
 .plan__carte { display: block; width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--filet-doux); border-radius: var(--rayon); background: var(--brume); }
 .plan__liens { margin: 0; }
 
-/* ---------- Cartes de praticiens ---------- */
-.praticiens { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--filet-doux); }
-.praticien {
-  display: grid;
-  grid-template-columns: 112px minmax(0, 1fr);
-  gap: 24px;
-  padding: 24px 0;
-  border-bottom: 1px solid var(--filet-doux);
-}
-.praticien__portrait {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 112px;
-  aspect-ratio: 4 / 5;
-  border-radius: var(--rayon);
-  overflow: hidden;
-  background: var(--brume);
-}
+/* ---------- Cartes de praticiens : grille de cartes égales, ordre tiré au hasard (components/Melange.tsx) ---------- */
+.praticiens { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px 16px; list-style: none; margin: 0; padding: 0; }
+.praticien { display: flex; flex: 0 1 244px; flex-direction: column; min-width: 200px; border-radius: var(--rayon); overflow: hidden; background: var(--brume); }
+.praticien__portrait { position: relative; display: grid; place-items: center; aspect-ratio: 4 / 5; background: var(--brume); }
+.praticiens--compactes .praticien__portrait { aspect-ratio: 1 / 1; }
 .praticien__portrait--bleu { background: color-mix(in srgb, var(--bleu) 28%, var(--fond)); }
 .praticien__portrait--jaune { background: color-mix(in srgb, var(--jaune) 40%, var(--fond)); }
 .praticien__portrait--gris { background: color-mix(in srgb, var(--gris-logo) 40%, var(--fond)); }
 .praticien__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.praticien__initiales { font: 400 36px/1 var(--font-display); letter-spacing: 0.04em; color: var(--encre); }
-.praticien__corps { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
-.praticien__nom { font: 400 26px/1.2 var(--font-display); }
-.praticien__role { margin-top: 6px; font: 400 12px/1.4 var(--font-mono); text-transform: uppercase; }
-.praticien__parcours { margin-top: 12px; max-width: 58ch; font: 400 15px/1.5 var(--font-texte); }
-.praticien__specialites { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 14px 0 0; padding: 0; }
+.praticien__initiales { font: 400 56px/1 var(--font-display); letter-spacing: 0.04em; color: var(--encre); }
+.praticien__corps { display: flex; flex: 1; flex-direction: column; align-items: flex-start; min-width: 0; padding: 18px 18px 20px; }
+.praticien__nom { font: 400 22px/1.15 var(--font-display); }
+.praticien__role { margin-top: 6px; font: 400 11px/1.45 var(--font-mono); text-transform: uppercase; }
+.praticien__parcours { margin-top: 10px; font: 400 14px/1.45 var(--font-texte); }
+.praticien__specialites { display: flex; flex-wrap: wrap; gap: 5px; list-style: none; margin: 12px 0 0; padding: 0; }
 .praticien__specialites > li {
-  padding: 6px 10px;
+  padding: 5px 8px;
   border: 1px solid var(--filet-doux);
   border-radius: var(--rayon-pilule);
-  font: 400 11px/1 var(--font-mono);
+  font: 400 10px/1.1 var(--font-mono);
   text-transform: uppercase;
 }
-.praticien__action { margin-top: 18px; }
-
-.praticiens--grille { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; border-top: 0; }
-.praticiens--grille .praticien { display: flex; flex-direction: column; gap: 0; padding: 0; border: 1px solid var(--brume); border-radius: var(--rayon); overflow: hidden; background: var(--brume); }
-.praticiens--grille .praticien__portrait { width: 100%; aspect-ratio: 4 / 5; border-radius: 0; }
-.praticiens--grille .praticien__initiales { font-size: calc(72 * var(--u)); }
-.praticiens--grille .praticien__corps { flex: 1; padding: 24px 24px 28px; }
-.praticiens--grille .praticien__action { margin-top: auto; padding-top: 20px; }
+.praticien__action { width: 100%; margin-top: auto; padding-top: 16px; }
+.praticien__action .hk-btn { height: auto; min-height: 36px; padding: 9px 10px; font-size: 12px; line-height: 1.2; white-space: normal; text-align: center; }
+/* Dans une section (titre à gauche) ou sur la page de rendez-vous : la grille part de la gauche et remplit la largeur */
+.section__corps > .praticiens, .rdv-groupe .praticiens { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); justify-content: start; }
+.section__corps > .praticiens > .praticien, .rdv-groupe .praticiens > .praticien { min-width: 0; }
+.section__corps > .praticiens { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+/* Fiches : le bloc des praticiens sort de la colonne de lecture pour tenir sur une ou deux lignes */
+.lecture-cadre { container-type: inline-size; }
+.bloc-large { --large: min(1240px, 100cqw); width: var(--large); margin-inline: calc((100% - var(--large)) / 2); }
 
 
 /* ---------- Compléments du site ---------- */
@@ -1053,7 +1025,8 @@ html:has(#entree) { --retard-entree: 3.65s; }
    le nom de l'onglet en Anton : la page quittée recule et s'efface sous lui, la nouvelle monte derrière lui,
    puis son titre entre mot par mot. La barre du header reste en place, au-dessus.
    Le rideau est un élément réel, hors écran (.rideau-page, rendu par TransitionPage) ; c'est son groupe de transition qui traverse l'écran.
-   Le nom du header est posé sur la barre elle-même (sur le header, il couperait le flou de la barre). */
+   Le nom du header est posé sur la barre elle-même (sur le header, il couperait le flou de la barre).
+   Le nom est centré dans la partie visible du rideau : sous la barre du header, entre les marges de la page. */
 .hk-header__bar { view-transition-name: entete; }
 .rideau-page {
   position: fixed;
@@ -1061,27 +1034,45 @@ html:has(#entree) { --retard-entree: 3.65s; }
   z-index: var(--plan-header);
   display: grid;
   place-items: center;
+  padding: var(--hauteur-header) var(--marge) 0;
+  container-type: size;
   background: var(--rideau-fond, var(--jaune));
   color: var(--rideau-texte, var(--encre));
   transform: translateY(100%);
   pointer-events: none;
   view-transition-name: rideau-page;
 }
-/* Le nom de l'onglet, dans la typographie des titres de page (Anton italique), terminé par un point de couleur */
+/* Le nom de l'onglet, dans la typographie des titres de page (Anton italique), terminé par un point de couleur.
+   Taille des grands titres, réduite pour que le mot le plus long tienne dans la largeur (--em : sa largeur en em, mesurée
+   par TransitionPage) et que le nom ne prenne pas plus de 40 % de la hauteur visible (téléphone à l'horizontale).
+   Un nom de plusieurs mots passe à la ligne entre les mots, jamais au milieu d'un mot ni avant le point ;
+   l'interligne de 1,05 laisse passer les accents de la seconde ligne (é : 0,97 em) sous la première. */
 .rideau-page__nom {
-  font: italic 400 clamp(64px, calc(150 * var(--u)), 210px)/0.95 var(--font-display);
+  font: italic 400 min(clamp(64px, calc(150 * var(--u)), 210px), calc(100cqi / var(--em, 6)), 40cqb)/1.05 var(--font-display);
   letter-spacing: 0;
   text-wrap: balance;
   text-align: center;
-  padding: 0 var(--marge);
+  /* Compensation optique de l'oblique : l'encre penche à droite (≈ 0,03 em), on la ramène au centre */
+  translate: -0.028em 0;
   animation: hk-rideau-nom 1.3s var(--courbe-sortie) both;
 }
+.rideau-page__mot { white-space: nowrap; }
 .rideau-page__point { display: inline-block; width: 0.19em; height: 0.19em; margin-left: 0.06em; border-radius: 50%; background: var(--rideau-point, var(--jaune)); }
+/* Rien ne dépasse la largeur de l'écran, même pendant une entrée (panneaux de rendez-vous qui glissent, apparitions) :
+   sur téléphone, un débordement élargit la fenêtre, ce qui annule la transition de page et fait glisser la page de côté. */
+.page { overflow-x: clip; }
 ::view-transition { pointer-events: none; }
-::view-transition-group(entete) { animation: none; z-index: 4; }
+::view-transition-group(entete) { animation: none; z-index: 5; }
 ::view-transition-old(entete) { display: none; }
 ::view-transition-new(entete) { animation: none; }
-::view-transition-group(rideau-page) { z-index: 3; animation: hk-balayage 1.3s linear both; }
+/* Sur téléphone, la barre du bas (rendez-vous, appel) reste en place sous le rideau, au-dessus des pages :
+   elle ne disparaît pas derrière la nouvelle page pour réapparaître d'un coup à la fin. Ses deux captures, identiques,
+   se fondent sans que rien ne bouge. Vers la page de rendez-vous, où elle n'existe pas, elle s'efface pendant que
+   le rideau la couvre ; en revenant de cette page, elle apparaît de même, cachée par le rideau. */
+.barre-mobile { view-transition-name: barre-mobile; }
+::view-transition-group(barre-mobile) { animation-name: none; z-index: 3; }
+::view-transition-old(barre-mobile):only-child, ::view-transition-new(barre-mobile):only-child { animation-delay: 0.3s; }
+::view-transition-group(rideau-page) { z-index: 4; animation: hk-balayage 1.3s linear both; }
 ::view-transition-old(rideau-page) { display: none; }
 ::view-transition-new(rideau-page) { animation: none; }
 ::view-transition-group(.page-sortie) { z-index: 1; }
@@ -1151,15 +1142,19 @@ html:active-view-transition :is(.w, .titre-point, .hk-hero__intro, .hk-hero__cta
    Mobile (≤ 1 023 px)
    ========================================================= */
 @media (max-width: 1023px) {
-  .praticien { grid-template-columns: 88px minmax(0, 1fr); gap: 16px; }
-  .praticien__portrait { width: 88px; }
-  .praticien__initiales { font-size: 30px; }
-  .praticiens--grille { grid-template-columns: 1fr; }
+    .praticiens, .section__corps > .praticiens, .rdv-groupe .praticiens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 10px; }
+  .praticien { min-width: 0; }
+  .praticien__corps { padding: 12px 12px 14px; }
+  .praticien__nom { font-size: 18px; }
+  .praticien__role { font-size: 10px; }
+  .praticien__parcours { display: none; }
+  .praticien__specialites > li { font-size: 9px; padding: 4px 6px; }
+    .praticien__action .hk-btn { font-size: 10px; letter-spacing: -0.01em; padding: 8px 4px; }
+  .praticien__initiales { font-size: 40px; }
   .avis__liste { grid-template-columns: 1fr; }
   .barre-mobile { display: grid; }
   .plan__carte { aspect-ratio: 4 / 3; }
   body:has(.barre-mobile) .hk-footer-cadre { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
-  .praticiens--grille .praticien__portrait { aspect-ratio: 4 / 3; }
   .titre-hero { font-size: calc(72 * var(--u)); }
   .titre-section { font-size: calc(36 * var(--u)); }
   .titre-bloc { font-size: calc(24 * var(--u)); }
@@ -1181,7 +1176,6 @@ html:active-view-transition :is(.w, .titre-point, .hk-hero__intro, .hk-hero__cta
   .hk-btn::after { content: ""; position: absolute; inset: -5px -2px; }
 
   .hk-lockup__mark { height: calc(44 * var(--u)); }
-  .hk-header { height: calc(64 * var(--u)); }
   .hk-header__bar { padding: 0 calc(12 * var(--u)) 0 calc(20 * var(--u)); }
   .hk-header__right { display: none; }
   .hk-burger { display: grid; }
@@ -1255,9 +1249,6 @@ html:active-view-transition :is(.w, .titre-point, .hk-hero__intro, .hk-hero__cta
   .hk-quote { font-size: 20px; }
 
   .liste__item { grid-template-columns: 1fr; }
-  .liste--praticiens .liste__item { grid-template-columns: 56px minmax(0, 1fr); }
-  .liste--praticiens .liste__portrait { width: 56px; font-size: 17px; }
-  .liste--praticiens .liste__fin { grid-column: 2; }
   .entree__logo { width: calc(236 * var(--u)); }
   .entree__cadre { gap: calc(24 * var(--u)); }
   .liste__fin { justify-content: flex-start; flex-wrap: wrap; }

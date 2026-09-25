@@ -30,6 +30,7 @@
   --filet: 2px;
   --marge: calc(22 * var(--u));
   --retrait: calc(16 * var(--u));
+  --hauteur-header: calc(76 * var(--u));
   --rayon: 20px;
   --rayon-pilule: 100px;
   --rayon-texte: 21px;
@@ -55,5 +56,6 @@
   :root {
     --u: calc(min(100vw, 700px) / 390);
     --marge: calc(16 * var(--u));
+    --hauteur-header: calc(64 * var(--u));
   }
 }

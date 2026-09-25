@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { athletes, creditsAthletes } from '@/content/athletes';
+import { athletes, creditsAthletes, photosHygie } from '@/content/athletes';
 
 /* Sportifs suivis par Johan Pereira : la galerie réunit ceux dont la photo est disponible (licence libre ou photo du centre),
    la liste « Également suivis » les autres, sans vignette vide. Une photo ajoutée dans content/athletes.ts fait passer
@@ -8,6 +8,7 @@ export function Athletes() {
   const avecPhoto = athletes.filter((a) => a.photo);
   const autres = athletes.filter((a) => !a.photo);
   const credits = creditsAthletes();
+  const deHygie = photosHygie();
 
   return (
     <div className="athletes">
@@ -51,9 +52,10 @@ export function Athletes() {
         </div>
       ) : null}
 
-      {credits.length ? (
+      {credits.length || deHygie.length ? (
         <p className="athletes__credits">
-          Photos, Wikimedia Commons :{' '}
+          Photos : {deHygie.length ? `${deHygie.join(', ')}, Hygie Sport Santé et Performance. ` : ''}
+          {credits.length ? 'Wikimedia Commons : ' : ''}
           {credits.map((c, i) => (
             <span key={c.nom}>
               {c.nom} par{' '}
