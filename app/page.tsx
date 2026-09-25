@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ArticleCard } from '@/components/ArticleCard';
-import { AvisGoogle } from '@/components/AvisGoogle';
+
+import { Confiance } from '@/components/Confiance';
 import { ContactForm } from '@/components/ContactForm';
 import { CoralPanel } from '@/components/CoralPanel';
 import { Hero, HeroMedia } from '@/components/Hero';
@@ -10,7 +11,7 @@ import { PhotoImg } from '@/components/Photo';
 import { Button } from '@/components/ui/Button';
 import { Section } from '@/components/ui/Section';
 import { Reveal } from '@/components/ui/Primitives';
-import { maisonSportSante, partenaires } from '@/content/confiance';
+
 import { imagePartage, photos } from '@/content/images';
 import { articlesTries, categories, couleursCategories, dateCourte } from '@/content/journal';
 import { poles as polesSoins } from '@/content/soins';
@@ -97,6 +98,16 @@ export default function Accueil() {
         }}
       />
 
+      {/* Les trois pôles : titre, trois cartes, bouton */}
+      <Section id="poles" titre="Nos trois pôles" titreId="titre-poles" aere>
+        <div className="hk-grid hk-grid--3">
+          {poles.map((p) => (
+            <ArticleCard key={p.href} href={p.href} tag={p.tag} tagCouleur={p.couleur} title={p.titre} excerpt={p.extrait} photo={p.photo} />
+          ))}
+        </div>
+        <Button href="/soins">Voir tous les soins</Button>
+      </Section>
+
       {/* Présentation : titre, texte, photo */}
       <Section
         titre="Rencontrez Johan Pereira"
@@ -107,46 +118,11 @@ export default function Accueil() {
           Ancien footballeur devenu étiopathe et préparateur physique, Johan Pereira a fondé Hygie à Avon. Il y réunit professionnels de santé et du sport
           autour d’un parcours personnalisé.
         </Reveal>
-        <Button href="/methodologie#johan-pereira">Son parcours</Button>
+        <Button href="/methodologie">Découvrir la méthode</Button>
       </Section>
 
-      {/* Les trois pôles : titre, trois cartes, bouton */}
-      <Section id="poles" titre="Nos trois pôles" titreId="titre-poles">
-        <div className="hk-grid hk-grid--3">
-          {poles.map((p) => (
-            <ArticleCard key={p.href} href={p.href} tag={p.tag} tagCouleur={p.couleur} title={p.titre} excerpt={p.extrait} photo={p.photo} />
-          ))}
-        </div>
-        <Button href="/soins">Voir tous les soins</Button>
-      </Section>
-
-      {/* Ils nous font confiance : partenariat, logos, avis Google */}
-      <Section id="confiance" titre="Ils nous font confiance" titreId="titre-confiance">
-        <Reveal as="p" className="courant texte-colonne">
-          {maisonSportSante.texte}
-        </Reveal>
-        <a className="libelle lien" href={maisonSportSante.url} target="_blank" rel="noopener noreferrer">
-          {maisonSportSante.nom}
-          <span className="sr-only"> (nouvel onglet)</span>
-        </a>
-        {partenaires.length ? (
-          <ul className="partenaires" aria-label="Partenaires">
-            {partenaires.map((p) => (
-              <li key={p.nom} className="partenaires__item">
-                {p.url ? (
-                  <a href={p.url} target="_blank" rel="noopener noreferrer" title={`${p.nom} (nouvel onglet)`}>
-                    <img src={p.logo} alt={p.nom} loading="lazy" width={240} height={96} />
-                  </a>
-                ) : (
-                  <img src={p.logo} alt={p.nom} loading="lazy" width={240} height={96} />
-                )}
-                {p.type ? <span className="partenaires__type">{p.type}</span> : null}
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </Section>
-      <AvisGoogle />
+      {/* Ils nous font confiance : panneau à part entière (partenariat, équipe, sportifs, avis Google) */}
+      <Confiance />
 
       {/* Temps fort : bandeau, panneau jaune, bandeau */}
       <section className="temps-fort" aria-label="Offre entreprises">

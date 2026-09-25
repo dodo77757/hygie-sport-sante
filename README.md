@@ -70,9 +70,9 @@ Les anciennes adresses du site Wix redirigent en 308 vers les nouvelles pages (`
 
 | Adresse | Gabarit du design system | Contenu |
 | --- | --- | --- |
-| `/` | Accueil | hero, grande photo et carte en verre (bilans), Johan Pereira, trois pôles, « Ils nous font confiance » (Maison Sport-Santé, partenaires, avis Google), panneau jaune entreprises, articles récents |
-| `/methodologie` | À propos | les trois temps de la méthode, deux parcours, Johan Pereira, l'équipe sport, séance offerte (panneau bleu) |
-| `/soins`, `/sante`, `/sport`, `/recuperation` | Journal | titre, une phrase, un soin par carte |
+| `/` | Accueil | hero, grande photo et carte en verre (bilans), trois pôles, Johan Pereira, panneau sombre « Ils nous font confiance » (Maison Sport-Santé, équipe, sportifs suivis, avis Google, partenaires), panneau jaune entreprises, articles récents |
+| `/methodologie` | À propos | les trois piliers (textes du site actuel), le bilan de départ en cinq mesures, deux parcours, objectifs, pourquoi Hygie, Johan Pereira (parcours et formation), les sportifs qu'il suit, l'équipe sport, séance offerte (panneau bleu) |
+| `/soins`, `/sante`, `/sport`, `/recuperation` | Journal | titre, une phrase, un soin par carte sur trois colonnes (`/soins` : une grille par pôle), puis une rangée « Et ensuite » avec la prise de rendez-vous |
 | `/sante/…`, `/sport/…`, `/recuperation/…`, `/bilans/…` | Article | 13 fiches : l'essentiel et l'action en tête, pour qui, déroulé, tarifs, cartes des praticiens, questions fréquentes, soins proches |
 | `/bilans` | À propos | les quatre bilans, tarifs et réservation, clubs |
 | `/entreprises`, `/clubs` | Contact | formulaire de devis, activités, forfaits, bilan salarié, questions fréquentes |
@@ -81,7 +81,7 @@ Les anciennes adresses du site Wix redirigent en 308 vers les nouvelles pages (`
 | `/contact` | Contact | coordonnées, itinéraire, formulaire, plan d'accès OpenStreetMap |
 | `/mentions-legales`, `/confidentialite` | Mentions | colonne sans cadre |
 
-**Mise en page.** Chaque section suit le même ordre (`components/ui/Section.tsx`) : le titre dans la première colonne, puis le texte, les boutons, les cartes ou la photo empilés dans les trois colonnes de droite. Les pages de tête (accueil, pôles, journal, fiches, contact) gardent leur gabarit propre. La barre du header est collée en haut de l'écran, pleine largeur, séparée de la page par un filet. Le pied de page est un bloc encre, séparé de la page par un trait jaune : logo en traits clairs, horaires, navigation, contact et bouton de rendez-vous.
+**Mise en page.** Chaque section suit le même ordre (`components/ui/Section.tsx`) : le titre dans la première colonne, puis le texte, les boutons, les cartes ou la photo empilés dans les trois colonnes de droite. Un numéro d'étape (`numero`) peut précéder le titre (les trois piliers de la méthode). Les pages de tête (accueil, pôles, journal, fiches, contact) gardent leur gabarit propre. Chaque page de pôle se termine par une rangée « Et ensuite » (rendez-vous, téléphone), et `/soins` regroupe les cartes par pôle. La barre du header est collée en haut de l'écran, pleine largeur, séparée de la page par un filet. Le pied de page est un bloc encre, séparé de la page par un trait jaune : logo en traits clairs, horaires, navigation, contact et bouton de rendez-vous.
 
 **Navigation.** Le menu compte six entrées (Méthode, Santé, Sport, Récupération, Bilans, Entreprises) et un seul bouton, « Prendre rendez-vous », en jaune. Aucune page ne répète le menu : on revient au pôle par l'étiquette de couleur en haut de chaque fiche. Le journal, les clubs et le contact sont dans le pied de page et sur l'accueil.
 
@@ -182,8 +182,14 @@ Tout est coupé si le visiteur a choisi de réduire les animations. Sans JavaScr
 - **PDF « exemple de bilan complet »** : il est hébergé chez Wix et contient peut-être des données personnelles. Le placer dans `public/` une fois anonymisé.
 
 **Praticiens** (`content/praticiens.ts`)
-- Les deux lignes de parcours et les spécialités sont rédigées d'après les présentations publiques des praticiens (Doctolib). À faire relire par chacun. Alexis Ballard, Aubin Salmon, Malika Pereira, Martin Tondeur et Jean-Etienne Boilot n'ont pas de présentation publique : leur parcours est à écrire.
-- Les photos manquent : en attendant, chaque carte affiche des initiales. Déposer un portrait par praticien (cadrage 4/5, 800 px de large au moins, fond neutre) dans `assets/photos/`, le déclarer dans `content/images.ts` et renseigner `photo` dans `praticiens.ts`.
+- Les deux lignes de parcours et les spécialités sont rédigées d'après les présentations publiques des praticiens (Doctolib). À faire relire par chacun. Alexis Ballard, Antoine Gras, Aubin Salmon, Malika Pereira, Martin Tondeur et Jean-Etienne Boilot n'ont pas de présentation publique : leur parcours est à écrire.
+- Théo Borragini a quitté le centre : retiré. Antoine Gras a été ajouté avec son lien Doctolib ; Alexis Ballard a le sien.
+- Le bouton des praticiens dit « Prendre rendez-vous » (Doctolib ou agenda en ligne) ; « Réserver l'essai » pour la séance de sport offerte ; le numéro pour les rendez-vous par téléphone.
+- Portraits : onze portraits repris en haute définition du site actuel dans `assets/photos/equipe/` (ceux de Marie Couineau, Pierre Becker et Thomas Crasson n'existaient qu'en petit format : ils ont été agrandis par super-résolution, à remplacer par les originaux). Il manque ceux d'Alexis Ballard, Antoine Gras, Jérémy Escriva et Malika Pereira : en attendant, leur carte affiche des initiales. Déposer un portrait (cadrage 2/3 ou 4/5, 1 200 px de large au moins, fond neutre) dans `assets/photos/equipe/`, le déclarer dans `content/images.ts` et renseigner `photo` dans `praticiens.ts`.
+
+**Sportifs suivis par Johan Pereira** (`content/athletes.ts`)
+- La liste vient de la page Étiopathe du site actuel (orthographes vérifiées : Carolle Zahi, Cheick Doucouré, Marie-Divine Kouamé). Les mentions sont limitées à ce qui est vérifiable.
+- Trois photos viennent de Wikimedia Commons, sous licence libre (CC0 ou CC BY-SA 4.0), créditées sous la galerie et dans les mentions légales. Ces licences couvrent le droit d'auteur des photographes, pas le droit à l'image des sportifs : pour un usage commercial, mieux vaut leur accord, ou des photos du centre (Johan avec les athlètes), qui remplaceront celles-ci en changeant `photo`. Les autres cartes affichent des initiales.
 
 **Questions fréquentes des fiches** (`content/soins.ts`, blocs `faq`) : rédigées avec prudence (remboursement, durée, quoi apporter, ordonnance). À valider par les praticiens, en particulier les durées de séance (kinésithérapie, orthoptie) et les contre-indications (pressothérapie, massages).
 
@@ -195,7 +201,7 @@ Tout est coupé si le visiteur a choisi de réduire les animations. Sans JavaScr
 
 ## Photos
 
-Les photos de sport et de soins viennent d'[Unsplash](https://unsplash.com/license) : usage commercial gratuit, sans autorisation à demander. Leurs auteurs sont crédités automatiquement dans les mentions légales. Le portrait de Johan Pereira est la photo d'Hygie (`assets/photos/johan-pereira.jpg`).
+Les photos de sport et de soins viennent d'[Unsplash](https://unsplash.com/license) : usage commercial gratuit, sans autorisation à demander. Leurs auteurs sont crédités automatiquement dans les mentions légales. Les portraits de l'équipe sont les photos d'Hygie (`assets/photos/johan-pereira.jpg`, `assets/photos/equipe/`), optimisées par `next/image` (formats modernes, tailles adaptées, flou de chargement). Les photos des sportifs suivis sont dans `assets/photos/athletes/` (voir plus haut).
 
 Elles sont servies par le CDN d'Unsplash à la largeur utile, de 480 à 3 840 px selon l'écran, en AVIF ou WebP ; les originaux font de 3 000 à 7 900 px (`components/Photo.tsx`). La grande photo d'accueil et les photos de tête de page sont en qualité 85 et chargées en priorité. Pendant le chargement, chaque photo affiche sa couleur dominante.
 

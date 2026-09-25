@@ -16,6 +16,7 @@ export default function TousLesSoins() {
       chapo="Santé, sport, récupération et bilans : tout ce que propose le centre, avec les tarifs et la prise de rendez-vous."
       point="jaune"
       liste={soins}
+      parPole
     />
   );
 }

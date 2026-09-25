@@ -8,6 +8,7 @@ import { Cell, Row } from './Row';
    Avec `photo`, le corps se partage en texte (colonne 2) et photo (colonnes 3-4). */
 export function Section({
   id,
+  numero,
   titre,
   titreId,
   sousTitre,
@@ -17,6 +18,8 @@ export function Section({
   className,
 }: {
   id?: string;
+  /** Numéro d'étape affiché au-dessus du titre (« 01 ») */
+  numero?: string;
   titre: ReactNode;
   titreId: string;
   /** Ligne d'étiquette sous le titre */
@@ -30,6 +33,11 @@ export function Section({
   return (
     <Row as="section" id={id} aria-labelledby={titreId} aere={aere} className={cx('section', className)}>
       <Cell className="section__tete">
+        {numero ? (
+          <p className="section__numero" aria-hidden="true">
+            {numero}
+          </p>
+        ) : null}
         <Reveal as="h2" id={titreId} className="titre-section">
           {titre}
         </Reveal>

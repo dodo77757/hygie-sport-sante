@@ -1,7 +1,8 @@
 /* Praticiens qui consultent au centre et leur lien de réservation.
    Sans lien en ligne, le bouton propose d'appeler le centre (ou le praticien).
    parcours : deux phrases rédigées d'après les présentations publiques des praticiens (Doctolib), à faire relire par chacun.
-   photo : clé dans content/images.ts (portrait 4/5 dans assets/photos/) ; sans photo, la carte affiche les initiales. */
+      photo : clé dans content/images.ts (portraits dans assets/photos/equipe/) ; sans photo, la carte affiche les initiales.
+   Portraits manquants : Alexis Ballard, Antoine Gras, Jérémy Escriva, Malika Pereira (à demander au centre). */
 import type { PhotoKey } from './images';
 
 export type Discipline = 'kinesitherapie' | 'etiopathie' | 'orthoptie' | 'bien-etre' | 'preparation';
@@ -50,8 +51,6 @@ export const disciplines: Record<Discipline, { nom: string; fiche?: string; note
 
 const essai: Reservation = { type: 'calendly', url: '/rendez-vous?motif=sport&objet=essai' };
 
-const centre: Reservation = { type: 'telephone', affichage: '01 84 74 34 20', lien: 'tel:+33184743420' };
-
 export const praticiens: Praticien[] = [
   /* Kinésithérapeutes */
   {
@@ -62,6 +61,7 @@ export const praticiens: Praticien[] = [
     parcours:
       'Elle reçoit tous les âges, du jeune enfant au senior, avec une attention particulière au sport et à la récupération. Formée à la technique des ventouses.',
     langues: ['Anglais'],
+    photo: 'naomeeAddra',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/naomee-addra' },
   },
   {
@@ -72,6 +72,7 @@ export const praticiens: Praticien[] = [
     parcours:
       'Diplômé en kinésithérapie et en ostéopathie, il fonde chaque prise en charge sur un bilan pour fixer avec vous les objectifs du traitement. Formé à la méthode McKenzie et à l’épaule opérée.',
     langues: ['Anglais', 'Espagnol'],
+    photo: 'gauthierArcache',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/paris/gauthier-arcache?pid=practice-478056' },
   },
   {
@@ -79,17 +80,16 @@ export const praticiens: Praticien[] = [
     discipline: 'kinesitherapie',
     fonction: 'Kinésithérapeute',
     specialites: ['Rééducation fonctionnelle'],
-    reservation: centre,
+    reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/alexis-ballard' },
   },
   {
-    nom: 'Théo Borragini',
+    nom: 'Antoine Gras',
     discipline: 'kinesitherapie',
     fonction: 'Kinésithérapeute',
-    specialites: ['Troubles musculo-squelettiques', 'Rééducation active et sportive', 'Après opération du genou'],
-    parcours:
-      'Spécialisé dans les troubles musculo-squelettiques, entorses, tendinopathies et lésions musculaires, avec un goût pour la rééducation active. Il vous accompagne aussi après une opération des ligaments croisés ou des ménisques.',
-    reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/theo-borragini' },
+    specialites: ['Rééducation fonctionnelle'],
+    reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/paris/antoine-gras' },
   },
+
   {
     nom: 'Romain Brelier-Murry',
     discipline: 'kinesitherapie',
@@ -98,6 +98,7 @@ export const praticiens: Praticien[] = [
     parcours:
       'Kinésithérapeute du sport, spécialisé dans les troubles articulaires et musculaires et la traumatologie, en particulier l’épaule et les atteintes nerveuses périphériques. Chaque suivi commence par un bilan et un échange approfondi.',
     langues: ['Anglais'],
+    photo: 'romainBrelierMurry',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/romain-brelier-murry' },
   },
   {
@@ -107,6 +108,7 @@ export const praticiens: Praticien[] = [
     specialites: ['Dos et cervicales', 'Blessures sportives', 'Rééducation après opération', 'Téléconsultation'],
     parcours:
       'Une prise en charge globale des douleurs et des blessures, fondée sur les sciences du mouvement : dos et cervicales, tendinites, entorses, rééducation après opération, troubles de la posture. Chaque suivi part d’un bilan complet.',
+    photo: 'thomasCrasson',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/thomas-crasson' },
   },
   {
@@ -116,6 +118,7 @@ export const praticiens: Praticien[] = [
     specialites: ['Kinésithérapie du sport', 'Rééducation de l’épaule', 'Rééducation de la cheville'],
     parcours:
       'Kinésithérapeute du sport, spécialisée dans les troubles articulaires et musculaires et la traumatologie. Formée à l’optimisation du renforcement musculaire, au centre depuis 2023.',
+    photo: 'margotDeOliveira',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/margot-de-oliveira' },
   },
   {
@@ -125,6 +128,7 @@ export const praticiens: Praticien[] = [
     specialites: ['Thérapie manuelle', 'Dry needling', 'Mâchoire (dysfonction temporo-mandibulaire)', 'Kinésithérapie du sport'],
     parcours:
       'Spécialisé dans les thérapies manuelles et la rééducation, il accompagne ses patients vers l’autonomie : mobilité, douleurs, bien-être. Pensez à apporter votre ordonnance et votre carte de mutuelle.',
+    photo: 'pierreBecker',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/pierre-becker' },
   },
   {
@@ -144,6 +148,7 @@ export const praticiens: Praticien[] = [
     specialites: ['Santé de la femme', 'Rééducation périnéale et abdominale', 'Pré et post-partum', 'Après un cancer du sein', 'Drainage lymphatique'],
     parcours:
       'Spécialisée en santé de la femme : rééducation périnéale et abdominale, accompagnement pré et post-partum, endométriose, suivi après un cancer du sein et drainage lymphatique. Une prise en charge avant tout individualisée.',
+    photo: 'mayaMaurer',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/maya-maurer' },
   },
 
@@ -164,6 +169,7 @@ export const praticiens: Praticien[] = [
     fonction: 'Étiopathe',
     specialites: ['Grimpeurs et sportifs'],
     parcours: 'Chargé de cours à la faculté d’étiopathie de Paris. Grimpeur, il suit en particulier les pratiquants d’escalade.',
+    photo: 'aubinSalmon',
     reservation: { type: 'calendly', url: 'https://calendly.com/aubinsalmon-etio' },
   },
 
@@ -176,6 +182,7 @@ export const praticiens: Praticien[] = [
     parcours:
       'Elle dépiste et prend en charge les troubles de la vision, strabisme, amblyopie, fatigue visuelle, ainsi que les troubles des apprentissages, chez l’enfant comme chez l’adulte. Elle accompagne aussi les athlètes, de la commotion cérébrale à la performance visuelle.',
     langues: ['Anglais'],
+    photo: 'marieCouineau',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/orthoptiste/avon/marie-couineau?pid=practice-466521' },
   },
 
@@ -205,6 +212,7 @@ export const praticiens: Praticien[] = [
     discipline: 'preparation',
     fonction: 'Préparateur physique',
     specialites: ['Coaching individuel', 'Cross training'],
+    photo: 'martinTondeur',
     reservation: essai,
   },
   {
@@ -212,6 +220,7 @@ export const praticiens: Praticien[] = [
     discipline: 'preparation',
     fonction: 'Préparateur physique',
     specialites: ['Coaching individuel', 'Sport-santé'],
+    photo: 'jeanEtienneBoilot',
     reservation: essai,
   },
 ];
@@ -220,10 +229,12 @@ export function praticiensDe(discipline: Discipline) {
   return praticiens.filter((p) => p.discipline === discipline);
 }
 
+/* Libellé du bouton : « Prendre rendez-vous » pour les praticiens (Doctolib ou agenda en ligne),
+   « Réserver l’essai » pour la séance de sport offerte, le numéro pour les prises de rendez-vous par téléphone. */
 export function libelleReservation(r: Reservation) {
-  if (r.type === 'doctolib') return 'Réserver sur Doctolib';
-  if (r.type === 'calendly') return r.url.startsWith('/') ? 'Réserver l’essai' : 'Réserver en ligne';
-  return `Appeler le ${r.affichage}`;
+  if (r.type === 'calendly' && r.url.startsWith('/')) return 'Réserver l’essai';
+  if (r.type === 'telephone') return `Appeler le ${r.affichage}`;
+  return 'Prendre rendez-vous';
 }
 
 /* Initiales pour la carte sans photo (deux lettres) */

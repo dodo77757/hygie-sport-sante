@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { creditsAthletes } from '@/content/athletes';
 import { creditsPhotos } from '@/content/images';
 import { site } from '@/content/site';
 
@@ -61,7 +62,7 @@ export default function MentionsLegales() {
       </p>
       <p>Les courtes citations sont autorisées, avec le nom de l’auteur et un lien vers la page citée.</p>
       <p>
-        Crédits photos : portrait de Johan Pereira, {site.nom}. Photos de sport et de soins :{' '}
+        Crédits photos : portraits de l’équipe, {site.nom}. Photos de sport et de soins :{' '}
         <a href="https://unsplash.com/license" rel="noopener">
           Unsplash
         </a>
@@ -72,6 +73,22 @@ export default function MentionsLegales() {
               {c.nom}
             </a>
             {i < liste.length - 2 ? ', ' : i === liste.length - 2 ? ' et ' : '.'}
+          </span>
+        ))}
+      </p>
+      <p>
+        Photos des sportifs suivis par Johan Pereira : Wikimedia Commons, sous licence libre.{' '}
+        {creditsAthletes().map((c, i, liste) => (
+          <span key={c.nom}>
+            {c.nom} par{' '}
+            <a href={c.source} rel="noopener">
+              {c.auteur}
+            </a>{' '}
+            (
+            <a href={c.licenceUrl} rel="noopener">
+              {c.licence}
+            </a>
+            ){i < liste.length - 1 ? ' ; ' : '.'}
           </span>
         ))}
       </p>

@@ -2,9 +2,21 @@
    Photos de sport : Unsplash (licence Unsplash, usage commercial libre, sans attribution obligatoire ;
    les auteurs sont crédités dans les mentions légales). Servies en haute définition par le CDN d'Unsplash,
    à la largeur utile et en AVIF ou WebP (voir components/Photo.tsx).
-   Portrait de Johan Pereira : photo d'Hygie. */
+   Portraits de l'équipe : photos d'Hygie (assets/photos/equipe/), reprises en haute définition du site actuel ;
+   celles de Marie Couineau, Pierre Becker et Thomas Crasson ont été agrandies (super-résolution) en attendant les originaux. */
 import type { StaticImageData } from 'next/image';
 import johanPereira from '@/assets/photos/johan-pereira.jpg';
+import aubinSalmon from '@/assets/photos/equipe/aubin-salmon.jpg';
+import gauthierArcache from '@/assets/photos/equipe/gauthier-arcache.jpg';
+import jeanEtienneBoilot from '@/assets/photos/equipe/jean-etienne-boilot.jpg';
+import margotDeOliveira from '@/assets/photos/equipe/margot-de-oliveira.jpg';
+import marieCouineau from '@/assets/photos/equipe/marie-couineau.jpg';
+import martinTondeur from '@/assets/photos/equipe/martin-tondeur.jpg';
+import mayaMaurer from '@/assets/photos/equipe/maya-maurer.jpg';
+import naomeeAddra from '@/assets/photos/equipe/naomee-addra.jpg';
+import pierreBecker from '@/assets/photos/equipe/pierre-becker.jpg';
+import romainBrelierMurry from '@/assets/photos/equipe/romain-brelier-murry.jpg';
+import thomasCrasson from '@/assets/photos/equipe/thomas-crasson.jpg';
 
 export type Photo = {
   src: StaticImageData | string;
@@ -31,6 +43,19 @@ function unsplash(chemin: string, width: number, height: number, alt: string, co
 
 export const photos = {
   johanPereira: { src: johanPereira, alt: 'Johan Pereira, fondateur d’Hygie', position: '50% 22%' } as Photo,
+
+  /* Équipe : portraits 2/3, le visage dans le tiers supérieur (position réglée pour le recadrage 4/5 des cartes) */
+  aubinSalmon: { src: aubinSalmon, alt: 'Aubin Salmon, étiopathe', position: '50% 24%' } as Photo,
+  gauthierArcache: { src: gauthierArcache, alt: 'Gauthier Arcache, kinésithérapeute et ostéopathe', position: '50% 24%' } as Photo,
+  jeanEtienneBoilot: { src: jeanEtienneBoilot, alt: 'Jean-Etienne Boilot, préparateur physique', position: '50% 28%' } as Photo,
+  margotDeOliveira: { src: margotDeOliveira, alt: 'Margot De Oliveira, kinésithérapeute', position: '50% 28%' } as Photo,
+  marieCouineau: { src: marieCouineau, alt: 'Marie Couineau, orthoptiste', position: '50% 26%' } as Photo,
+  martinTondeur: { src: martinTondeur, alt: 'Martin Tondeur, préparateur physique', position: '50% 30%' } as Photo,
+  mayaMaurer: { src: mayaMaurer, alt: 'Maya Maurer, kinésithérapeute', position: '50% 24%' } as Photo,
+  naomeeAddra: { src: naomeeAddra, alt: 'Naomée Addra, kinésithérapeute', position: '50% 26%' } as Photo,
+  pierreBecker: { src: pierreBecker, alt: 'Pierre Becker, kinésithérapeute', position: '50% 26%' } as Photo,
+  romainBrelierMurry: { src: romainBrelierMurry, alt: 'Romain Brelier-Murry, kinésithérapeute', position: '50% 24%' } as Photo,
+  thomasCrasson: { src: thomasCrasson, alt: 'Thomas Crasson, kinésithérapeute', position: '50% 26%' } as Photo,
 
   depart: unsplash(
     'photo-1644492097455-d5f39f458fcd',

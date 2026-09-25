@@ -579,6 +579,9 @@ select.hk-field__input {
   padding: calc(40 * var(--u)) var(--retrait) calc(56 * var(--u));
 }
 .journal-vide { padding: 40px 0; }
+.soins-groupe + .soins-groupe { margin-top: calc(64 * var(--u)); }
+.soins-groupe__tete { display: flex; align-items: baseline; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; margin-bottom: calc(20 * var(--u)); padding-bottom: calc(14 * var(--u)); border-bottom: 1px solid var(--filet-doux); }
+.soins-groupe__tete .titre-section { font-size: calc(40 * var(--u)); }
 
 /* ---------- Gabarit « Article » (articles et fiches) ---------- */
 .lecture-cadre {
@@ -642,6 +645,22 @@ ol.prose-liste > li::before { content: counter(n) "."; }
 .liste--fluide .liste__nom { font-size: max(20px, calc(24 * var(--u))); }
 .liste--fluide .liste__detail { font-size: max(13px, calc(14 * var(--u))); }
 
+/* Liste de praticiens : un portrait devant le nom */
+.liste--praticiens .liste__item { grid-template-columns: 64px minmax(0, 1fr) auto; }
+.liste__portrait {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--rayon);
+  overflow: hidden;
+  background: var(--brume);
+  font: 400 20px/1 var(--font-display);
+  letter-spacing: 0.04em;
+}
+.liste__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
 /* ---------- Offres en colonnes (forfaits) ---------- */
 .offre { display: flex; flex-direction: column; align-items: flex-start; gap: calc(14 * var(--u)); height: 100%; }
 .offre__effectif { font: 400 max(11px, calc(12 * var(--u)))/1.2 var(--font-mono); text-transform: uppercase; }
@@ -703,7 +722,7 @@ ol.prose-liste > li::before { content: counter(n) "."; }
 .page-404 { min-height: 70vh; }
 
 /* ---------- Sections ordonnées : titre à gauche, tout le reste à droite ---------- */
-.section__tete .titre-section { font-size: calc(54 * var(--u)); }
+.section__tete .titre-section { font-size: calc(50 * var(--u)); hyphens: auto; -webkit-hyphens: auto; }
 .section__sous-titre { margin-top: calc(20 * var(--u)); }
 .section__corps > .offre { height: auto; }
 .section__corps > .offre .offre__prix { margin-top: 0; }
@@ -715,8 +734,81 @@ ol.prose-liste > li::before { content: counter(n) "."; }
 .section__photo .hk-media { width: 100%; }
 .section__deux { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(24 * var(--u)) var(--retrait); align-self: stretch; }
 .section__deux > div { display: flex; flex-direction: column; gap: calc(12 * var(--u)); }
+.section__numero { margin-bottom: calc(14 * var(--u)); font: 400 max(12px, calc(14 * var(--u)))/1 var(--font-mono); color: var(--bleu-fonce); }
+.section__numero::after { content: ""; display: block; width: calc(36 * var(--u)); height: 3px; margin-top: calc(10 * var(--u)); background: var(--jaune); border-radius: 3px; }
 
-/* ---------- Ils nous font confiance : partenaires et avis Google ---------- */
+/* ---------- Méthode : bilan détaillé, parcours, objectifs, raisons, sportifs suivis ---------- */
+.apropos-hero__sommaire { margin-top: calc(28 * var(--u)); color: var(--bleu-fonce); }
+.mesures, .objectifs, .raisons { list-style: none; margin: 0; padding: 0; align-self: stretch; }
+.mesures { border-top: 1px solid var(--filet-doux); }
+.mesures__item {
+  display: grid;
+  grid-template-columns: calc(56 * var(--u)) minmax(0, 1fr);
+  gap: calc(16 * var(--u));
+  padding: calc(18 * var(--u)) 0;
+  border-bottom: 1px solid var(--filet-doux);
+}
+.mesures__numero, .raisons__numero { font: 400 max(12px, calc(14 * var(--u)))/1.5 var(--font-mono); color: var(--bleu-fonce); }
+.mesures__item .courant { margin-top: 6px; max-width: 58ch; }
+.parcours__promesse { font: 400 max(16px, calc(18 * var(--u)))/1.35 var(--font-texte); color: var(--bleu-fonce); }
+.objectifs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--retrait); border-top: 1px solid var(--filet-doux); }
+.objectifs__item { padding: calc(16 * var(--u)) 0; border-bottom: 1px solid var(--filet-doux); }
+.objectifs__item .courant { margin-top: 4px; max-width: 40ch; }
+.raisons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(28 * var(--u)) var(--retrait); }
+.raisons__item { display: flex; flex-direction: column; gap: calc(8 * var(--u)); padding-top: calc(14 * var(--u)); border-top: 3px solid var(--jaune); }
+.raisons__item .courant { max-width: 44ch; }
+.athletes { align-self: stretch; }
+.athletes__liste { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: calc(28 * var(--u)) calc(16 * var(--u)); list-style: none; margin: 0; padding: 0; }
+.athlete__portrait {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--rayon);
+  overflow: hidden;
+  background: var(--brume);
+}
+.athlete__portrait--jaune { background: color-mix(in srgb, var(--jaune) 42%, var(--fond)); }
+.athlete__portrait--bleu { background: color-mix(in srgb, var(--bleu) 30%, var(--fond)); }
+.athlete__portrait--gris { background: color-mix(in srgb, var(--gris-logo) 42%, var(--fond)); }
+.athlete__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.athlete__initiales { font: 400 calc(48 * var(--u))/1 var(--font-display); letter-spacing: 0.04em; color: var(--encre); }
+.athlete__nom { margin-top: calc(12 * var(--u)); font: 400 max(17px, calc(19 * var(--u)))/1.2 var(--font-display); }
+.athlete__discipline { margin-top: 5px; font: 400 max(10px, calc(11 * var(--u)))/1.4 var(--font-mono); text-transform: uppercase; }
+.athlete__detail { margin-top: 4px; font: 400 max(12px, calc(13 * var(--u)))/1.4 var(--font-texte); color: var(--bleu-fonce); }
+.athletes__credits { margin-top: calc(20 * var(--u)); font: 400 12px/1.5 var(--font-texte); color: var(--bleu-fonce); }
+.athletes__credits a { text-decoration: underline; }
+
+/* ---------- Ils nous font confiance : panneau sombre, preuves, partenaires et avis Google ---------- */
+.confiance {
+  --filet-confiance: rgba(238, 239, 233, 0.22);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+  gap: calc(32 * var(--u)) var(--retrait);
+  margin: calc(24 * var(--u)) var(--marge) calc(40 * var(--u));
+  padding: calc(64 * var(--u)) var(--retrait) calc(72 * var(--u));
+  border-radius: var(--rayon);
+  background: var(--bleu-fonce);
+  color: var(--fond);
+}
+.confiance .titre-section { font-size: calc(54 * var(--u)); color: var(--fond); }
+.confiance__sous-titre { margin-top: calc(20 * var(--u)); color: var(--jaune); }
+.confiance__corps { display: flex; flex-direction: column; align-items: flex-start; gap: calc(36 * var(--u)); min-width: 0; }
+.confiance__enonce { max-width: calc(640 * var(--u)); font: 400 max(20px, calc(30 * var(--u)))/1.25 var(--font-display); letter-spacing: -0.01em; text-wrap: balance; }
+.preuves { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(20 * var(--u)); width: 100%; list-style: none; margin: 0; padding: 0; }
+.preuve { display: flex; flex-direction: column; align-items: flex-start; gap: calc(10 * var(--u)); padding-top: calc(16 * var(--u)); border-top: 3px solid var(--jaune); }
+.preuve__etiquette { font: 400 max(11px, calc(12 * var(--u)))/1.2 var(--font-mono); text-transform: uppercase; color: var(--jaune); }
+.preuve__titre { font: 400 max(20px, calc(24 * var(--u)))/1.2 var(--font-display); }
+.preuve__texte { font: 400 max(14px, calc(15 * var(--u)))/1.5 var(--font-texte); color: rgba(238, 239, 233, 0.82); }
+.preuve__lien { margin-top: auto; padding-top: calc(6 * var(--u)); font: 400 max(12px, calc(13 * var(--u)))/1.3 var(--font-mono); text-transform: uppercase; color: var(--fond); text-decoration: underline; text-underline-offset: 0.25em; }
+.preuve__lien:hover { color: var(--jaune); }
+.confiance .avis { width: 100%; margin: 0; }
+.confiance .avis__tete { border-top-color: var(--filet-confiance); }
+.confiance .avis__item { background: rgba(238, 239, 233, 0.08); }
+.confiance .avis__etoiles svg { stroke: var(--fond); }
+.confiance .avis__etoiles svg.is-pleine { fill: var(--jaune); stroke: var(--jaune); }
+.confiance .avis .lien { color: var(--fond); }
+.confiance .partenaires__item img { filter: grayscale(1) brightness(10); opacity: 0.9; }
 .partenaires { display: flex; flex-wrap: wrap; gap: 24px 32px; list-style: none; margin: 8px 0 0; padding: 0; }
 .partenaires__item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .partenaires__item img { display: block; width: auto; max-width: 160px; height: 56px; object-fit: contain; filter: grayscale(1); opacity: 0.85; transition: filter 0.3s var(--courbe-sortie), opacity 0.3s var(--courbe-sortie); }
@@ -840,6 +932,9 @@ main:focus { outline: none; }
 .methode-citation { padding-block: calc(24 * var(--u)) calc(48 * var(--u)); }
 .methode-citation .hk-quote { max-width: calc(760 * var(--u)); margin-left: calc(325 * var(--u)); font-size: max(20px, calc(28 * var(--u))); }
 .pole-suite .hk-cell { padding-top: calc(40 * var(--u)); padding-bottom: calc(56 * var(--u)); }
+.pole-suite .hk-cell--stack { gap: calc(14 * var(--u)); }
+.pole-suite .actions { margin-top: calc(10 * var(--u)); }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .rdv-infos { display: flex; flex-direction: column; gap: calc(14 * var(--u)); }
 
 
@@ -1149,6 +1244,9 @@ html:active-view-transition :is(.w, .titre-point, .hk-hero__intro, .hk-hero__cta
   .hk-quote { font-size: 20px; }
 
   .liste__item { grid-template-columns: 1fr; }
+  .liste--praticiens .liste__item { grid-template-columns: 56px minmax(0, 1fr); }
+  .liste--praticiens .liste__portrait { width: 56px; font-size: 17px; }
+  .liste--praticiens .liste__fin { grid-column: 2; }
   .entree__logo { width: calc(236 * var(--u)); }
   .entree__cadre { gap: calc(24 * var(--u)); }
   .liste__fin { justify-content: flex-start; flex-wrap: wrap; }
@@ -1164,6 +1262,14 @@ html:active-view-transition :is(.w, .titre-point, .hk-hero__intro, .hk-hero__cta
   .accueil-flux__cta { align-items: center; }
   .lecture__cle { flex-direction: column; align-items: flex-start; }
   .methode-citation .hk-quote { margin-left: 0; max-width: none; }
+  .objectifs, .raisons { grid-template-columns: 1fr; }
+  .raisons { gap: calc(20 * var(--u)); }
+  .confiance { grid-template-columns: 1fr; gap: calc(28 * var(--u)); padding: calc(40 * var(--u)) calc(20 * var(--u)) calc(44 * var(--u)); }
+  .confiance .titre-section { font-size: calc(36 * var(--u)); }
+  .preuves { grid-template-columns: 1fr; }
+  .athletes__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .athlete__initiales { font-size: calc(48 * var(--u)); }
+  .mesures__item { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; }
   .hk-card__vignette span { font-size: 56px; }
   .pole-suite .hk-cell { padding-top: calc(24 * var(--u)); padding-bottom: calc(16 * var(--u)); }
   .offre__prix { font-size: calc(32 * var(--u)); }
