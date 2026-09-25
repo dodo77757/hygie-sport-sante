@@ -758,7 +758,7 @@ ol.prose-liste > li::before { content: counter(n) "."; }
 .raisons__item { display: flex; flex-direction: column; gap: calc(8 * var(--u)); padding-top: calc(14 * var(--u)); border-top: 3px solid var(--jaune); }
 .raisons__item .courant { max-width: 44ch; }
 .athletes { align-self: stretch; }
-.athletes__liste { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: calc(28 * var(--u)) calc(16 * var(--u)); list-style: none; margin: 0; padding: 0; }
+.athletes__liste { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: calc(28 * var(--u)) calc(16 * var(--u)); list-style: none; margin: 0; padding: 0; }
 .athlete__portrait {
   position: relative;
   display: grid;
@@ -768,14 +768,25 @@ ol.prose-liste > li::before { content: counter(n) "."; }
   overflow: hidden;
   background: var(--brume);
 }
-.athlete__portrait--jaune { background: color-mix(in srgb, var(--jaune) 42%, var(--fond)); }
-.athlete__portrait--bleu { background: color-mix(in srgb, var(--bleu) 30%, var(--fond)); }
-.athlete__portrait--gris { background: color-mix(in srgb, var(--gris-logo) 42%, var(--fond)); }
+
 .athlete__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.athlete__initiales { font: 400 calc(48 * var(--u))/1 var(--font-display); letter-spacing: 0.04em; color: var(--encre); }
-.athlete__nom { margin-top: calc(12 * var(--u)); font: 400 max(17px, calc(19 * var(--u)))/1.2 var(--font-display); }
+
+.athlete__nom { margin-top: calc(14 * var(--u)); font: 400 max(18px, calc(22 * var(--u)))/1.2 var(--font-display); }
 .athlete__discipline { margin-top: 5px; font: 400 max(10px, calc(11 * var(--u)))/1.4 var(--font-mono); text-transform: uppercase; }
 .athlete__detail { margin-top: 4px; font: 400 max(12px, calc(13 * var(--u)))/1.4 var(--font-texte); color: var(--bleu-fonce); }
+.athletes__autres { margin-top: calc(40 * var(--u)); }
+.athletes__noms { list-style: none; margin: calc(12 * var(--u)) 0 0; padding: 0; border-top: 1px solid var(--filet-doux); }
+.athletes__ligne {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1.4fr);
+  align-items: baseline;
+  gap: 6px calc(24 * var(--u));
+  padding: calc(14 * var(--u)) 0;
+  border-bottom: 1px solid var(--filet-doux);
+}
+.athletes__nom { font: 400 max(18px, calc(22 * var(--u)))/1.2 var(--font-display); }
+.athletes__disc { font: 400 max(11px, calc(12 * var(--u)))/1.4 var(--font-mono); text-transform: uppercase; }
+.athletes__det { font: 400 max(13px, calc(14 * var(--u)))/1.4 var(--font-texte); color: var(--bleu-fonce); }
 .athletes__credits { margin-top: calc(20 * var(--u)); font: 400 12px/1.5 var(--font-texte); color: var(--bleu-fonce); }
 .athletes__credits a { text-decoration: underline; }
 
@@ -1268,7 +1279,9 @@ html:active-view-transition :is(.w, .titre-point, .hk-hero__intro, .hk-hero__cta
   .confiance .titre-section { font-size: calc(36 * var(--u)); }
   .preuves { grid-template-columns: 1fr; }
   .athletes__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .athlete__initiales { font-size: calc(48 * var(--u)); }
+  .athletes__ligne { grid-template-columns: minmax(0, 1fr) auto; }
+  .athletes__det { grid-column: 1 / -1; }
+  .athletes__det:empty { display: none; }
   .mesures__item { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; }
   .hk-card__vignette span { font-size: 56px; }
   .pole-suite .hk-cell { padding-top: calc(24 * var(--u)); padding-bottom: calc(16 * var(--u)); }

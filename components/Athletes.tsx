@@ -1,46 +1,59 @@
 import Image from 'next/image';
-import { cx } from '@/lib/cx';
 import { athletes, creditsAthletes } from '@/content/athletes';
-import { initiales } from '@/content/praticiens';
 
-const couleurs = ['jaune', 'bleu', 'gris'] as const;
-
-/* Galerie des sportifs suivis par Johan Pereira : portrait (ou initiales), nom, discipline.
-   Les photos sous licence libre sont créditées juste sous la galerie. */
+/* Sportifs suivis par Johan Pereira : la galerie réunit ceux dont la photo est disponible (licence libre ou photo du centre),
+   la liste « Également suivis » les autres, sans vignette vide. Une photo ajoutée dans content/athletes.ts fait passer
+   l'athlète dans la galerie. Les photos sous licence libre sont créditées sous la galerie. */
 export function Athletes() {
+  const avecPhoto = athletes.filter((a) => a.photo);
+  const autres = athletes.filter((a) => !a.photo);
   const credits = creditsAthletes();
+
   return (
     <div className="athletes">
-      <ul className="athletes__liste">
-        {athletes.map((a, i) => (
-          <li className="athlete" key={a.nom}>
-            <div
-              className={cx('athlete__portrait', !a.photo && `athlete__portrait--${couleurs[i % couleurs.length]}`)}
-              aria-hidden={a.photo ? undefined : true}
-            >
-              {a.photo ? (
-                <Image
-                  className="athlete__img"
-                  src={a.photo.src}
-                  alt={a.photo.alt}
-                  sizes="(max-width: 1023px) 46vw, 22vw"
-                  quality={80}
-                  placeholder="blur"
-                  style={{ objectPosition: a.photo.position }}
-                />
-              ) : (
-                <span className="athlete__initiales">{initiales(a.nom)}</span>
-              )}
-            </div>
-            <p className="athlete__nom">{a.nom}</p>
-            <p className="athlete__discipline">{a.discipline}</p>
-            {a.detail ? <p className="athlete__detail">{a.detail}</p> : null}
-          </li>
-        ))}
-      </ul>
+      {avecPhoto.length ? (
+        <ul className="athletes__liste">
+          {avecPhoto.map((a) =>
+            a.photo ? (
+              <li className="athlete" key={a.nom}>
+                <div className="athlete__portrait">
+                  <Image
+                    className="athlete__img"
+                    src={a.photo.src}
+                    alt={a.photo.alt}
+                    sizes="(max-width: 1023px) 46vw, 18vw"
+                    quality={80}
+                    placeholder="blur"
+                    style={{ objectPosition: a.photo.position }}
+                  />
+                </div>
+                <p className="athlete__nom">{a.nom}</p>
+                <p className="athlete__discipline">{a.discipline}</p>
+                {a.detail ? <p className="athlete__detail">{a.detail}</p> : null}
+              </li>
+            ) : null,
+          )}
+        </ul>
+      ) : null}
+
+      {autres.length ? (
+        <div className="athletes__autres">
+          <p className="etiquette">Également suivis</p>
+          <ul className="athletes__noms">
+            {autres.map((a) => (
+              <li className="athletes__ligne" key={a.nom}>
+                <span className="athletes__nom">{a.nom}</span>
+                <span className="athletes__disc">{a.discipline}</span>
+                <span className="athletes__det">{a.detail ?? ''}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
       {credits.length ? (
         <p className="athletes__credits">
-          Photos :{' '}
+          Photos, Wikimedia Commons :{' '}
           {credits.map((c, i) => (
             <span key={c.nom}>
               {c.nom} par{' '}
