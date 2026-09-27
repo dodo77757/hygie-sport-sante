@@ -74,18 +74,24 @@ export default function RendezVous() {
     sport: (
       <Row className="rdv-groupe">
         <Cell className="hk-cell--stack">
-          <h2 className="titre-bloc">Votre première séance est offerte</h2>
+          {/* H3, comme dans les textes du site */}
+          <h3 className="titre-bloc">Votre première séance est offerte</h3>
           <p className="courant texte-colonne">
             Une heure pour faire connaissance, parler de vos objectifs et tester la méthode, sans engagement. Choisissez votre créneau :
           </p>
           {lienEssai ? (
-            <Button href={lienEssai} variant="solid">
-              Réserver ma séance d’essai
-            </Button>
+            <>
+              <Button href={lienEssai} variant="solid">
+                Réserver ma séance d’essai
+              </Button>
+              <a className="courant lien" href="#rappel-essai">
+                Vous préférez être rappelé ? Laissez vos coordonnées
+              </a>
+            </>
           ) : null}
+          {telephone}
         </Cell>
-        <Cell span={2} className="hk-cell--stack">
-          {lienEssai ? <p className="courant">Vous préférez être rappelé ? Laissez vos coordonnées.</p> : null}
+        <Cell span={2} id="rappel-essai">
           <ContactForm type="rendez-vous" motif="essai" motifDepuisUrl submitLabel="Être rappelé" />
         </Cell>
         <Cell mobile="hide" className="hk-cell--stack">

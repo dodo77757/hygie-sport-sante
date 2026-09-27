@@ -32,7 +32,7 @@ const situations = [
   { situation: 'Vous démarrez un coaching individuel', bilan: 'Bilan physiologique d’entrée', id: 'entree' },
 ];
 
-/* Bilans : une photo, le choix du bilan, ce que vous recevez, les tarifs, l'offre clubs. */
+/* Bilans : une photo, nos bilans (fiches), le choix du bilan, ce que vous recevez, les tarifs, l'offre clubs. */
 export default function Bilans() {
   const fiches = soinsDu('bilans');
 
@@ -52,15 +52,13 @@ export default function Bilans() {
         </Cell>
       </Row>
 
-      {/* Quel bilan choisir ? : votre situation et le bilan conseillé, puis les fiches */}
-      <Section titre="Quel bilan choisir ?" titreId="titre-choisir">
-        <ListeTarifs
-          fluide
-          items={situations.map((s) => ({
-            nom: s.situation,
-            action: { label: s.bilan, href: bilanPar(s.id).fiche, variant: 'contour' as const },
-          }))}
-        />
+      {/* Nos bilans : section déjà en place, absente des textes du site (titre, texte, bouton, les fiches) */}
+      <Section titre="Nos bilans" titreId="titre-nos-bilans">
+        <Reveal as="p" className="courant texte-colonne">
+          Beaucoup de sportifs s’entraînent sans connaître leurs asymétries ni leurs limites. Nos bilans, issus du haut niveau, vous donnent un rapport clair et
+          vos axes de travail prioritaires.
+        </Reveal>
+        <Button href="#tarifs">Voir les tarifs</Button>
         <div className="hk-grid">
           {fiches.map((s) => (
             <ArticleCard
@@ -78,6 +76,17 @@ export default function Bilans() {
             />
           ))}
         </div>
+      </Section>
+
+      {/* Quel bilan choisir ? : votre situation et le bilan conseillé */}
+      <Section titre="Quel bilan choisir ?" titreId="titre-choisir" aere>
+        <ListeTarifs
+          fluide
+          items={situations.map((s) => ({
+            nom: s.situation,
+            action: { label: s.bilan, href: bilanPar(s.id).fiche, variant: 'contour' as const },
+          }))}
+        />
       </Section>
 
       {/* Ce que vous recevez : titre, liste */}

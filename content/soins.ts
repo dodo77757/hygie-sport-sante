@@ -408,6 +408,8 @@ export const soins: Soin[] = [
         t: 'p',
         texte: 'Johan Pereira, Martin Tondeur et Jean-Étienne Boilot, préparateurs physiques diplômés, vous accompagnent.',
       },
+      /* Lien déjà en place, absent des textes du site */
+      { t: 'p', texte: 'Découvrez [la méthode Hygie](/methodologie).' },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
         t: 'faq',
@@ -472,6 +474,7 @@ export const soins: Soin[] = [
         t: 'p',
         texte: [...siRenseigne(v.prix.sportSante, (prix) => `${prix} par mois.`), 'Contactez-nous pour les prochains créneaux.'].join(' '),
       },
+      { t: 'actions', items: [{ label: 'Demander un créneau', href: '/rendez-vous?motif=sport&objet=sport-sante', variant: 'solid' }] },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
         t: 'faq',
@@ -531,6 +534,8 @@ export const soins: Soin[] = [
         t: 'tarifs',
         items: [{ nom: 'Forfait cross training', detail: '1 séance par semaine sur un créneau réservé, 6 personnes au plus', prix: '60 € / mois' }],
       },
+      { t: 'actions', items: [{ label: 'Demander un créneau', href: '/rendez-vous?motif=sport&objet=cross-training', variant: 'solid' }] },
+      { t: 'p', texte: 'À lire dans le journal : [le CrossFit, une discipline complète](/journal/crossfit) et [se préparer au Hyrox](/journal/hyrox).' },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
         t: 'faq',
@@ -639,6 +644,7 @@ export const soins: Soin[] = [
           { nom: 'Carte de 10 séances', detail: '30 min par séance', prix: v.prix.pressotherapie.carte10 },
         ],
       },
+      { t: 'actions', items: [{ label: 'Réserver une séance', href: '/rendez-vous?motif=recuperation&objet=pressotherapie', variant: 'solid' }] },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
         t: 'faq',
@@ -710,10 +716,11 @@ export const soins: Soin[] = [
       {
         t: 'p',
         texte:
-          'Ces massages sont des soins de bien-être, sans visée thérapeutique. Pour une rééducation ou un drainage prescrit, adressez-vous aux [kinésithérapeutes du centre](/sante/kinesitherapie).',
+          'Ces massages sont des soins de bien-être, sans visée thérapeutique. Pour une rééducation ou un drainage prescrit, adressez-vous aux kinésithérapeutes du centre.',
       },
       { t: 'h2', texte: 'Prendre rendez-vous' },
       { t: 'p', texte: `Sur rendez-vous, par l’accueil au ${site.telephone.affichage}.` },
+      { t: 'actions', items: [{ label: 'Appeler l’accueil', href: site.telephone.lien, variant: 'solid' }] },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
         t: 'faq',
@@ -771,6 +778,10 @@ export const soins: Soin[] = [
           'Le premier rendez-vous fait le point sur vos habitudes, votre activité, votre sommeil et vos objectifs. Les suivants ajustent le plan, à votre rythme.',
       },
       ...tarifNutrition(),
+      /* Section déjà en place, absente des textes du site : rendez-vous par l'accueil */
+      { t: 'h2', texte: 'Prendre rendez-vous' },
+      { t: 'p', texte: `Le conseil en nutrition est assuré par Malika Pereira, sur rendez-vous par l’accueil du centre, au ${site.telephone.affichage}.` },
+      { t: 'actions', items: [{ label: 'Appeler l’accueil', href: site.telephone.lien, variant: 'solid' }] },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
         t: 'faq',

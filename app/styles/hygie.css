@@ -1187,15 +1187,19 @@ html:active-view-transition :is(.w, .titre-point, .hk-hero__intro, .hk-hero__cta
   .hk-hero {
     grid-template-columns: 1fr;
     justify-items: center;
-    gap: calc(32 * var(--u));
+    gap: 0;
     margin: 0 var(--marge);
     padding: calc(112 * var(--u)) var(--retrait) calc(60 * var(--u));
     text-align: center;
   }
   .hk-hero__title { order: 1; font-size: calc(66 * var(--u)); } /* « mouvement » : mot long, on garde de l'air près des filets */
-  .hk-hero__intro { order: 2; padding: 0; max-width: calc(250 * var(--u)); }
-  .hk-hero__cta { order: 3; justify-self: center; padding: 0; flex-direction: column; align-items: center; }
-  .hk-hero .points-logo { justify-content: center; }
+  /* Ordre des textes du site : surtitre, H1, puis les points et le sous-titre */
+  .hk-hero__intro { display: contents; }
+  .hk-hero__intro > * { max-width: calc(250 * var(--u)); animation: inherit; }
+  .hk-hero__surtitre { order: 0; margin: 0 0 calc(18 * var(--u)); }
+  .hk-hero .points-logo { order: 2; justify-content: center; margin: calc(32 * var(--u)) 0 calc(18 * var(--u)); }
+  .hk-hero__intro > .courant { order: 2; }
+  .hk-hero__cta { order: 3; justify-self: center; padding: calc(32 * var(--u)) 0 0; flex-direction: column; align-items: center; }
 
   .hk-hero-media__img { aspect-ratio: 322 / 492; object-position: 72% 50%; }
   /* Carte en verre : toute la largeur de la photo moins une marge, pour le texte du bloc Bilans et son bouton */

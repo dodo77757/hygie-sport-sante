@@ -168,6 +168,14 @@ Tout est coupé si le visiteur a choisi de réduire les animations. Sans JavaScr
 - **« Un même dossier »** (accueil) et **« partagent l'information »** (méthode) : partager des informations de santé avec les préparateurs physiques demande le consentement du patient.
 - **Maison Sport-Santé et sport sur ordonnance** : le partenariat avec la Maison Sport-Santé de Fontainebleau et l'accueil dans le cadre du sport sur ordonnance sont à confirmer.
 
+**Contradictions relevées, laissées en place** (textes conservés ou absents des textes du site)
+- **Kinésithérapie**, question « Les séances sont-elles remboursées ? » (texte conservé) : « Les kinésithérapeutes du centre pratiquent des dépassements d'honoraires », alors que le bloc Honoraires et la page de rendez-vous disent « certains ».
+- **Pressothérapie**, questions fréquentes (texte conservé) : « l'accord de votre médecin est demandé », alors que « Avant votre séance » dit « peut être demandé ».
+- **Journal**, article « Le sport en entreprise » : « des bilans réalisés par nos kinésithérapeutes », alors que le bilan salarié passe par « nous ».
+- **Cartes des bilans** : « Un diagnostic de votre mobilité… » (bilan fonctionnel ; la fiche dit « Un état des lieux ») ; « les équipements VALD » (forces musculaires ; la fiche cite VALD et KINVENT).
+- **Pied de page** : « encadré par des professionnels de la santé et du sport », alors que la règle des textes du site préfère « praticiens » quand l'étiopathe est inclus.
+- **Orthoptie** : page inchangée, mais sa description dépassait les 155 caractères ; « au centre Hygie d'Avon » y devient « à Avon ».
+
 **Choix faits sur des informations contradictoires. À confirmer.**
 - **Forfait à 250 € par mois** : « Avancé » sur le site, comme dans les textes du site, « Passionné » à la caisse. Aligner le site et la facturation.
 - **Bilan d'entrée** : offert pour un engagement de trois mois, alors que l'abonnement est mensuel, à tacite reconduction.
@@ -177,7 +185,7 @@ Tout est coupé si le visiteur a choisi de réduire les animations. Sans JavaScr
 - **Sport-santé** : les questions fréquentes (texte actuel conservé) parlent d'« éducateurs » ; la qualification des encadrants est à préciser.
 - **Forfaits entreprises** : « par collaborateur et par mois » selon les textes du site ; préciser HT ou TTC.
 
-**Retiré avec les textes du site** (25 septembre 2026) : l'ancien ciblage « femmes dès 40 ans, hommes dès 35 ans » (bilan des forces musculaires) ; la question « Pourquoi proposer un bilan santé en entreprise ? » ; les phrases, sous-titres et étiquettes absents des textes du site dans les sections qu'ils réécrivent (intro « Nos bilans », « Objectif : » des deux parcours, étiquettes et liens des preuves de l'accueil…).
+**Retiré avec les textes du site** (25 septembre 2026) : l'ancien ciblage « femmes dès 40 ans, hommes dès 35 ans » (bilan des forces musculaires) ; la question « Pourquoi proposer un bilan santé en entreprise ? » ; les phrases, sous-titres et étiquettes absents des textes du site dans les sections qu'ils réécrivent (« Objectif : » des deux parcours, sous-titre et étiquettes des preuves de l'accueil…). Les sections, boutons et liens que les textes du site n'abordent pas restent en place (section « Nos bilans », boutons de demande des fiches, liens vers le journal ou la méthode…).
 
 **Retiré volontairement**
 - **Cryothérapie** : la page, l'article, les textes, les textes alternatifs et le mode froid Game Ready. Les anciennes adresses redirigent vers Récupération.

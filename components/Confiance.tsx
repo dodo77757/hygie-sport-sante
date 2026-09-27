@@ -1,29 +1,35 @@
+import Link from 'next/link';
 import { AvisGoogle } from './AvisGoogle';
 import { Reveal } from './ui/Primitives';
-import { partenaires } from '@/content/confiance';
+import { maisonSportSante, partenaires } from '@/content/confiance';
 import { praticiensAffiches } from '@/content/praticiens';
 
+type Preuve = { titre: string; texte: string; lien?: { href: string; label: string; externe?: boolean } };
+
 /* « Ils nous font confiance » : un panneau sombre à part entière sur l'accueil.
-   Les quatre preuves des textes du site (25 septembre 2026), puis les avis Google (s'ils sont configurés)
-   et les logos de partenaires (s'il y en a). Rien n'est inventé. */
+   Les quatre preuves des textes du site (25 septembre 2026), avec les liens déjà en place, puis les avis Google
+   (s'ils sont configurés) et les logos de partenaires (s'il y en a). Rien n'est inventé. */
 export function Confiance() {
   const nbPraticiens = new Set(praticiensAffiches.map((p) => p.nom)).size;
 
-  const preuves = [
+  const preuves: Preuve[] = [
     {
       titre: 'Maison Sport-Santé de Fontainebleau',
       texte:
         'Hygie est centre partenaire de ce dispositif labellisé par l’État, qui oriente vers une activité physique adaptée les personnes atteintes de maladies chroniques ou éloignées du sport.',
+      lien: { href: maisonSportSante.url, label: 'Le dispositif', externe: true },
     },
     {
       titre: `${nbPraticiens} praticiens sous le même toit`,
       texte:
         'Kinés, étiopathe, orthoptiste, préparateurs physiques, massages et nutrition : un seul parcours, des professionnels qui se transmettent l’information.',
+      lien: { href: '/soins', label: 'Tous les soins' },
     },
     {
       titre: 'Des sportifs de haut niveau suivis',
       texte:
         'Football, cyclisme sur piste, athlétisme, marathon, sports de combat : la méthode s’est construite auprès d’athlètes professionnels, et elle profite à chacun.',
+      lien: { href: '/methodologie#titre-athletes', label: 'Voir qui' },
     },
     {
       titre: 'Des entreprises accompagnées',
@@ -44,6 +50,16 @@ export function Confiance() {
             <li className="preuve" key={p.titre}>
               <h3 className="preuve__titre">{p.titre}</h3>
               <p className="preuve__texte">{p.texte}</p>
+              {p.lien?.externe ? (
+                <a className="preuve__lien" href={p.lien.href} target="_blank" rel="noopener noreferrer">
+                  {p.lien.label}
+                  <span className="sr-only"> (nouvel onglet)</span>
+                </a>
+              ) : p.lien ? (
+                <Link className="preuve__lien" href={p.lien.href}>
+                  {p.lien.label}
+                </Link>
+              ) : null}
             </li>
           ))}
         </ul>

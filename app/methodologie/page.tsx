@@ -271,6 +271,14 @@ export default function Methodologie() {
         <p className="courant texte-large">
           Au centre, ils travaillent avec les kinésithérapeutes, l’étiopathe, l’orthoptiste et la praticienne en massages et nutrition.
         </p>
+        {/* Lien déjà en place, absent des textes du site */}
+        <p className="courant texte-large">
+          Découvrez le{' '}
+          <Link className="lien" href="/sante">
+            pôle Santé
+          </Link>
+          .
+        </p>
       </Section>
 
       <div className="temps-fort">

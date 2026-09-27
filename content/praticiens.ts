@@ -218,8 +218,9 @@ export const praticiens: Praticien[] = [
     discipline: 'preparation',
     fonction: 'Préparateur physique, étiopathe',
     specialites: ['Réathlétisation', 'Biomécanique du sport', 'Bilans physiologiques', 'Sportifs de haut niveau'],
+    /* Parcours actuel conservé : les textes du site ne donnent que la fonction et les spécialités pour l'équipe sport */
     parcours:
-      'Formé comme footballeur à l’ESTAC, diplômé de la faculté d’étiopathie de Paris, où il est chargé de cours. Deux diplômes universitaires en préparation physique et réathlétisation puis en biomécanique du sport.',
+      'Ancien footballeur à l’ESTAC, diplômé en préparation physique et réathlétisation, puis en biomécanique du sport. Il a fondé Hygie pour réunir santé, sport et prévention au même endroit.',
     photo: 'johanPereira',
     reservation: essai,
   },

@@ -7,7 +7,7 @@ export const site = {
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hygiesportsante.fr').replace(/\/$/, ''),
   accroche: 'Santé, sport et récupération au même endroit, à Avon.',
   description:
-    'Centre de santé, de sport et de récupération à Avon (77) : kinésithérapie, étiopathie, orthoptie, coaching, bilans physiologiques, pressothérapie et massages.',
+    'Centre de santé, de sport et de récupération à Avon : kinésithérapie, étiopathie, orthoptie, coaching, bilans physiologiques, pressothérapie et massages.',
   adresse: {
     rue: '9, rue de la Petite Vitesse',
     codePostal: '77210',
