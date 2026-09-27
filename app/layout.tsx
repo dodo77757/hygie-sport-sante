@@ -18,7 +18,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
     default: 'Hygie Sport Santé et Performance · Avon (77)',
-    template: '%s · Hygie Sport Santé et Performance',
+    /* Pages sans titre complet (journal, tous les soins) ; les autres pages donnent leur titre complet (textes du site) */
+    template: '%s · Hygie',
   },
   description: site.description,
   applicationName: site.nom,

@@ -2,7 +2,7 @@
 
 Nouveau site d'Hygie (Avon, 77), construit avec le design system **Hygie Kinétique** : fond os, cadre de filets en quatre colonnes, titres Anton, texte Hanken Grotesk, boutons JetBrains Mono, bandeau défilant. Les couleurs viennent du logo : jaune pour l'action principale et les temps forts, bleu, gris.
 
-Next.js 16 (App Router), React 19, TypeScript. Aucune dépendance en plus de Next et React. 50 pages générées en statique, plus une route serveur pour les formulaires.
+Next.js 16 (App Router), React 19, TypeScript. Aucune dépendance en plus de Next et React. 52 pages générées en statique, plus une route serveur pour les formulaires.
 
 ## Démarrer
 
@@ -11,6 +11,7 @@ npm install
 cp .env.example .env.local   # facultatif en local
 npm run dev                  # http://localhost:3000
 npm run build && npm start   # version de production
+npm run controle             # après un build : titres, descriptions, notes de travail, liens internes
 ```
 
 Node 20.9 ou plus récent.
@@ -70,12 +71,12 @@ Les anciennes adresses du site Wix redirigent en 308 vers les nouvelles pages (`
 
 | Adresse | Gabarit du design system | Contenu |
 | --- | --- | --- |
-| `/` | Accueil | hero, grande photo et carte en verre (bilans), trois pôles, Johan Pereira, panneau sombre « Ils nous font confiance » (Maison Sport-Santé, équipe, sportifs suivis, avis Google, partenaires), panneau jaune entreprises, articles récents |
-| `/methodologie` | À propos | les trois piliers (textes du site actuel), le bilan de départ en cinq mesures, deux parcours, objectifs, pourquoi Hygie, Johan Pereira (parcours et formation), les sportifs qu'il suit, l'équipe sport, séance offerte (panneau bleu) |
-| `/soins`, `/sante`, `/sport`, `/recuperation` | Journal | titre, une phrase, un soin par carte sur trois colonnes (`/soins` : une grille par pôle), puis une rangée « Et ensuite » avec la prise de rendez-vous |
-| `/sante/…`, `/sport/…`, `/recuperation/…`, `/bilans/…` | Article | 13 fiches : l'essentiel et l'action en tête, pour qui, déroulé, tarifs, cartes des praticiens, questions fréquentes, soins proches |
-| `/bilans` | À propos | les quatre bilans, tarifs et réservation, clubs |
-| `/entreprises`, `/clubs` | Contact | formulaire de devis, activités, forfaits, bilan salarié, questions fréquentes |
+| `/` | Accueil | hero (surtitre, sous-titre, deux boutons), grande photo et carte en verre (bilans), trois pôles, Johan Pereira, panneau sombre « Ils nous font confiance » (quatre preuves, avis Google, partenaires), panneau jaune entreprises, articles récents |
+| `/methodologie` | À propos | les trois piliers, le bilan de départ en cinq mesures, deux parcours, objectifs, pourquoi Hygie, Johan Pereira (parcours et formation), les sportifs qu'il suit, l'équipe sport, séance offerte (panneau bleu) |
+| `/soins`, `/sante`, `/sport`, `/recuperation` | Journal | titre, une phrase, un soin par carte sur trois colonnes (`/soins` : une grille par pôle ; `/sport` : la carte Clubs sportifs et la préparation par discipline), puis une rangée « Et ensuite » avec la prise de rendez-vous |
+| `/sante/…`, `/sport/…`, `/recuperation/…`, `/bilans/…` | Article | 15 fiches, dont Réathlétisation (`/sport/reathletisation`) et Bilan aérobie PNOE (`/bilans/aerobie`) : l'essentiel et l'action en tête, pour qui, déroulé, tarifs, cartes des praticiens, questions fréquentes, soins proches |
+| `/bilans` | À propos | quel bilan choisir (situation et bilan conseillé), les fiches, ce que vous recevez, tarifs (huit bilans) et réservation, bilan d'entrée, clubs |
+| `/entreprises`, `/clubs` | Contact | formulaire de devis ; entreprises : trois façons de travailler, activités, forfaits, bilan salarié, campagnes de prévention des TMS, questions fréquentes ; clubs : bilans de saison, stages, préparation physique, jeunes |
 | `/rendez-vous` | Contact et onglets | praticiens (Doctolib ou agenda en ligne), bilans (agenda en ligne), sport et récupération (appel et formulaire), entreprises et clubs |
 | `/journal`, `/journal/categorie/…`, `/journal/…` | Journal et Article | 10 articles réécrits |
 | `/contact` | Contact | coordonnées, itinéraire, formulaire, plan d'accès OpenStreetMap |
@@ -91,7 +92,10 @@ Les anciennes adresses du site Wix redirigent en 308 vers les nouvelles pages (`
 
 ## Modifier les contenus
 
+Les textes des pages suivent le document « Hygie — Textes du site, page par page » (25 septembre 2026), repris mot pour mot. Ses notes de travail (« À valider », « Proposition : », « texte actuel conservé »…) ne vont jamais sur le site : `npm run controle` les cherche dans les pages générées, avec les titres de plus de 60 caractères, les descriptions de plus de 155, les liens internes vers une page absente et les `?motif=` sans onglet.
+
 Tous les textes sont dans `content/` :
+- `valeurs.ts` : les valeurs encore vides des textes du site (liens de réservation, prix, durées, nombre de bilans clubs), voir « À compléter » ;
 - `site.ts` : coordonnées, position sur la carte, horaires, réseaux, champs des mentions légales ;
 - `praticiens.ts` : praticiens et préparateurs, fonction, deux lignes de parcours, spécialités, langues, photo, lien de réservation ;
 - `confiance.ts` : partenariat Maison Sport-Santé et logos des partenaires ;
@@ -105,7 +109,7 @@ Dans les textes, `[libellé](/adresse)` crée un lien.
 
 Après une modification, lancez `npm run typo`. Le script pose les espaces insécables (avant « : ; ? ! », dans les guillemets, les montants, les heures et les numéros de téléphone) et les apostrophes typographiques. Il ne touche qu'aux textes, jamais au code, et peut être relancé sans risque.
 
-Règles de rédaction du design system :
+Règles de rédaction du design system (les textes du site priment : ils ne sont pas raccourcis pour les suivre) :
 - H1 de 3 à 5 mots, H2 de 2 à 4 mots ;
 - paragraphes de section de deux phrases, 30 mots au plus ;
 - vouvoiement, sans point d'exclamation ni superlatif ;
@@ -141,33 +145,39 @@ Tout est coupé si le visiteur a choisi de réduire les animations. Sans JavaScr
 
 ## À compléter avant la mise en ligne
 
-**Mentions légales** (`content/site.ts`, champ `mentions`). Tant qu'ils sont vides, ces champs s'affichent « [à compléter] » :
-- forme juridique, capital, SIRET, RCS et n° de TVA ;
-- directeur de la publication ;
-- hébergeur ;
-- médiateur de la consommation.
+**Valeurs à renseigner** (`content/valeurs.ts`). Elles sont vides dans les textes du site : rien n'est inventé. Un prix se saisit avec son symbole (`'60 €'`) ; la phrase ou la cellule apparaît dès que la valeur est renseignée.
+
+| Valeur | Ce que le site affiche en attendant |
+| --- | --- |
+| Lien de réservation de la séance d'essai | Les boutons d'essai (accueil, méthode, sport, coaching, cross training, préparateurs) mènent au formulaire de rappel, `/rendez-vous?motif=sport&objet=essai`, qui reste l'action principale de l'onglet Séances de sport. |
+| Liens de réservation des bilans (isocinétique, forces musculaires, fonctionnel, sauts, force-vitesse, aérobie, bilan d'entrée) | Chaque bilan garde son lien actuel (agenda de Johan Pereira). Le bilan aérobie, sans lien, propose d'appeler l'accueil. Le bilan d'entrée mène à la demande de coaching, `/rendez-vous?motif=sport&objet=coaching`. |
+| Prix de la consultation d'étiopathie | La phrase « Consultation : … » n'apparaît pas. |
+| Prix du sport-santé | La phrase du tarif n'apparaît pas ; reste « Contactez-nous pour les prochains créneaux. » |
+| Prix des cartes de 5 et 10 séances de pressothérapie | « Sur demande » dans le tableau. |
+| Durée et prix des quatre massages | Tableau sans durée, prix « Sur demande ». |
+| Prix du conseil en nutrition (premier rendez-vous, suivi) | La phrase du tarif n'apparaît pas. |
+| Prix et durée du bilan aérobie PNOE | « Sur demande » dans le tableau et sur la carte, sans durée ; la phrase du tarif de la fiche n'apparaît pas. |
+| Durées du bilan des sauts, du profil force-vitesse et du bilan d'entrée | Pas de durée dans le tableau. |
+| Nombre de bilans compris dans les 290 € (clubs) | « À partir de 290 € par sportif pour la saison », sans « soit … bilans ». |
+
+**Mentions légales** (`content/site.ts`, champ `mentions`) : capital, SIRET, numéro RCS (Melun), numéro de TVA et médiateur de la consommation (nom, adresse, site). Tant qu'ils sont vides, la page affiche « [à compléter] », comme les textes du site. La date de la politique de confidentialité (`confidentialiteMiseAJour`) est à mettre au jour de la publication.
+
+**À trancher dans les textes du site** (textes repris tels quels, sans modification)
+- **Clubs sportifs** : la carte de la page Sport dit « Sur devis », la page Clubs « à partir de 290 € par sportif ».
+- **Formule Performance** : elle promet un « accès prioritaire aux praticiens du centre », alors que les kinésithérapeutes sont indépendants.
+- **« Un même dossier »** (accueil) et **« partagent l'information »** (méthode) : partager des informations de santé avec les préparateurs physiques demande le consentement du patient.
+- **Maison Sport-Santé et sport sur ordonnance** : le partenariat avec la Maison Sport-Santé de Fontainebleau et l'accueil dans le cadre du sport sur ordonnance sont à confirmer.
 
 **Choix faits sur des informations contradictoires. À confirmer.**
-- **Forfait à 250 € par mois** : il s'appelle « Avancé » sur la page tarifs et « Passionné » à la caisse. « Avancé » est retenu.
-- **Bilan d'entrée** : il est offert pour un engagement de trois mois, sinon facturé 145 €. La page de paiement indiquait « jusqu'à annulation ».
-- **Bilan fonctionnel** : il coûte 60 € sur les pages tarifs et 80 € sur l'ancienne réservation Wix. 60 € est retenu.
-- **Johan Pereira** : il est présenté comme « fondateur », comme sur l'accueil, alors que d'autres pages disaient « co-fondateur ».
-  - Sportifs cités sur la page Méthodologie : Mekdès Woldu, Carole Zahi, Cheick Doucouré. Vérifier leur accord et l'orthographe.
-- **Kinésithérapeutes**
-  - Gauthier Arcache est écrit comme sur Doctolib ; l'ancien site écrivait « Gautier ».
-  - Alexis Ballard n'a pas de lien Doctolib : son bouton propose d'appeler le centre.
-- **Aubin Salmon**, étiopathe, n'apparaissait que sur une page brouillon. Confirmer qu'il consulte au centre.
-- **Conseil en nutrition** : il est attribué à Malika Pereira. L'ancienne page était écrite à la première personne, sans nom.
-- **Sport-santé**
-  - Le tarif n'était pas affiché : la page indique « sur demande ».
-  - Trois mentions ne figuraient que dans la description Google de l'ancienne page : « éducateurs APA », « sport sur ordonnance » et « partenaire de la Maison Sport-Santé de Fontainebleau ».
-- **Pressothérapie**
-  - Le site décrit des bottes de compression, comme la photo. Préciser l'appareil.
-  - Les prix des cartes de 5 et 10 séances sont à renseigner.
-- **Forfaits entreprises** : préciser la période de facturation et le HT ou TTC.
-- **Questions fréquentes entreprises** : les réponses 2 à 5 ont été rédigées, car elles étaient illisibles sur l'ancien site. À valider.
-- **Orthoptie**
-  - Les durées de validité des ordonnances de lentilles ont été corrigées (1 an avant 16 ans, 3 ans après). L'ancien site écrivait deux fois « plus de 16 ans ». À faire valider par Marie Couineau.
+- **Forfait à 250 € par mois** : « Avancé » sur le site, comme dans les textes du site, « Passionné » à la caisse. Aligner le site et la facturation.
+- **Bilan d'entrée** : offert pour un engagement de trois mois, alors que l'abonnement est mensuel, à tacite reconduction.
+- **Aubin Salmon**, étiopathe : masqué (`masque: true` dans `content/praticiens.ts`), les textes du site ne présentant qu'un étiopathe, Johan Pereira. Ses données restent ; retirer `masque` le fait réapparaître partout (cartes, rendez-vous, nombre de praticiens).
+- **Conseil en nutrition** : il est attribué à Malika Pereira sur sa carte. Les textes du site parlent de « la conseillère en nutrition », sans nom.
+- **Carte de Malika Pereira** : sa spécialité « Drainages lymphatiques » reste, alors que la page Massages dit « drainage esthétique ».
+- **Sport-santé** : les questions fréquentes (texte actuel conservé) parlent d'« éducateurs » ; la qualification des encadrants est à préciser.
+- **Forfaits entreprises** : « par collaborateur et par mois » selon les textes du site ; préciser HT ou TTC.
+
+**Retiré avec les textes du site** (25 septembre 2026) : l'ancien ciblage « femmes dès 40 ans, hommes dès 35 ans » (bilan des forces musculaires) ; la question « Pourquoi proposer un bilan santé en entreprise ? » ; les phrases, sous-titres et étiquettes absents des textes du site dans les sections qu'ils réécrivent (intro « Nos bilans », « Objectif : » des deux parcours, étiquettes et liens des preuves de l'accueil…).
 
 **Retiré volontairement**
 - **Cryothérapie** : la page, l'article, les textes, les textes alternatifs et le mode froid Game Ready. Les anciennes adresses redirigent vers Récupération.
@@ -183,12 +193,11 @@ Tout est coupé si le visiteur a choisi de réduire les animations. Sans JavaScr
 - **PDF « exemple de bilan complet »** : il est hébergé chez Wix et contient peut-être des données personnelles. Le placer dans `public/` une fois anonymisé.
 
 **Praticiens** (`content/praticiens.ts`)
-- Les deux lignes de parcours et les spécialités sont rédigées d'après les présentations publiques des praticiens (Doctolib). À faire relire par chacun. Alexis Ballard, Antoine Gras, Aubin Salmon, Malika Pereira, Martin Tondeur et Jean-Etienne Boilot n'ont pas de présentation publique : leur parcours est à écrire.
-- Théo Borragini a quitté le centre : retiré. Antoine Gras a été ajouté avec son lien Doctolib ; Alexis Ballard a le sien.
-- Le bouton des praticiens dit « Prendre rendez-vous » (Doctolib ou agenda en ligne) ; « Réserver l'essai » pour la séance de sport offerte ; le numéro pour les rendez-vous par téléphone.
+- Kinésithérapeutes : bio courte et spécialités des textes du site, validées par chaque kiné. Johan Pereira : présentation des textes du site (étiopathe et préparateur physique). Martin Tondeur et Jean-Étienne Boilot : fonction et spécialités seulement, leur courte bio reste à écrire (diplômes, spécialités). Malika Pereira : présentation actuelle conservée.
+- Théo Borragini a quitté le centre : retiré.
+- Le bouton des praticiens dit « Prendre rendez-vous » (Doctolib ou agenda en ligne) ; « Réserver l'essai » pour la séance de sport offerte ; le numéro pour les rendez-vous par téléphone (Malika Pereira : l'accueil).
 - Portraits : tous les praticiens ont leur photo (`assets/photos/equipe/`). Onze viennent du site actuel, en haute définition (Marie Couineau, Pierre Becker et Thomas Crasson n'existaient qu'en petit format : agrandis par super-résolution, à remplacer par les originaux). Alexis Ballard, Antoine Gras et Jérémy Escriva : leur photo de profil Doctolib (originaux en haute définition ; Antoine Gras agrandi). Malika Pereira : la présentation de l'équipe publiée par Hygie sur Instagram (janvier 2026), fond uniformisé et agrandie. À faire valider par chacun. Pour changer un portrait : déposer le fichier (cadrage 2/3 ou 4/5, 1 200 px de large au moins) dans `assets/photos/equipe/` et mettre à jour `content/images.ts`.
-- Alexis Ballard et Antoine Gras : parcours et spécialités rédigés d'après leur présentation Doctolib.
-- À vérifier avec le centre, d'après la présentation de l'équipe publiée par Hygie en janvier 2026 : Kévin Vautier (kinésithérapeute) et Charlotte Jeleff (préparatrice physique) n'apparaissent pas encore sur le site ; Aubin Salmon n'apparaît pas dans cette présentation ; Jean-Etienne Boilot y est écrit « Etienne Boillot » et présenté aussi comme préparateur mental.
+- À vérifier avec le centre, d'après la présentation de l'équipe publiée par Hygie en janvier 2026 : Kévin Vautier (kinésithérapeute) et Charlotte Jeleff (préparatrice physique) n'apparaissent pas encore sur le site ; Aubin Salmon n'apparaît pas dans cette présentation ; Jean-Étienne Boilot y est écrit « Etienne Boillot » et présenté aussi comme préparateur mental.
 
 **Sportifs suivis par Johan Pereira** (`content/athletes.ts`)
 - La liste vient de la page Étiopathe du site actuel (orthographes vérifiées : Carolle Zahi, Cheick Doucouré, Marie-Divine Kouamé). Les mentions sont limitées à ce qui est vérifiable.
@@ -197,7 +206,7 @@ Tout est coupé si le visiteur a choisi de réduire les animations. Sans JavaScr
 - Sans photo pour l'instant : Diana Iscaye (aucune photo libre ni publication d'Hygie la concernant). Les photos de presse (Alamy, Maxppp), de la fédération ou de la Police nationale sont protégées et ne sont pas utilisées. Elle figure dans la liste « Également suivis », sous la galerie ; une photo renseignée la fait passer dans la galerie.
 - Noms corrigés d'après la FFA et Wikipédia : Diana Iscaye (et non « Iscaye Diana »), Leila Hadji.
 
-**Questions fréquentes des fiches** (`content/soins.ts`, blocs `faq`) : rédigées avec prudence (remboursement, durée, quoi apporter, ordonnance). À valider par les praticiens, en particulier les durées de séance (kinésithérapie, orthoptie) et les contre-indications (pressothérapie, massages).
+**Questions fréquentes des fiches** (`content/soins.ts`, blocs `faq`) : celles des textes du site sont reprises telles quelles. Les autres sont les textes actuels, conservés (kinésithérapie, orthoptie, sport-santé, cross training, pressothérapie, bilans) : à valider par les praticiens, en particulier les durées de séance et les contre-indications.
 
 **Partenaires** (`content/confiance.ts`) : la liste est vide. Ajouter les logos fournis par les clubs et entreprises partenaires dans `public/partenaires/`, avec leur accord. Aucun logo n'a été inventé.
 

@@ -18,7 +18,8 @@ export function routesFiche(pole: Pole) {
     if (!soin) return {};
     const photo = soin.photo ? photos[soin.photo] : null;
     return {
-      title: soin.seo.title,
+      /* Titre complet, tel que dans les textes du site */
+      title: { absolute: soin.seo.title },
       description: soin.seo.description,
       alternates: { canonical: cheminSoin(soin) },
       openGraph: {

@@ -15,13 +15,18 @@ export type Suite = {
   actions: Array<{ label: string; href: string; variant?: 'solid' | 'contour' | 'jaune' }>;
 };
 
+/* Bloc de texte après les cartes (page Sport : la préparation par discipline) */
+export type Complement = { titre: string; texte: string; items: string[] };
+
+export const actionsParDefaut: Suite['actions'] = [
+  { label: 'Prendre rendez-vous', href: '/rendez-vous', variant: 'solid' },
+  { label: `Appeler le ${site.telephone.affichage}`, href: site.telephone.lien },
+];
+
 const suiteParDefaut: Suite = {
   titre: 'Un doute sur le soin adapté ?',
   texte: 'Appelez-nous, nous vous orientons vers le bon praticien ou le bon bilan.',
-  actions: [
-    { label: 'Prendre rendez-vous', href: '/rendez-vous', variant: 'solid' },
-    { label: `Appeler le ${site.telephone.affichage}`, href: site.telephone.lien },
-  ],
+  actions: actionsParDefaut,
 };
 
 /* Page d'un pôle (Santé, Sport, Récupération) ou de tous les soins : un titre, une phrase, une carte par soin sur trois colonnes,
@@ -32,6 +37,7 @@ export function PolePage({
   point,
   liste,
   supplementaires = [],
+  complement,
   suite = suiteParDefaut,
   parPole,
 }: {
@@ -40,6 +46,7 @@ export function PolePage({
   point?: CouleurPole;
   liste: Soin[];
   supplementaires?: CarteSupplementaire[];
+  complement?: Complement;
   suite?: Suite;
   /** Tous les soins : une grille par pôle, avec son titre et le lien vers la page du pôle */
   parPole?: boolean;
@@ -59,6 +66,7 @@ export function PolePage({
         excerpt={s.carte.extrait}
         headingLevel={parPole ? 'h3' : 'h2'}
         sizes={i < premieres ? '(max-width: 1023px) 92vw, 30vw' : undefined}
+        entier
       />
     ));
   const ordre: Pole[] = ['sante', 'sport', 'recuperation', 'bilans'];
@@ -69,22 +77,40 @@ export function PolePage({
       chapo={chapo}
       point={point}
       apres={
-        <Row className="pole-suite" aria-label="Et ensuite">
-          <Cell>
-            <p className="etiquette">Et ensuite</p>
-          </Cell>
-          <Cell span={3} className="hk-cell--stack">
-            <h2 className="titre-bloc">{suite.titre}</h2>
-            <p className="courant texte-colonne">{suite.texte}</p>
-            <div className="actions">
-              {suite.actions.map((a) => (
-                <Button key={a.href} href={a.href} variant={a.variant ?? 'contour'}>
-                  {a.label}
-                </Button>
-              ))}
-            </div>
-          </Cell>
-        </Row>
+        <>
+          {complement ? (
+            <Row as="section" className="pole-suite" aria-labelledby="titre-complement">
+              <Cell mobile="hide" aria-hidden />
+              <Cell span={3} className="hk-cell--stack">
+                <h2 id="titre-complement" className="titre-bloc">
+                  {complement.titre}
+                </h2>
+                <p className="courant texte-large">{complement.texte}</p>
+                <ul className="puces courant texte-large">
+                  {complement.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </Cell>
+            </Row>
+          ) : null}
+          <Row className="pole-suite" aria-label="Et ensuite">
+            <Cell>
+              <p className="etiquette">Et ensuite</p>
+            </Cell>
+            <Cell span={3} className="hk-cell--stack">
+              <h2 className="titre-bloc">{suite.titre}</h2>
+              <p className="courant texte-colonne">{suite.texte}</p>
+              <div className="actions">
+                {suite.actions.map((a) => (
+                  <Button key={a.href} href={a.href} variant={a.variant ?? 'contour'}>
+                    {a.label}
+                  </Button>
+                ))}
+              </div>
+            </Cell>
+          </Row>
+        </>
       }
     >
       {parPole ? (
@@ -124,6 +150,7 @@ export function PolePage({
               title={c.titre}
               excerpt={c.extrait}
               headingLevel="h2"
+              entier
             />
           ))}
         </div>

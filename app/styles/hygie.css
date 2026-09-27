@@ -265,7 +265,10 @@ a.hk-tag--bleu:hover, a.hk-tag--jaune:hover, a.hk-tag--gris:hover { background: 
 }
 .hk-hero__intro { padding-left: calc(19 * var(--u)); max-width: calc(247 * var(--u)); }
 .hk-hero__title { text-align: center; }
-.hk-hero__cta { justify-self: end; padding-right: calc(23 * var(--u)); }
+.hk-hero__cta { justify-self: end; padding-right: calc(23 * var(--u)); display: flex; flex-direction: column; align-items: flex-end; gap: calc(10 * var(--u)); }
+/* Deux boutons : une rangée centrée sous le titre, pour que le libellé long ne touche jamais le H1 */
+.hk-hero__cta--rangee { grid-column: 1 / -1; justify-self: center; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; padding: calc(44 * var(--u)) 0 0; }
+.hk-hero__surtitre { margin-bottom: calc(10 * var(--u)); }
 
 /* ---------- Grande photo et carte en verre ---------- */
 .hk-hero-media {
@@ -339,6 +342,7 @@ a.hk-tag--bleu:hover, a.hk-tag--jaune:hover, a.hk-tag--gris:hover { background: 
   overflow: hidden;
 }
 .hk-card--blog .hk-card__body { padding: 32px 32px 36px; }
+.hk-card--entier .hk-card__excerpt { display: block; -webkit-line-clamp: unset; overflow: visible; }
 .hk-card--recent { border-color: transparent; }
 .hk-card--recent .hk-card__img { aspect-ratio: 16 / 9; }
 .hk-card--recent .hk-card__body { padding: 28px 30px 32px; }
@@ -791,7 +795,7 @@ ol.prose-liste > li::before { content: counter(n) "."; }
 .confiance__sous-titre { margin-top: calc(20 * var(--u)); color: var(--jaune); }
 .confiance__corps { display: flex; flex-direction: column; align-items: flex-start; gap: calc(36 * var(--u)); min-width: 0; }
 .confiance__enonce { max-width: calc(640 * var(--u)); font: 400 max(20px, calc(30 * var(--u)))/1.25 var(--font-display); letter-spacing: -0.01em; text-wrap: balance; }
-.preuves { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(20 * var(--u)); width: 100%; list-style: none; margin: 0; padding: 0; }
+.preuves { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(28 * var(--u)) calc(20 * var(--u)); width: 100%; list-style: none; margin: 0; padding: 0; }
 .preuve { display: flex; flex-direction: column; align-items: flex-start; gap: calc(10 * var(--u)); padding-top: calc(16 * var(--u)); border-top: 3px solid var(--jaune); }
 .preuve__etiquette { font: 400 max(11px, calc(12 * var(--u)))/1.2 var(--font-mono); text-transform: uppercase; color: var(--jaune); }
 .preuve__titre { font: 400 max(20px, calc(24 * var(--u)))/1.2 var(--font-display); }
@@ -1190,18 +1194,19 @@ html:active-view-transition :is(.w, .titre-point, .hk-hero__intro, .hk-hero__cta
   }
   .hk-hero__title { order: 1; font-size: calc(66 * var(--u)); } /* « mouvement » : mot long, on garde de l'air près des filets */
   .hk-hero__intro { order: 2; padding: 0; max-width: calc(250 * var(--u)); }
-  .hk-hero__cta { order: 3; justify-self: center; padding: 0; }
+  .hk-hero__cta { order: 3; justify-self: center; padding: 0; flex-direction: column; align-items: center; }
   .hk-hero .points-logo { justify-content: center; }
 
   .hk-hero-media__img { aspect-ratio: 322 / 492; object-position: 72% 50%; }
+  /* Carte en verre : toute la largeur de la photo moins une marge, pour le texte du bloc Bilans et son bouton */
   .hk-glass {
-    left: 0;
-    right: 0;
-    bottom: calc(38 * var(--u));
-    width: calc(285 * var(--u));
-    margin-inline: auto;
-    padding: calc(20 * var(--u)) calc(25 * var(--u)) calc(24 * var(--u));
+    left: calc(var(--retrait) + 6 * var(--u));
+    right: calc(var(--retrait) + 6 * var(--u));
+    bottom: calc(23 * var(--u));
+    width: auto;
+    padding: calc(18 * var(--u)) calc(16 * var(--u)) calc(20 * var(--u));
   }
+  .hk-glass .hk-btn { height: auto; min-height: max(30px, calc(34 * var(--u))); padding-block: 8px; white-space: normal; text-align: center; line-height: 1.2; }
   .hk-glass .titre-bloc { font-size: calc(24 * var(--u)); }
   .hk-glass__text { max-width: none; }
   .hk-glass .hk-btn { margin-top: calc(32 * var(--u)); }

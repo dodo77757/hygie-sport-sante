@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "typo": "node scripts/typo-fr.mjs",
     "place-id": "node scripts/trouver-place-id.mjs",
-    "redirections": "node scripts/verifier-redirections.mjs"
+    "redirections": "node scripts/verifier-redirections.mjs",
+    "controle": "node scripts/controle-pages.mjs"
   },
   "engines": {
     "node": ">=20.9.0"

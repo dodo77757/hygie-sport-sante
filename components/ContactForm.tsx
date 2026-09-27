@@ -74,8 +74,7 @@ export function ContactForm({ type, submitLabel = 'Envoyer', motif, motifDepuisU
       <div className="hk-form__done" role="status" tabIndex={-1} ref={statusRef}>
         <p className="titre-liste">Merci, votre demande est bien partie.</p>
         <p className="courant">
-          {type === 'rappel' || type === 'rendez-vous' ? 'Nous vous rappelons rapidement pour convenir d’un créneau.' : 'Nous vous répondons rapidement.'} Pour
-          une réponse immédiate : <a href="tel:+33184743420">{TELEPHONE}</a>.
+          Nous vous rappelons sous 48 h ouvrées. Pour une urgence, appelez le <a href="tel:+33184743420">{TELEPHONE}</a>.
         </p>
       </div>
     );

@@ -1,13 +1,14 @@
 import { cx } from '@/lib/cx';
 import { disciplines, type Discipline } from '@/content/praticiens';
 import type { Tarif } from '@/content/types';
+import { SUR_DEMANDE } from '@/content/valeurs';
 import { Button } from './ui/Button';
 
 export function noteDiscipline(discipline: Discipline) {
   return disciplines[discipline].note;
 }
 
-/* Liste de tarifs : nom, détail, prix, action éventuelle. */
+/* Liste de tarifs : nom, détail, prix, action éventuelle. Un prix vide (à renseigner) s'affiche « Sur demande ». */
 export function ListeTarifs({ items, fluide, titreNiveau = 'h3' }: { items: Tarif[]; fluide?: boolean; titreNiveau?: 'h3' | 'h4' }) {
   const Titre = titreNiveau;
   return (
@@ -20,7 +21,7 @@ export function ListeTarifs({ items, fluide, titreNiveau = 'h3' }: { items: Tari
             {t.note ? <p className="liste__note">{t.note}</p> : null}
           </div>
           <div className="liste__fin">
-            {t.prix ? <span className="liste__prix">{t.prix}</span> : null}
+            {t.prix !== undefined ? <span className="liste__prix">{t.prix || SUR_DEMANDE}</span> : null}
             {t.action ? (
               <Button href={t.action.href} variant={t.action.variant === 'contour' ? 'contour' : 'solid'}>
                 {t.action.label}

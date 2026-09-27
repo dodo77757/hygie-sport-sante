@@ -1,5 +1,5 @@
 /* Coordonnées et informations générales du centre.
-   Les champs à null sont affichés « [à compléter] » dans les mentions légales. */
+   Les champs des mentions à null sont affichés « [à compléter] » dans les mentions légales. */
 
 export const site = {
   nom: 'Hygie Sport Santé et Performance',
@@ -35,6 +35,8 @@ export const site = {
     },
     { jours: 'Le samedi', heures: '9 h – 13 h', court: 'Sam. 9 h – 13 h', schema: { jours: ['Saturday'], ouvre: '09:00', ferme: '13:00' } },
   ],
+  /** Les horaires en une phrase (rendez-vous, contact) */
+  horairesPhrase: 'du lundi au vendredi de 8 h à 20 h, le samedi de 9 h à 13 h',
   reseaux: [
     { nom: 'Facebook', court: 'Fb', url: 'https://www.facebook.com/hygiesportsanteetperformance' },
     { nom: 'LinkedIn', court: 'In', url: 'https://www.linkedin.com/company/hygie-sport-sant%C3%A9-et-performance/' },
@@ -42,12 +44,21 @@ export const site = {
   ],
   anneeCreation: 2022,
   mentions: {
-    formeJuridique: null as string | null,
+    raisonSociale: 'LJ Concept',
+    formeJuridique: 'SAS',
+    /** Capital social, sans le symbole € (affiché après) */
     capital: null as string | null,
     siret: null as string | null,
+    /** Numéro au RCS de Melun */
     rcs: null as string | null,
+    /** Numéro de TVA intracommunautaire, sans le préfixe FR (affiché avant) */
     tva: null as string | null,
-    directeurPublication: null as string | null,
-    hebergeur: null as string | null,
+    directeurPublication: 'Johan Pereira, président.',
+    /* Adresse vérifiée sur vercel.com/legal (septembre 2026) */
+    hebergeur: 'Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com.',
+    /** Médiateur de la consommation : nom, adresse et site */
+    mediateur: null as string | null,
   },
+  /** Date de la dernière mise à jour de la politique de confidentialité */
+  confidentialiteMiseAJour: '27 septembre 2026',
 } as const;

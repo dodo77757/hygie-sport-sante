@@ -5,7 +5,7 @@ import { soins } from '@/content/soins';
 export const metadata: Metadata = {
   title: 'Tous les soins et tarifs',
   description:
-    'Kinésithérapie, étiopathie, orthoptie, coaching, sport-santé, cross training, pressothérapie, massages, nutrition et bilans physiologiques au centre Hygie d’Avon (77).',
+    'Kinésithérapie, étiopathie, orthoptie, coaching, sport-santé, cross training, pressothérapie, massages, nutrition et bilans physiologiques à Avon (77).',
   alternates: { canonical: '/soins' },
 };
 

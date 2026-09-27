@@ -10,15 +10,18 @@ export const metadata: Metadata = {
 
 const outil = nomOutilAudience();
 
+/* Avis Google affichés sur l'accueil : mêmes variables que le bloc d'avis (components/AvisGoogle.tsx) */
+const avisGoogle = Boolean(process.env.GOOGLE_PLACES_API_KEY && process.env.GOOGLE_PLACE_ID);
+
 export default function Confidentialite() {
   return (
     <div className="legal courant">
       <h1 className="titre-section">Confidentialité</h1>
-      <p style={{ marginTop: 20 }}>Dernière mise à jour : septembre 2026.</p>
+      <p style={{ marginTop: 20 }}>Dernière mise à jour : {site.confidentialiteMiseAJour}.</p>
 
       <h2>Responsable du traitement</h2>
       <p>
-        {site.nom}, {site.adresse.rue}, {site.adresse.codePostal} {site.adresse.ville}. Pour toute question sur vos données :{' '}
+        {site.mentions.raisonSociale}, exploitant {site.nom}, {site.adresse.rue}, {site.adresse.codePostal} {site.adresse.ville}. Contact :{' '}
         <a href={`mailto:${site.email}`}>{site.email}</a>.
       </p>
 
@@ -31,25 +34,17 @@ export default function Confidentialite() {
 
       <h2>Finalités et base légale</h2>
       <p>
-        Ces données servent uniquement à répondre à votre demande, à organiser vos séances et à établir un devis. Le traitement repose sur les mesures
-        précontractuelles prises à votre demande (article 6.1.b du RGPD).
+        Répondre à votre demande, organiser vos séances, établir un devis. Base légale : mesures précontractuelles prises à votre demande (article 6.1.b du
+        RGPD) ; pour les demandes d’entreprises, notre intérêt légitime à répondre aux sollicitations professionnelles (article 6.1.f).
       </p>
 
       <h2>Destinataires</h2>
-      <p>
-        Vos données sont destinées à l’équipe d’Hygie. Elles ne sont ni vendues, ni louées, ni cédées. Nos prestataires techniques y accèdent pour le seul
-        fonctionnement du site :
-      </p>
+      <p>L’équipe d’Hygie. Vos données ne sont ni vendues, ni louées, ni cédées. Prestataires techniques :</p>
       <ul>
-        <li>
-          l’hébergeur du site : <span className="a-completer">[à compléter]</span> ;
-        </li>
-        <li>le service d’envoi des e-mails du formulaire : Resend, Inc. (États-Unis).</li>
+        <li>Hébergement du site : Vercel Inc. (États-Unis)</li>
+        <li>Envoi des e-mails du formulaire : Resend, Inc. (États-Unis)</li>
       </ul>
-      <p>
-        Les transferts hors de l’Union européenne sont encadrés par les clauses contractuelles types de la Commission européenne ou le cadre de protection des
-        données UE-États-Unis.
-      </p>
+      <p>Transferts hors UE encadrés par les clauses contractuelles types de la Commission européenne ou le cadre de protection des données UE-États-Unis.</p>
 
       <h2>Durée de conservation</h2>
       <p>
@@ -72,8 +67,9 @@ export default function Confidentialite() {
         </p>
       ) : null}
       <p>
-        Le plan d’accès de la page Contact est fourni par OpenStreetMap, sans cookie ; les avis affichés sur l’accueil sont lus depuis Google par notre serveur,
-        sans script ni cookie chez vous.
+        {avisGoogle
+          ? 'Le plan d’accès de la page Contact est fourni par OpenStreetMap, sans cookie ; les avis affichés sur l’accueil sont lus depuis Google par notre serveur, sans script ni cookie chez vous.'
+          : 'Le plan d’accès de la page Contact est fourni par OpenStreetMap, sans cookie.'}
       </p>
 
       <h2>Vos droits</h2>

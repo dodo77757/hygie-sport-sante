@@ -1,7 +1,13 @@
-/* Les pôles et leurs fiches (gabarit Article). */
+/* Les pôles et leurs fiches (gabarit Article).
+   Textes : « Hygie — Textes du site, page par page » (25 septembre 2026). « Texte actuel conservé » : questions fréquentes
+   de la kinésithérapie, de l'orthoptie, du sport-santé, du cross training, de la pressothérapie et des bilans ; page Orthoptie ;
+   limites du conseil en nutrition. Valeurs à renseigner : content/valeurs.ts.
+   seo.title est le titre complet de la page, utilisé tel quel. */
 import type { Action, Bloc } from './types';
 import type { PhotoKey } from './images';
-import { bilanPar } from './bilans';
+import { bilanPar, texteBilanEntree } from './bilans';
+import { site } from './site';
+import { aRenseigner, LIEN_ESSAI, SUR_DEMANDE, siRenseigne } from './valeurs';
 
 export type Pole = 'sante' | 'sport' | 'recuperation' | 'bilans';
 
@@ -16,10 +22,11 @@ export const poles: Record<
     etiquette: 'Santé',
     href: '/sante',
     couleur: 'bleu',
-    chapo: 'Kinésithérapeutes, étiopathes et orthoptiste consultent au centre. Prenez rendez-vous en ligne, directement auprès de chaque praticien.',
+    chapo:
+      'Kinésithérapeutes, étiopathe et orthoptiste consultent au centre. Chacun exerce en libéral, avec son propre agenda en ligne. Tous travaillent en lien avec les préparateurs physiques : quand la rééducation se termine, l’entraînement prend le relais sans rupture.',
     seo: {
-      title: 'Pôle santé : kinésithérapie, étiopathie, orthoptie à Avon',
-      description: 'Kinésithérapeutes, étiopathes et orthoptiste au centre Hygie d’Avon (77). Prise de rendez-vous en ligne auprès de chaque praticien.',
+      title: 'Kiné, étiopathe et orthoptiste à Avon (77) · Hygie',
+      description: '10 kinésithérapeutes, 1 étiopathe et 1 orthoptiste au centre Hygie d’Avon. Rendez-vous en ligne auprès de chaque praticien.',
     },
   },
   sport: {
@@ -27,11 +34,12 @@ export const poles: Record<
     etiquette: 'Sport',
     href: '/sport',
     couleur: 'jaune',
-    chapo: 'Coaching individuel, sport-santé en petit groupe ou cross training : nos préparateurs physiques construisent vos séances à partir d’un bilan.',
+    chapo:
+      'Coaching individuel, sport-santé en petit groupe, cross training ou préparation spécifique à votre discipline : nos préparateurs physiques construisent chaque séance à partir d’un bilan chiffré.',
     seo: {
-      title: 'Coaching sportif et préparation physique à Avon',
+      title: 'Coaching sportif et préparation physique à Avon · Hygie',
       description:
-        'Coaching individuel, sport-santé en petit groupe et cross training avec des préparateurs physiques diplômés, au centre Hygie d’Avon. Première séance offerte.',
+        'Coaching individuel, sport-santé, cross training et préparation par discipline avec des préparateurs physiques diplômés à Avon. Essai offert.',
     },
   },
   recuperation: {
@@ -39,9 +47,10 @@ export const poles: Record<
     etiquette: 'Récupération',
     href: '/recuperation',
     couleur: 'gris',
-    chapo: 'Pressothérapie, massages et conseil en nutrition : des soins complémentaires pour récupérer, relâcher les tensions et retrouver de l’énergie.',
+    chapo:
+      'L’entraînement ne fait progresser que si l’on récupère. Pressothérapie, massages et conseil en nutrition complètent votre suivi, que vous sortiez d’une compétition ou d’une semaine chargée.',
     seo: {
-      title: 'Récupération et bien-être : pressothérapie, massages, nutrition',
+      title: 'Récupération à Avon : pressothérapie, massages, nutrition',
       description:
         'Pressothérapie, massages bien-être et conseil en nutrition au centre Hygie d’Avon (77), pour récupérer après l’effort et prendre soin de soi.',
     },
@@ -52,10 +61,11 @@ export const poles: Record<
     href: '/bilans',
     couleur: 'encre',
     chapo:
-      'Force, mobilité, asymétries, puissance : nos bilans font l’état des lieux de votre corps. Vous savez ensuite quoi travailler pour progresser sans vous blesser.',
+      'Force, asymétries, mobilité, puissance, endurance : nos bilans font l’état des lieux de votre corps avec les outils des clubs professionnels. Vous repartez avec un compte rendu chiffré et vos priorités de travail.',
     seo: {
-      title: 'Bilans physiologiques : isocinétique, force, mobilité, sauts',
-      description: 'Bilan isocinétique, forces musculaires, bilan fonctionnel, sauts et profil force-vitesse à Avon (77). Tarifs et réservation en ligne.',
+      title: 'Bilans physiologiques à Avon : isocinétique, force, sauts',
+      description:
+        'Bilan isocinétique, force musculaire, fonctionnel, sauts, profil force-vitesse et aérobie à Avon (77). Compte rendu chiffré, réservation en ligne.',
     },
   },
 };
@@ -74,10 +84,20 @@ export type Soin = {
   proches: string[];
 };
 
-const bilanAction = (id: string, label = 'Réserver') => {
+/* Rendez-vous par l'accueil (massages, nutrition, réathlétisation, bilans sans lien de réservation) */
+const appelAccueil: Action = { label: `Appeler le ${site.telephone.affichage}`, href: site.telephone.lien };
+
+const bilanAction = (id: string, label = 'Réserver le bilan'): Action => {
   const b = bilanPar(id);
-  return { label, href: b.reservation };
+  return b.reservation.startsWith('tel:') ? appelAccueil : { label, href: b.reservation };
 };
+
+const essai: Action = { label: 'Réserver l’essai', href: LIEN_ESSAI };
+
+const v = aRenseigner;
+
+/* Détail d'une ligne de tableau : le texte, puis la durée si elle est renseignée */
+const avecDuree = (texte: string, duree: string) => [texte, duree].filter(Boolean).join(' · ');
 
 export const soins: Soin[] = [
   /* ---------------- Santé ---------------- */
@@ -86,24 +106,23 @@ export const soins: Soin[] = [
     slug: 'kinesitherapie',
     nom: 'Kinésithérapie',
     carte: {
-      extrait: 'Rééducation fonctionnelle, kinésithérapie du sport, rééducation périnéale : dix kinésithérapeutes vous reçoivent au centre.',
+      extrait: 'Rééducation fonctionnelle et post-opératoire, kinésithérapie du sport, santé de la femme.',
       meta: '10 kinésithérapeutes · Doctolib',
     },
     chapo:
-      'Dix kinésithérapeutes consultent au centre, chacun avec ses spécialités, du sport au pré et post-partum. Choisissez le vôtre et réservez directement sur Doctolib.',
+      'Dix kinésithérapeutes consultent au centre, chacun avec ses spécialités, du sport à la santé de la femme. Choisissez le vôtre et réservez directement sur Doctolib.',
     action: { label: 'Choisir un kiné', href: '#praticiens' },
     photo: 'kine',
     seo: {
       title: 'Kinésithérapeute à Avon : rééducation et kiné du sport',
-      description:
-        'Dix kinésithérapeutes au centre Hygie d’Avon : rééducation fonctionnelle, kinésithérapie du sport, périnéale, pré et post-partum. Rendez-vous sur Doctolib.',
+      description: '10 kinés au centre Hygie d’Avon : rééducation post-opératoire, kiné du sport, périnée, pré et post-partum. Rendez-vous sur Doctolib.',
     },
     corps: [
       { t: 'h2', texte: 'Pour qui' },
       {
         t: 'p',
         texte:
-          'Toute personne qui a besoin d’une rééducation, sur prescription médicale : après une blessure, une opération ou pour une douleur qui dure. Les sportifs trouvent aussi au centre une kinésithérapie du sport, en lien avec les préparateurs physiques.',
+          'Toute personne qui a besoin d’une rééducation, sur prescription médicale : après une blessure, une opération ou pour une douleur qui dure. Les sportifs bénéficient en plus d’un plateau technique partagé avec les préparateurs physiques : isocinétisme, plateformes de force, capteurs de force.',
       },
       { t: 'h2', texte: 'Nos kinésithérapeutes', id: 'praticiens' },
       { t: 'praticiens', discipline: 'kinesitherapie' },
@@ -111,13 +130,13 @@ export const soins: Soin[] = [
       {
         t: 'p',
         texte:
-          'Les kinésithérapeutes du centre pratiquent des dépassements d’honoraires. Pour en connaître le montant, renseignez-vous directement auprès de votre praticien.',
+          'Les tarifs varient selon le praticien et l’acte. Certains kinésithérapeutes du centre appliquent des dépassements d’honoraires : demandez le montant à votre praticien avant la première séance.',
       },
       { t: 'h2', texte: 'Après la rééducation' },
       {
         t: 'p',
         texte:
-          'Au centre, la rééducation peut se prolonger par un [bilan isocinétique](/bilans/isocinetique) avant la reprise, puis par un [coaching individuel](/sport/coaching-individuel) pour retrouver votre niveau en sécurité.',
+          'Au centre, la rééducation se prolonge naturellement : un [bilan isocinétique](/bilans/isocinetique) objective votre récupération avant la reprise, puis un [coaching individuel](/sport/coaching-individuel) vous ramène à votre niveau, en sécurité, avec des critères de retour au sport mesurés.',
       },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
@@ -142,79 +161,72 @@ export const soins: Soin[] = [
         ],
       },
     ],
-    proches: ['/sante/etiopathie', '/bilans/isocinetique', '/sport/coaching-individuel'],
+    proches: ['/sante/etiopathie', '/bilans/isocinetique', '/sport/reathletisation'],
   },
   {
     pole: 'sante',
     slug: 'etiopathie',
     nom: 'Étiopathie',
     carte: {
-      extrait: 'Comprendre l’origine mécanique de vos douleurs pour traiter la cause, par des gestes manuels précis et sans médicament.',
-      meta: '2 étiopathes · Réservation en ligne',
+      extrait: 'Rechercher l’origine mécanique d’une douleur et la traiter par des gestes manuels précis, sans médicament.',
+      meta: '1 étiopathe · Réservation en ligne',
     },
-    chapo: 'L’étiopathie recherche la cause mécanique de vos douleurs pour la traiter à la main, sans médicament. En général, peu de séances suffisent.',
+    chapo:
+      'L’étiopathie recherche la cause mécanique de vos douleurs pour la traiter à la main, sans médicament. Le plus souvent, peu de séances sont nécessaires.',
     action: { label: 'Prendre rendez-vous', href: '#praticiens' },
     photo: 'manipulation',
     seo: {
-      title: 'Étiopathe à Avon : dos, articulations, digestion',
-      description:
-        'Consultations d’étiopathie au centre Hygie d’Avon (77) avec Johan Pereira et Aubin Salmon. Douleurs de dos, articulations, troubles digestifs et ORL.',
+      title: 'Étiopathe à Avon : dos, articulations, sportifs · Hygie',
+      description: 'Consultations d’étiopathie à Avon (77) avec Johan Pereira : dos, nuque, articulations, tendons, sportifs. Sans ordonnance.',
     },
     corps: [
       { t: 'h2', texte: 'Le principe' },
       {
         t: 'p',
         texte:
-          'L’étiopathe analyse le mécanisme de votre douleur pour remonter à sa cause, puis la traite par des manipulations précises. Cette méthode fondée sur le raisonnement vise des résultats durables.',
+          'L’étiopathe analyse le mécanisme de votre douleur pour remonter à sa cause, puis agit par des manipulations précises. C’est une démarche fondée sur le raisonnement : chaque geste répond à une hypothèse posée pendant le bilan.',
       },
       {
         t: 'p',
-        texte:
-          'Ignorer une douleur, c’est prendre le risque qu’elle s’installe : raideur, perte de mobilité, fatigue. Agir tôt préserve votre équilibre et votre qualité de vie.',
+        texte: 'Une douleur ignorée a tendance à s’installer : raideur, perte de mobilité, compensations. Consulter tôt limite ces effets.',
       },
-      { t: 'h2', texte: 'Ce que l’étiopathie prend en charge' },
+      { t: 'h2', texte: 'Motifs fréquents de consultation' },
       {
         t: 'ul',
         items: [
           'Le dos et la nuque : lumbago, sciatique, torticolis, névralgie d’Arnold ou cervico-brachiale',
-          'Les articulations et les tendons : entorse, tendinite, canal carpien, douleurs d’épaule, de coude, de genou ou de cheville',
-          'La digestion : reflux, ballonnements, troubles du transit',
-          'La sphère ORL : sinusite, otite séreuse, rhume à répétition',
+          'Les articulations et les tendons : suites d’entorse, tendinite, canal carpien, douleurs d’épaule, de coude, de genou ou de cheville',
+          'Les troubles fonctionnels digestifs et ORL, en complément du suivi médical',
+          'Les sportifs : douleurs liées à l’entraînement, préparation d’une échéance, retour après blessure',
         ],
       },
-      { t: 'note', texte: 'L’étiopathie ne remplace pas un avis médical. En cas de symptôme inhabituel ou qui persiste, consultez d’abord votre médecin.' },
+      {
+        t: 'note',
+        texte:
+          'L’étiopathie ne remplace pas un avis médical. En cas de symptôme inhabituel, de fièvre ou d’une douleur qui persiste, consultez d’abord votre médecin.',
+      },
       { t: 'h2', texte: 'Déroulé d’une séance' },
       {
         t: 'p',
         texte:
-          'La séance commence par un bilan complet pour comprendre votre douleur et son histoire. Le praticien traite ensuite la cause identifiée par des techniques manuelles adaptées à chacun.',
+          'La séance commence par un interrogatoire et un examen pour comprendre votre douleur et son histoire. Le praticien traite ensuite la cause identifiée par des techniques manuelles adaptées à votre âge et à votre condition. Il vous indique dès la première séance si un suivi est utile, ou s’il faut vous orienter vers un médecin ou un kiné.',
       },
-      {
-        t: 'p',
-        texte:
-          'Elle s’adresse à tous, du nourrisson au senior, de la femme enceinte au sportif. Le nombre de séances dépend de la nature et de l’ancienneté de la douleur.',
-      },
-      { t: 'h2', texte: 'Nos étiopathes', id: 'praticiens' },
+      { t: 'h2', texte: 'Votre étiopathe', id: 'praticiens' },
       { t: 'praticiens', discipline: 'etiopathie' },
-      { t: 'h2', texte: 'Remboursement' },
+      { t: 'h2', texte: 'Tarif et remboursement' },
       {
         t: 'p',
-        texte:
-          'L’étiopathie n’est pas remboursée par la Sécurité sociale. Certaines mutuelles prennent en charge une partie des séances : renseignez-vous auprès de la vôtre.',
+        texte: [
+          ...siRenseigne(v.prix.etiopathie, (prix) => `Consultation : ${prix}.`),
+          'L’étiopathie n’est pas remboursée par la Sécurité sociale. De nombreuses mutuelles prennent en charge tout ou partie des séances dans leur forfait « médecines douces » : demandez une facture à votre étiopathe.',
+        ].join(' '),
       },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
         t: 'faq',
         items: [
-          { q: 'Faut-il une ordonnance ?', r: 'Non. L’étiopathie se consulte en accès direct, sans prescription médicale.' },
-          {
-            q: 'L’étiopathie est-elle remboursée ?',
-            r: 'Pas par la Sécurité sociale. De nombreuses mutuelles remboursent tout ou partie des séances dans leur forfait « médecines douces » : demandez une facture à votre étiopathe et renseignez-vous auprès de votre mutuelle.',
-          },
-          {
-            q: 'Combien de séances faut-il ?',
-            r: 'Cela dépend du motif. L’étiopathe vous l’indique dès la première séance, après son bilan, et le traitement demande souvent peu de séances.',
-          },
+          { q: 'Faut-il une ordonnance ?', r: 'Non, l’étiopathie se consulte en accès direct.' },
+          { q: 'Combien de séances faut-il ?', r: 'Cela dépend du motif ; l’étiopathe vous l’indique après son bilan.' },
           { q: 'Que dois-je apporter ?', r: 'Vos examens s’ils existent (radiographies, IRM, comptes rendus) et une tenue confortable.' },
         ],
       },
@@ -226,7 +238,7 @@ export const soins: Soin[] = [
     slug: 'orthoptie',
     nom: 'Orthoptie',
     carte: {
-      extrait: 'Dépistage, bilans orthoptiques et neurovisuels, rééducation et renouvellement de lunettes, du nourrisson au sportif.',
+      extrait: 'Dépistage, bilans orthoptiques et neurovisuels, rééducation, renouvellement de lunettes, suivi après commotion.',
       meta: '1 orthoptiste · Doctolib',
     },
     chapo:
@@ -234,9 +246,9 @@ export const soins: Soin[] = [
     action: { label: 'Réserver sur Doctolib', href: 'https://www.doctolib.fr/orthoptiste/avon/marie-couineau?pid=practice-466521' },
     photo: 'vision',
     seo: {
-      title: 'Orthoptiste à Avon : bilans visuels et neurovisuels',
+      title: 'Orthoptiste à Avon : bilans visuels et neurovisuels · Hygie',
       description:
-        'Marie Couineau, orthoptiste au centre Hygie d’Avon : dépistage dès 9 mois, bilans neurovisuels, rééducation, suivi après commotion et renouvellement de lunettes.',
+        'Marie Couineau, orthoptiste à Avon : dépistage dès 9 mois, bilans neurovisuels, rééducation, suivi après commotion et renouvellement de lunettes.',
     },
     corps: [
       { t: 'h2', texte: 'Quand consulter' },
@@ -277,6 +289,11 @@ export const soins: Soin[] = [
         t: 'p',
         texte:
           'Après une commotion cérébrale, des symptômes peuvent persister : maux de tête, sensibilité à la lumière, vertiges, nausées, troubles de la concentration ou de la mémoire. Ils augmentent souvent après un effort, et une prise en charge neurovisuelle permet de les travailler.',
+      },
+      {
+        t: 'p',
+        texte:
+          'Au centre, le suivi neurovisuel après commotion se coordonne avec le kiné et le préparateur physique, pour une reprise progressive et encadrée.',
       },
       {
         t: 'p',
@@ -334,25 +351,24 @@ export const soins: Soin[] = [
     slug: 'coaching-individuel',
     nom: 'Coaching individuel',
     carte: {
-      extrait:
-        'Des séances individuelles avec un préparateur physique, construites à partir de votre bilan. Trois formules, d’une à trois séances par semaine.',
+      extrait: 'Une à trois séances individuelles par semaine avec un préparateur physique, construites à partir de votre bilan.',
       meta: 'Dès 140 € par mois',
     },
     chapo:
       'Une à trois séances individuelles par semaine avec un préparateur physique, construites à partir de votre bilan. Votre première séance d’une heure est offerte.',
-    action: { label: 'Réserver l’essai', href: '/rendez-vous?motif=sport&objet=essai' },
+    action: essai,
     photo: 'coachPompes',
     seo: {
       title: 'Coaching sportif individuel à Avon, dès 140 € par mois',
       description:
-        'Séances individuelles avec un préparateur physique, à partir d’un bilan physiologique. Formules à 1, 2 ou 3 séances par semaine. Première séance offerte.',
+        'Séances individuelles avec un préparateur physique, à partir d’un bilan physiologique. 1, 2 ou 3 séances par semaine. Première séance offerte.',
     },
     corps: [
       { t: 'h2', texte: 'Le principe' },
       {
         t: 'p',
         texte:
-          'Tout commence par un bilan physiologique : mobilité, force, asymétries et objectifs. Votre préparateur physique en tire un programme, puis ajuste chaque séance à votre forme du jour.',
+          'Tout commence par un bilan physiologique : mobilité, force, asymétries, explosivité et objectifs. Votre préparateur en tire un programme écrit, puis ajuste chaque séance à votre forme du jour. Des bilans intermédiaires mesurent vos progrès et recalent le programme.',
       },
       {
         t: 'p',
@@ -364,46 +380,48 @@ export const soins: Soin[] = [
         items: [
           { nom: 'Essentiel', detail: '1 séance individuelle par semaine', prix: '140 € / mois' },
           { nom: 'Avancé', detail: '2 séances individuelles par semaine', prix: '250 € / mois' },
-          { nom: 'Performance', detail: '3 séances individuelles par semaine et accès privilégié aux praticiens de santé du centre', prix: '300 € / mois' },
+          { nom: 'Performance', detail: '3 séances individuelles par semaine et accès prioritaire aux praticiens du centre', prix: '300 € / mois' },
         ],
       },
-      { t: 'p', texte: 'Le bilan physiologique d’entrée est offert pour un engagement de trois mois. Sans engagement, il est facturé 145 €.' },
+      { t: 'p', texte: 'Le bilan physiologique d’entrée (145 €) est offert pour un engagement de trois mois.' },
+      { t: 'h3', texte: 'Bilan physiologique d’entrée' },
+      { t: 'p', texte: texteBilanEntree },
+      { t: 'h2', texte: 'Ce que comprend votre suivi' },
+      {
+        t: 'ul',
+        items: [
+          'Un bilan d’entrée et un compte rendu chiffré',
+          'Un préparateur référent qui suit votre dossier',
+          'Un programme écrit, ajusté à chaque séance',
+          'Des bilans intermédiaires pour mesurer vos progrès',
+          'Un lien direct avec les kinés et l’étiopathe du centre en cas de douleur',
+        ],
+      },
       { t: 'h2', texte: 'Séance d’essai' },
       {
         t: 'p',
-        texte:
-          'Votre première séance d’une heure est gratuite et sans engagement. Elle permet de faire connaissance, de parler de vos objectifs et de tester la méthode.',
+        texte: 'Votre première séance d’une heure est gratuite et sans engagement : faire connaissance, parler de vos objectifs, tester la méthode.',
       },
-      {
-        t: 'actions',
-        items: [{ label: 'Réserver l’essai', href: '/rendez-vous?motif=sport&objet=essai', variant: 'solid' }],
-      },
+      { t: 'actions', items: [{ ...essai, variant: 'solid' }] },
       { t: 'h2', texte: 'Vos préparateurs' },
       {
         t: 'p',
-        texte:
-          'Johan Pereira, Martin Tondeur et Jean-Etienne Boilot, préparateurs physiques diplômés, vous accompagnent. Découvrez [la méthode Hygie](/methodologie).',
+        texte: 'Johan Pereira, Martin Tondeur et Jean-Étienne Boilot, préparateurs physiques diplômés, vous accompagnent.',
       },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
         t: 'faq',
         items: [
-          {
-            q: 'La séance d’essai est-elle vraiment gratuite ?',
-            r: 'Oui. Une première séance d’une heure, sans engagement, pour faire connaissance, parler de vos objectifs et tester la méthode.',
-          },
-          {
-            q: 'Faut-il déjà être sportif ?',
-            r: 'Non. Le programme part de votre bilan et de vos objectifs, quel que soit votre niveau : reprise, perte de poids, préparation d’une épreuve ou retour après une blessure.',
-          },
+          { q: 'Faut-il déjà être sportif ?', r: 'Non. Le programme part de votre bilan et de vos objectifs, quel que soit votre niveau.' },
           {
             q: 'Le coaching est-il remboursé ?',
-            r: 'Non, ce n’est pas un soin médical. Certaines mutuelles et comités d’entreprise participent aux activités physiques : renseignez-vous auprès des vôtres.',
+            r: 'Non, ce n’est pas un soin médical. Certaines mutuelles et comités d’entreprise participent aux activités physiques.',
           },
           { q: 'Que dois-je apporter ?', r: 'Une tenue de sport, des chaussures propres pour la salle, une bouteille d’eau et une serviette.' },
+          { q: 'Puis-je changer de formule ?', r: 'Oui, les formules sont mensuelles et s’ajustent avec votre préparateur.' },
           {
-            q: 'Puis-je changer de formule ?',
-            r: 'Oui, les formules sont mensuelles et s’ajustent avec votre préparateur. Le bilan d’entrée est offert pour un engagement de trois mois.',
+            q: 'Comment arrêter ?',
+            r: 'L’abonnement est mensuel et se renouvelle chaque mois ; prévenez l’accueil avant le prochain prélèvement.',
           },
         ],
       },
@@ -415,47 +433,44 @@ export const soins: Soin[] = [
     slug: 'sport-sante',
     nom: 'Sport-santé',
     carte: {
-      extrait:
-        'Renforcement, étirements et prévention des chutes en groupe de quatre, deux fois par semaine, avec des éducateurs en activité physique adaptée.',
+      extrait: 'Renforcement, mobilité et prévention des chutes, adaptés à votre état de santé.',
       meta: 'Groupes de 4 · 2 séances par semaine',
     },
     chapo:
-      'Deux séances par semaine en groupe de quatre pour renforcer votre corps, gagner en souplesse et prévenir les chutes. Un programme pensé pour le bien-être au quotidien.',
+      'Deux séances par semaine en groupe de quatre pour renforcer votre corps, gagner en mobilité et prévenir les chutes. Un programme pensé pour le bien-être au quotidien.',
     action: { label: 'Demander un créneau', href: '/rendez-vous?motif=sport&objet=sport-sante' },
     photo: 'senior',
     seo: {
-      title: 'Sport-santé et activité physique adaptée à Avon',
+      title: 'Sport-santé et activité physique adaptée à Avon · Hygie',
       description:
-        'Renforcement, étirements et prévention des chutes en groupe de quatre, encadrés par des éducateurs en activité physique adaptée. Sport sur ordonnance à Avon.',
+        'Renforcement, mobilité et prévention des chutes en groupe de 4, deux fois par semaine. Sport sur ordonnance, partenaire Maison Sport-Santé.',
     },
     corps: [
       { t: 'h2', texte: 'Le principe' },
       {
         t: 'p',
         texte:
-          'Les séances associent renforcement musculaire et étirements, avec un objectif : se sentir bien au quotidien et prévenir les chutes. Le petit groupe permet un suivi attentif de chacun.',
+          'Les séances associent renforcement musculaire, équilibre et mobilité. À quatre, l’encadrant corrige chacun et adapte les exercices séance après séance.',
       },
       { t: 'h2', texte: 'Pour qui' },
       {
         t: 'p',
         texte:
-          'Les personnes qui reprennent une activité, avancent en âge ou vivent avec une maladie chronique. Nos éducateurs en activité physique adaptée ajustent la pratique à votre état de santé, y compris dans le cadre du sport sur ordonnance.',
+          'Les personnes qui reprennent une activité, avancent en âge ou vivent avec une maladie chronique. Les séances s’adaptent à votre état de santé, y compris dans le cadre du sport sur ordonnance. Hygie est partenaire de la Maison Sport-Santé de Fontainebleau.',
       },
       { t: 'h2', texte: 'Le déroulé' },
       {
-        t: 'ul',
+        t: 'ol',
         items: [
-          'un bilan d’entrée pour connaître votre point de départ',
-          'deux séances par semaine en groupe de quatre personnes',
-          'des exercices progressifs, adaptés au niveau de chacun',
+          'Un bilan d’entrée : force de préhension, équilibre, mobilité, test de marche.',
+          'Deux séances par semaine en groupe de quatre.',
+          'Un bilan de suivi pour mesurer les progrès et ajuster.',
         ],
       },
-      { t: 'p', texte: 'Hygie est partenaire de la Maison Sport-Santé de Fontainebleau.' },
       { t: 'h2', texte: 'Tarif' },
-      { t: 'p', texte: 'Contactez-nous pour connaître le tarif et les prochains créneaux disponibles.' },
       {
-        t: 'actions',
-        items: [{ label: 'Demander un créneau', href: '/rendez-vous?motif=sport&objet=sport-sante', variant: 'solid' }],
+        t: 'p',
+        texte: [...siRenseigne(v.prix.sportSante, (prix) => `${prix} par mois.`), 'Contactez-nous pour les prochains créneaux.'].join(' '),
       },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
@@ -491,41 +506,31 @@ export const soins: Soin[] = [
     slug: 'cross-training',
     nom: 'Cross training',
     carte: {
-      extrait: 'Préparation physique et renforcement fonctionnel en petit groupe, une séance par semaine sur un créneau réservé.',
+      extrait: 'Force, endurance et mobilité en petit groupe, une séance par semaine sur un créneau réservé.',
       meta: '60 € par mois · 6 personnes au plus',
     },
     chapo:
-      'Une séance par semaine sur un créneau réservé, à six au plus. Endurance, force et mobilité progressent ensemble, sans négliger la prévention des blessures.',
-    action: { label: 'Demander un créneau', href: '/rendez-vous?motif=sport&objet=cross-training' },
+      'Une séance par semaine sur un créneau réservé, à six au plus. Force, endurance et mobilité progressent ensemble, sans négliger la prévention des blessures.',
+    action: essai,
     photo: 'kettlebell',
     seo: {
       title: 'Cross training en petit groupe à Avon, 60 € par mois',
-      description:
-        'Préparation physique et renforcement fonctionnel en groupe de six au plus, une séance par semaine sur un créneau réservé, au centre Hygie d’Avon.',
+      description: 'Force, endurance et mobilité en groupe de six au plus, une séance par semaine sur un créneau réservé. Préparation Hyrox. Essai offert.',
     },
     corps: [
       { t: 'h2', texte: 'Le principe' },
       {
         t: 'p',
         texte:
-          'Le cross training combine préparation physique et renforcement fonctionnel dans des séances variées. Le petit groupe garde l’énergie du collectif tout en laissant au coach le temps de corriger chaque geste.',
+          'Des séances variées qui combinent haltérophilie technique, gymnastique et travail cardio. Le petit groupe garde l’énergie du collectif et laisse au coach le temps de corriger chaque geste.',
       },
       { t: 'h2', texte: 'Pour qui' },
-      {
-        t: 'p',
-        texte:
-          'Les sportifs qui veulent un entraînement complet, y compris pour préparer un Hyrox. Chaque mouvement s’adapte à votre niveau, du débutant au confirmé.',
-      },
+      { t: 'p', texte: 'Du débutant au confirmé, et pour préparer un Hyrox. Chaque mouvement se décline à votre niveau.' },
       { t: 'h2', texte: 'Formule' },
       {
         t: 'tarifs',
         items: [{ nom: 'Forfait cross training', detail: '1 séance par semaine sur un créneau réservé, 6 personnes au plus', prix: '60 € / mois' }],
       },
-      {
-        t: 'actions',
-        items: [{ label: 'Demander un créneau', href: '/rendez-vous?motif=sport&objet=cross-training', variant: 'solid' }],
-      },
-      { t: 'p', texte: 'À lire dans le journal : [le CrossFit, une discipline complète](/journal/crossfit) et [se préparer au Hyrox](/journal/hyrox).' },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
         t: 'faq',
@@ -543,7 +548,44 @@ export const soins: Soin[] = [
         ],
       },
     ],
-    proches: ['/sport/coaching-individuel', '/bilans/sauts-force-vitesse', '/recuperation/pressotherapie'],
+    proches: ['/sport/coaching-individuel', '/bilans/sauts-force-vitesse', '/bilans/aerobie'],
+  },
+  {
+    pole: 'sport',
+    slug: 'reathletisation',
+    nom: 'Réathlétisation',
+    carte: {
+      extrait: 'Le pont entre la fin de la rééducation et le retour au terrain, avec des critères de reprise mesurés.',
+      meta: 'Sur devis',
+    },
+    chapo:
+      'La rééducation vous rend la fonction ; la réathlétisation vous rend le terrain. Nous faisons le lien entre les deux, avec des critères de reprise mesurés.',
+    action: appelAccueil,
+    photo: 'traineau',
+    seo: {
+      title: 'Réathlétisation et retour au sport à Avon · Hygie',
+      description:
+        'Après une blessure ou une opération, un retour au terrain encadré par critères mesurés : isocinétisme, sauts, force. Lien direct avec votre kiné.',
+    },
+    corps: [
+      { t: 'h2', texte: 'Le parcours' },
+      {
+        t: 'ol',
+        items: [
+          'Bilan de départ en lien avec votre kiné : isocinétisme, force, sauts.',
+          'Reconstruction : force, puissance, course, changements de direction, spécifique à votre sport.',
+          'Tests de retour au sport : asymétries sous les seuils de reprise, qualités athlétiques retrouvées.',
+          'Retour progressif à l’entraînement collectif puis à la compétition.',
+        ],
+      },
+      { t: 'h2', texte: 'Pour qui' },
+      {
+        t: 'p',
+        texte: 'Les sportifs amateurs comme professionnels, après une rupture du ligament croisé, une lésion musculaire, une entorse grave ou une opération.',
+      },
+      { t: 'p', texte: 'Tarif : sur devis, selon la durée du protocole.' },
+    ],
+    proches: ['/sante/kinesitherapie', '/bilans/isocinetique', '/sport/coaching-individuel'],
   },
 
   /* ---------------- Récupération & bien-être ---------------- */
@@ -552,7 +594,7 @@ export const soins: Soin[] = [
     slug: 'pressotherapie',
     nom: 'Pressothérapie',
     carte: {
-      extrait: 'Des bottes gonflables exercent une compression par vagues pour stimuler la circulation et retrouver des jambes légères.',
+      extrait: 'Des bottes gonflables compressent les jambes par vagues, du pied vers la cuisse, pour des jambes plus légères.',
       meta: '20 € · 30 min',
     },
     chapo:
@@ -561,7 +603,8 @@ export const soins: Soin[] = [
     photo: 'pressotherapie',
     seo: {
       title: 'Pressothérapie à Avon : 20 € la séance de 30 minutes',
-      description: 'Séances de pressothérapie au centre Hygie d’Avon pour récupérer après l’effort et soulager les jambes lourdes. 20 € les 30 minutes.',
+      description:
+        'Pressothérapie au centre Hygie d’Avon pour récupérer après l’effort et soulager les jambes lourdes. 20 € les 30 minutes, cartes de 5 et 10.',
     },
     corps: [
       { t: 'h2', texte: 'Le principe' },
@@ -574,31 +617,27 @@ export const soins: Soin[] = [
       {
         t: 'p',
         texte:
-          'Les sportifs après un effort intense ou avant une compétition, et toute personne qui a souvent les jambes lourdes. La séance est aussi un vrai moment de détente.',
+          'Les sportifs après un effort intense, entre deux séances en période de charge ou avant une compétition, et toute personne qui a souvent les jambes lourdes.',
       },
       { t: 'h2', texte: 'Ce que vous pouvez en attendre' },
       {
         t: 'ul',
-        items: ['une sensation de jambes plus légères', 'une récupération facilitée entre deux entraînements', 'un moment de relâchement, allongé au calme'],
+        items: ['Une sensation de jambes plus légères', 'Une récupération facilitée entre deux entraînements', 'Un moment de relâchement, allongé au calme'],
       },
       { t: 'h2', texte: 'Avant votre séance' },
       {
         t: 'p',
         texte:
-          'La pressothérapie ne convient pas à tout le monde : certains troubles circulatoires, cardiaques ou cutanés la contre-indiquent. Un questionnaire de contre-indications est à remplir avant la première séance ; selon vos réponses, l’accord de votre médecin peut être demandé.',
+          'Un questionnaire de contre-indications est à remplir avant la première séance. Certains troubles circulatoires (phlébite, thrombose), cardiaques ou rénaux, une infection, une plaie ou une grossesse la contre-indiquent ; l’accord de votre médecin peut être demandé.',
       },
       { t: 'h2', texte: 'Tarifs' },
       {
         t: 'tarifs',
         items: [
-          { nom: 'Séance', detail: '30 minutes', prix: '20 €' },
-          { nom: 'Carte de 5 séances', detail: '30 minutes par séance', prix: 'Sur demande' },
-          { nom: 'Carte de 10 séances', detail: '30 minutes par séance', prix: 'Sur demande' },
+          { nom: 'Séance', detail: '30 min', prix: '20 €' },
+          { nom: 'Carte de 5 séances', detail: '30 min par séance', prix: v.prix.pressotherapie.carte5 },
+          { nom: 'Carte de 10 séances', detail: '30 min par séance', prix: v.prix.pressotherapie.carte10 },
         ],
-      },
-      {
-        t: 'actions',
-        items: [{ label: 'Réserver une séance', href: '/rendez-vous?motif=recuperation&objet=pressotherapie', variant: 'solid' }],
       },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
@@ -626,59 +665,65 @@ export const soins: Soin[] = [
   {
     pole: 'recuperation',
     slug: 'massages',
-    nom: 'Massages',
+    nom: 'Massages bien-être',
     carte: {
-      extrait: 'Deep tissue, drainages lymphatiques et massage anti-cellulite, sur rendez-vous avec Malika Pereira.',
+      extrait: 'Deep tissue, drainage esthétique, anti-cellulite, avec Malika Pereira.',
       meta: 'Sur rendez-vous',
     },
-    chapo:
-      'Malika Pereira propose quatre massages, du plus profond au plus doux. Chaque séance s’adapte à vos tensions, à votre récupération et à vos objectifs.',
-    action: { label: 'Appeler Malika', href: 'tel:+33624114219' },
+    chapo: 'Malika Pereira propose des massages de bien-être, du plus profond au plus doux. Chaque séance s’adapte à vos tensions et à vos objectifs.',
+    action: appelAccueil,
     photo: 'massage',
     seo: {
-      title: 'Massages bien-être à Avon : deep tissue, drainage lymphatique',
-      description:
-        'Massage deep tissue, drainage lymphatique Renata França et Vodder, massage anti-cellulite avec Malika Pereira, sur rendez-vous au centre Hygie d’Avon.',
+      title: 'Massages bien-être à Avon : deep tissue, drainage · Hygie',
+      description: 'Massages bien-être deep tissue, drainage esthétique méthode Renata França et anti-cellulite avec Malika Pereira, sur rendez-vous à Avon.',
     },
     corps: [
       { t: 'h2', texte: 'Nos massages' },
-      { t: 'h3', texte: 'Deep tissue' },
+      {
+        t: 'tarifs',
+        items: [
+          {
+            nom: 'Deep tissue',
+            detail: avecDuree('Relâcher les tensions installées, retrouver de la souplesse, récupérer après l’effort', v.durees.massages.deepTissue),
+            prix: v.prix.massages.deepTissue,
+          },
+          {
+            nom: 'Drainage méthode Renata França',
+            detail: avecDuree(
+              'Un drainage tonique et rythmé qui laisse une sensation de corps dégonflé, en cure ou avant un événement',
+              v.durees.massages.renataFranca,
+            ),
+            prix: v.prix.massages.renataFranca,
+          },
+          {
+            nom: 'Drainage doux, méthode Vodder',
+            detail: avecDuree('Une technique douce pour des jambes plus légères et une détente profonde', v.durees.massages.vodder),
+            prix: v.prix.massages.vodder,
+          },
+          {
+            nom: 'Anti-cellulite',
+            detail: avecDuree('Stimuler la circulation, lisser et raffermir l’aspect de la peau', v.durees.massages.antiCellulite),
+            prix: v.prix.massages.antiCellulite,
+          },
+        ],
+      },
       {
         t: 'p',
         texte:
-          'Un massage profond qui cible les couches musculaires et les fascias. Il relâche les tensions installées, aide à retrouver de la souplesse et accompagne la récupération des sportifs.',
+          'Ces massages sont des soins de bien-être, sans visée thérapeutique. Pour une rééducation ou un drainage prescrit, adressez-vous aux [kinésithérapeutes du centre](/sante/kinesitherapie).',
       },
-      { t: 'h3', texte: 'Drainage lymphatique, méthode Renata França' },
-      {
-        t: 'p',
-        texte:
-          'Un drainage tonique et rythmé, aux pressions fermes, qui stimule la circulation. Il laisse une sensation de corps dégonflé et se pratique volontiers en cure ou avant un événement.',
-      },
-      { t: 'h3', texte: 'Drainage lymphatique manuel, méthode Vodder' },
-      {
-        t: 'p',
-        texte:
-          'Une technique douce qui stimule à la main la circulation lymphatique. Elle soulage les jambes lourdes et gonflées et invite à une détente profonde.',
-      },
-      { t: 'h3', texte: 'Massage anti-cellulite' },
-      { t: 'p', texte: 'Un massage ciblé qui stimule la circulation sanguine et lymphatique. Il vise à lisser l’aspect de la peau et à la raffermir.' },
       { t: 'h2', texte: 'Prendre rendez-vous' },
-      { t: 'p', texte: 'Les massages se font sur rendez-vous, directement auprès de Malika Pereira, au 06 24 11 42 19.' },
-      { t: 'actions', items: [{ label: 'Appeler Malika', href: 'tel:+33624114219', variant: 'solid' }] },
+      { t: 'p', texte: `Sur rendez-vous, par l’accueil au ${site.telephone.affichage}.` },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
         t: 'faq',
         items: [
-          { q: 'Les massages sont-ils remboursés ?', r: 'Non. Ce sont des massages bien-être, sans visée thérapeutique.' },
-          { q: 'Combien de temps dure un massage ?', r: 'La durée dépend du massage choisi : Malika Pereira vous l’indique à la réservation.' },
+          { q: 'Sont-ils remboursés ?', r: 'Non, ce sont des massages bien-être.' },
           {
             q: 'Y a-t-il des contre-indications ?',
-            r: 'Oui, en particulier pour les drainages (insuffisance cardiaque ou rénale, phlébite, infection en cours) et pendant la grossesse pour certains soins. Signalez tout traitement ou grossesse à la réservation.',
+            r: 'Oui, surtout pour les drainages (insuffisance cardiaque ou rénale, phlébite, infection) et pendant la grossesse. Signalez tout traitement ou grossesse à la réservation.',
           },
-          {
-            q: 'Que dois-je apporter ?',
-            r: 'Rien de particulier. Évitez un repas copieux juste avant et prévenez à la réservation si vous êtes enceinte ou suivez un traitement.',
-          },
+          { q: 'Que dois-je apporter ?', r: 'Rien. Évitez un repas copieux juste avant.' },
         ],
       },
     ],
@@ -689,32 +734,29 @@ export const soins: Soin[] = [
     slug: 'nutrition',
     nom: 'Conseil en nutrition',
     carte: {
-      extrait: 'Un accompagnement personnalisé vers une alimentation équilibrée, adaptée à votre rythme, à votre sport et à vos étapes de vie.',
+      extrait: 'Une alimentation équilibrée, adaptée à votre rythme, à votre sport et à vos étapes de vie.',
       meta: 'Sur rendez-vous',
     },
-    chapo:
-      'Une alimentation saine et adaptée à vos besoins, construite à votre rythme. L’accompagnement est personnalisé et s’inscrit dans une démarche de prévention.',
-    action: { label: 'Appeler Malika', href: 'tel:+33624114219' },
+    chapo: 'Une alimentation adaptée à vos besoins, construite à votre rythme. L’accompagnement est personnalisé et s’inscrit dans une démarche de prévention.',
+    action: appelAccueil,
     photo: 'nutrition',
     seo: {
-      title: 'Conseil en nutrition à Avon',
+      title: 'Conseil en nutrition à Avon · Hygie',
       description:
-        'Accompagnement personnalisé en nutrition au centre Hygie d’Avon : énergie, poids, performance sportive, grossesse ou ménopause, dans une démarche de prévention.',
+        'Accompagnement en nutrition à Avon : énergie, poids, performance sportive, grossesse ou ménopause, dans une démarche de prévention, sans régime prescrit.',
     },
     corps: [
       { t: 'h2', texte: 'Ce que l’accompagnement vous apporte' },
       {
         t: 'ul',
         items: [
-          'retrouver de l’énergie au quotidien',
-          'gérer votre poids de façon durable',
-          'mieux comprendre votre alimentation et vos besoins',
-          'soutenir vos performances sportives',
-          'mieux vivre certaines étapes : grossesse, post-partum, ménopause',
-          'prévenir les déséquilibres liés au stress et aux rythmes de vie',
+          'Retrouver de l’énergie au quotidien',
+          'Gérer votre poids de façon durable',
+          'Comprendre votre alimentation et vos besoins',
+          'Soutenir vos entraînements et votre récupération, en lien avec votre préparateur physique',
+          'Mieux vivre certaines étapes : grossesse, post-partum, ménopause',
         ],
       },
-      { t: 'p', texte: 'Chaque accompagnement respecte votre rythme, vos objectifs et vos préférences.' },
       { t: 'h2', texte: 'Les limites du conseil en nutrition' },
       {
         t: 'p',
@@ -722,26 +764,20 @@ export const soins: Soin[] = [
           'La conseillère en nutrition n’est ni diététicienne ni médecin. Elle ne pose pas de diagnostic, n’intervient pas sur les pathologies qui demandent un suivi thérapeutique (diabète, maladies cardiovasculaires, troubles du comportement alimentaire) et n’établit pas de régime prescrit.',
       },
       { t: 'p', texte: 'Si votre situation le demande, elle vous oriente vers le professionnel de santé adapté.' },
-      { t: 'h2', texte: 'Prendre rendez-vous' },
-      { t: 'p', texte: 'Le conseil en nutrition est assuré par Malika Pereira, sur rendez-vous au 06 24 11 42 19.' },
-      { t: 'actions', items: [{ label: 'Appeler Malika', href: 'tel:+33624114219', variant: 'solid' }] },
+      { t: 'h2', texte: 'Déroulé' },
+      {
+        t: 'p',
+        texte:
+          'Le premier rendez-vous fait le point sur vos habitudes, votre activité, votre sommeil et vos objectifs. Les suivants ajustent le plan, à votre rythme.',
+      },
+      ...tarifNutrition(),
       { t: 'h2', texte: 'Questions fréquentes' },
       {
         t: 'faq',
         items: [
-          { q: 'Faut-il une ordonnance ?', r: 'Non. Le conseil en nutrition se prend directement, par téléphone.' },
-          {
-            q: 'Est-ce remboursé ?',
-            r: 'Non. Le conseil en nutrition n’est pas un acte médical ; seule une consultation chez un diététicien ou un médecin nutritionniste peut, dans certains cas, être prise en charge.',
-          },
-          {
-            q: 'Comment se passe le premier rendez-vous ?',
-            r: 'C’est le plus long : il fait le point sur vos habitudes, votre activité, votre sommeil et vos objectifs. Les rendez-vous suivants ajustent le plan.',
-          },
-          {
-            q: 'Que dois-je apporter ?',
-            r: 'Vos derniers bilans sanguins si vous en avez, votre programme d’entraînement et, si possible, un relevé de vos repas sur quelques jours.',
-          },
+          { q: 'Faut-il une ordonnance ?', r: 'Non.' },
+          { q: 'Est-ce remboursé ?', r: 'Non, ce n’est pas un acte médical.' },
+          { q: 'Que dois-je apporter ?', r: 'Votre programme d’entraînement et, si possible, un relevé de vos repas sur quelques jours.' },
         ],
       },
     ],
@@ -758,53 +794,63 @@ export const soins: Soin[] = [
       meta: '80 € · 1 h 30',
     },
     chapo:
-      'Le bilan isocinétique mesure la force de vos muscles pendant un mouvement à vitesse constante. C’est l’examen de référence avant un retour au sport, notamment après une rupture du ligament croisé.',
-    action: bilanAction('isocinetique', 'Réserver le bilan'),
+      'Le bilan isocinétique mesure la force de vos muscles pendant un mouvement à vitesse constante. C’est l’examen de référence pour décider d’un retour au sport, notamment après une rupture du ligament croisé.',
+    action: bilanAction('isocinetique'),
     photo: 'extensionJambe',
     seo: {
-      title: 'Bilan isocinétique à Avon : 80 €, réservation en ligne',
+      title: 'Bilan isocinétique à Avon : 80 €, 1 h 30',
       description:
-        'Test isocinétique au centre Hygie d’Avon (77) : force, équilibre musculaire et asymétries, avant un retour au sport ou pendant une rééducation. 80 €, 1 h 30.',
+        'Test isocinétique à Avon (77) : force, ratio ischio-jambiers/quadriceps et asymétries, avant un retour au sport ou pendant une rééducation. 80 €.',
     },
     corps: [
       { t: 'h2', texte: 'Ce que mesure la machine' },
       {
         t: 'p',
-        texte:
-          'Vous réalisez des flexions et des extensions, du genou par exemple, sur un dynamomètre qui impose une vitesse constante. La machine enregistre :',
+        texte: 'Vous réalisez des flexions et des extensions, du genou le plus souvent, sur un dynamomètre qui impose la vitesse. La machine enregistre :',
       },
       {
         t: 'ul',
         items: [
-          'la force maximale que vous développez',
-          'votre endurance musculaire à l’effort',
-          'l’équilibre entre muscles opposés, quadriceps et ischio-jambiers par exemple',
-          'les écarts entre votre côté droit et votre côté gauche',
+          'le pic de force de chaque muscle, à vitesse lente et à vitesse rapide',
+          'votre endurance musculaire sur une série prolongée',
+          'le ratio entre muscles opposés, ischio-jambiers et quadriceps',
+          'le déficit entre votre côté fort et votre côté faible',
         ],
+      },
+      { t: 'h2', texte: 'Comment nous lisons vos résultats' },
+      {
+        t: 'p',
+        texte:
+          'Le déficit se calcule toujours en rapportant le côté faible au côté fort : (force du côté fort − force du côté faible) / force du côté fort. Le compte rendu indique clairement le côté déficitaire. Ces chiffres, rapprochés des repères de reprise, aident votre chirurgien, votre kiné et votre préparateur à décider de la suite.',
       },
       { t: 'h2', texte: 'Pourquoi le faire' },
       {
         t: 'ul',
         items: [
-          'prévenir les blessures, notamment ligamentaires et tendineuses',
-          'décider d’un retour au sport en sécurité, après une blessure ou une opération',
-          'évaluer l’efficacité d’une rééducation ou d’une préparation physique',
-          'suivre vos progrès avec des repères objectifs',
+          'Décider d’un retour au sport en sécurité, après une blessure ou une opération',
+          'Mesurer l’efficacité d’une rééducation ou d’une préparation physique',
+          'Prévenir les blessures ligamentaires et musculaires en repérant les déséquilibres',
+          'Suivre vos progrès avec des repères objectifs, d’un bilan à l’autre',
         ],
       },
       { t: 'h2', texte: 'Pour qui' },
       {
         t: 'p',
         texte:
-          'Les sportifs en reprise ou en préparation, les personnes en rééducation après une blessure au genou, à la cheville ou à l’épaule, et toute personne qui veut connaître son profil musculaire.',
+          'Les sportifs en reprise ou en préparation, les personnes en rééducation (genou, cheville, épaule) et toute personne qui veut connaître son profil musculaire.',
       },
       { t: 'h2', texte: 'Déroulé' },
       {
-        t: 'p',
-        texte:
-          'Le test est indolore et non invasif. Installé sur la machine, vous réalisez les mouvements demandés à plusieurs vitesses, puis vous repartez avec un compte-rendu et des recommandations.',
+        t: 'ol',
+        items: [
+          'Entretien : blessure, opération, date, sport pratiqué.',
+          'Échauffement et familiarisation avec la machine.',
+          'Tests à plusieurs vitesses, côté sain puis côté opéré.',
+          'Restitution des résultats et recommandations.',
+        ],
       },
-      { t: 'h3', texte: 'Pour bien le préparer' },
+      { t: 'p', texte: 'Le test est indolore et non invasif ; il demande un effort maximal sur quelques répétitions.' },
+      { t: 'h2', texte: 'Pour bien le préparer' },
       {
         t: 'ul',
         items: [
@@ -813,19 +859,7 @@ export const soins: Soin[] = [
           'apportez vos comptes rendus médicaux ou opératoires',
         ],
       },
-      { t: 'h2', texte: 'Tarif' },
-      {
-        t: 'tarifs',
-        items: [
-          {
-            nom: 'Bilan isocinétique',
-            detail: '1 h 30',
-            note: 'Non pris en charge par la Sécurité sociale.',
-            prix: '80 €',
-            action: bilanAction('isocinetique'),
-          },
-        ],
-      },
+      { t: 'p', texte: 'Tarif : 80 €, 1 h 30. Non pris en charge par la Sécurité sociale.' },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
         t: 'faq',
@@ -850,7 +884,7 @@ export const soins: Soin[] = [
         ],
       },
     ],
-    proches: ['/bilans/forces-musculaires', '/sante/kinesitherapie', '/sport/coaching-individuel'],
+    proches: ['/bilans/forces-musculaires', '/sante/kinesitherapie', '/sport/reathletisation'],
   },
   {
     pole: 'bilans',
@@ -861,47 +895,41 @@ export const soins: Soin[] = [
       meta: 'Dès 80 € · 1 h',
     },
     chapo:
-      'Mesurez votre force et vos asymétries pour vous entraîner plus juste. Nos préparateurs s’appuient sur les équipements VALD, utilisés par des clubs professionnels et des centres de rééducation.',
-    action: { label: 'Voir les tarifs', href: '#tarifs' },
+      'Mesurez votre force et vos asymétries pour vous entraîner plus juste. Nous utilisons les capteurs VALD et KINVENT, présents dans les clubs professionnels et les centres de rééducation.',
+    action: bilanAction('forces-complet'),
     photo: 'souleve',
     seo: {
       title: 'Bilan des forces musculaires à Avon, dès 80 €',
-      description:
-        'Mesure de la force et des asymétries musculaires avec les équipements VALD, au centre Hygie d’Avon. Bilan complet 120 €, membres supérieurs ou inférieurs 80 €.',
+      description: 'Force et asymétries musculaires mesurées sur capteurs VALD et KINVENT à Avon. Bilan complet 120 €, membres supérieurs ou inférieurs 80 €.',
     },
     corps: [
       { t: 'h2', texte: 'Le principe' },
       {
         t: 'p',
         texte:
-          'Des tests rapides et non invasifs mesurent la force de vos principaux groupes musculaires, côté droit et côté gauche. Les données révèlent les déséquilibres qu’un simple ressenti ne montre pas.',
+          'Des tests isométriques courts mesurent la force de vos principaux groupes musculaires, côté droit et côté gauche : hanches, cuisses, ischio-jambiers, mollets, épaules, préhension. Les données révèlent les déséquilibres que le ressenti ne montre pas.',
       },
       { t: 'h2', texte: 'Pour qui' },
       {
         t: 'ul',
         items: [
-          'les femmes à partir de 40 ans : tonus, renforcement, prévention des douleurs',
-          'les hommes à partir de 35 ans : mobilité, performance, prévention des blessures',
-          'les sportifs, en reprise ou confirmés : optimisation du geste et suivi de la performance',
-          'les personnes en rééducation : suivi après une blessure ou une opération',
+          'Les sportifs, en reprise ou confirmés, qui veulent optimiser leur préparation',
+          'Les personnes en rééducation, pour suivre la récupération après une blessure',
+          'Les adultes qui veulent garder leur force avec l’âge : prévention des douleurs et des chutes',
         ],
       },
       { t: 'h2', texte: 'Ce que vous obtenez' },
       {
         t: 'ul',
         items: [
-          'un rapport clair et visuel de vos résultats',
-          'l’analyse de votre préparateur physique',
-          'un plan d’action : renforcement, mobilité, séances ciblées',
+          'Un rapport visuel de vos résultats, muscle par muscle',
+          'Les écarts gauche-droite et entre muscles opposés',
+          'L’analyse de votre préparateur et un plan d’action : renforcement, mobilité, séances ciblées',
         ],
       },
-      { t: 'h2', texte: 'Tarifs', id: 'tarifs' },
       {
-        t: 'tarifs',
-        items: [
-          { nom: 'Bilan complet', detail: 'Membres supérieurs et inférieurs · 1 h', prix: '120 €', action: bilanAction('forces-complet') },
-          { nom: 'Bilan partiel', detail: 'Membres supérieurs ou inférieurs · 1 h', prix: '80 €', action: bilanAction('forces-partiel') },
-        ],
+        t: 'p',
+        texte: 'Tarifs : bilan complet (supérieurs et inférieurs) 120 € · 1 h ; bilan partiel (supérieurs ou inférieurs) 80 € · 1 h.',
       },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
@@ -928,39 +956,36 @@ export const soins: Soin[] = [
       meta: '60 € · 1 h',
     },
     chapo:
-      'Un diagnostic complet pour bouger mieux, plus fort et plus longtemps. Que vous repreniez une activité, perdiez en mobilité ou cherchiez la performance, il révèle ce qui vous limite.',
-    action: bilanAction('fonctionnel', 'Réserver le bilan'),
+      'Un état des lieux pour bouger mieux, plus fort et plus longtemps. Que vous repreniez une activité, perdiez en mobilité ou cherchiez la performance, il révèle ce qui vous limite.',
+    action: bilanAction('fonctionnel'),
     photo: 'coachSouleve',
     seo: {
-      title: 'Bilan fonctionnel à Avon : mobilité, équilibre, force',
+      title: 'Bilan fonctionnel à Avon : mobilité, équilibre, force · 60 €',
       description:
-        'Bilan fonctionnel au centre Hygie d’Avon : mobilité, forces isométriques, contrôle moteur et équilibre, pour un programme d’étirements et de renforcement ciblé. 60 €.',
+        'Mobilité, force isométrique, contrôle moteur et équilibre au centre Hygie d’Avon, pour un programme d’étirements et de renforcement ciblé. 60 €.',
     },
     corps: [
       { t: 'h2', texte: 'Ce que nous mesurons' },
       {
         t: 'ul',
-        items: ['la force isométrique de vos chaînes musculaires', 'vos amplitudes articulaires et votre mobilité', 'votre contrôle moteur et votre équilibre'],
-      },
-      {
-        t: 'p',
-        texte: 'Les tests reposent sur des mouvements simples : équilibre sur une jambe, rotations d’épaules, squat bras tendus au-dessus de la tête, fentes.',
+        items: [
+          'Vos amplitudes articulaires : hanches, chevilles, épaules, colonne',
+          'La force isométrique de vos chaînes musculaires, sur capteurs',
+          'Votre contrôle moteur : squat bras tendus au-dessus de la tête, fentes, rotations d’épaules',
+          'Votre équilibre, sur une jambe puis l’autre',
+        ],
       },
       { t: 'h2', texte: 'Pour quoi faire' },
       {
         t: 'ul',
         items: [
-          'identifier vos déséquilibres posturaux et moteurs',
-          'repérer les faiblesses musculaires et les instabilités',
-          'comprendre ce qui entretient une douleur ou freine votre performance',
-          'personnaliser votre programme d’étirements et de renforcement',
+          'Identifier vos déséquilibres et vos compensations',
+          'Repérer les faiblesses et les instabilités',
+          'Comprendre ce qui entretient une douleur ou freine votre performance',
+          'Construire votre programme d’étirements et de renforcement',
         ],
       },
-      { t: 'h2', texte: 'Tarif' },
-      {
-        t: 'tarifs',
-        items: [{ nom: 'Bilan fonctionnel', detail: '1 h', prix: '60 €', action: bilanAction('fonctionnel') }],
-      },
+      { t: 'p', texte: 'Tarif : 60 €, 1 h, rapport et plan d’action compris.' },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
         t: 'faq',
@@ -990,35 +1015,36 @@ export const soins: Soin[] = [
     },
     chapo:
       'Deux bilans sur plateformes de force pour mesurer ce qui fait la différence sur le terrain : la puissance, l’explosivité et l’équilibre entre force et vitesse.',
-    action: { label: 'Voir les tarifs', href: '#tarifs' },
+    action: bilanAction('sauts'),
     photo: 'boxJump',
     seo: {
-      title: 'Bilan des sauts et profil force-vitesse à Avon',
+      title: 'Bilan des sauts et profil force-vitesse à Avon · 80 €',
       description:
-        'Tests de sauts sur plateformes de force et profil force-vitesse au centre Hygie d’Avon : puissance, explosivité et asymétries entre les jambes. 80 € par bilan.',
+        'Sauts sur plateformes de force et profil force-vitesse à Avon : puissance, explosivité, réactivité et asymétries entre les jambes. 80 € par bilan.',
     },
     corps: [
       { t: 'h2', texte: 'Le bilan des sauts' },
+      { t: 'p', texte: 'Une batterie de sauts, sur deux jambes puis sur une seule :' },
+      {
+        t: 'ul',
+        items: [
+          'Saut vertical avec contre-mouvement : puissance et hauteur de saut.',
+          'Sauts unipodaux : comparaison gauche-droite, asymétries à corriger.',
+          'Drop jump (saut après une chute depuis une caisse) : réactivité et raideur, via l’indice de force réactive (RSI).',
+        ],
+      },
       {
         t: 'p',
         texte:
-          'Plusieurs sauts, sur deux jambes puis sur une seule, mesurent votre force, votre puissance et votre explosivité. La comparaison entre vos deux jambes met en évidence les asymétries à corriger.',
+          'Les plateformes mesurent la force au sol milliseconde par milliseconde : au-delà de la hauteur, nous analysons comment vous produisez cette hauteur.',
       },
       { t: 'h2', texte: 'Le profil force-vitesse' },
       {
         t: 'p',
         texte:
-          'Des sauts réalisés avec des charges croissantes dessinent votre profil. Il indique s’il faut d’abord travailler la force ou la vitesse pour gagner en performance.',
+          'Des sauts avec charges croissantes dessinent votre profil. Il indique s’il faut d’abord travailler la force ou la vitesse pour gagner en performance. Ce test demande de savoir sauter avec une barre chargée sur les épaules.',
       },
-      { t: 'note', texte: 'Le profil force-vitesse demande de savoir sauter avec une barre chargée sur les épaules.' },
-      { t: 'h2', texte: 'Tarifs', id: 'tarifs' },
-      {
-        t: 'tarifs',
-        items: [
-          { nom: 'Bilan des sauts', prix: '80 €', action: bilanAction('sauts') },
-          { nom: 'Profil force-vitesse', prix: '80 €', action: bilanAction('force-vitesse') },
-        ],
-      },
+      { t: 'p', texte: 'Tarifs : bilan des sauts 80 € ; profil force-vitesse 80 €. Les deux peuvent se faire le même jour.' },
       { t: 'h2', texte: 'Questions fréquentes' },
       {
         t: 'faq',
@@ -1039,9 +1065,56 @@ export const soins: Soin[] = [
         ],
       },
     ],
-    proches: ['/bilans/forces-musculaires', '/sport/cross-training', '/bilans/isocinetique'],
+    proches: ['/bilans/forces-musculaires', '/bilans/aerobie', '/bilans/isocinetique'],
+  },
+  {
+    pole: 'bilans',
+    slug: 'aerobie',
+    nom: 'Bilan aérobie',
+    carte: {
+      extrait: 'Un masque relié à l’analyseur métabolique PNOE mesure l’oxygène que vous consommez et le CO2 que vous rejetez pendant un effort progressif.',
+      meta: [v.prix.aerobie, v.durees.aerobie].filter(Boolean).join(' · ') || SUR_DEMANDE,
+    },
+    chapo:
+      'Un masque relié à l’analyseur métabolique PNOE mesure l’oxygène que vous consommez et le CO2 que vous rejetez pendant un effort progressif. On en déduit vos seuils et vos zones d’entraînement réelles, au lieu de formules théoriques.',
+    action: bilanAction('aerobie'),
+    photo: 'course',
+    seo: {
+      title: 'Bilan aérobie PNOE à Avon : vos zones d’entraînement',
+      description:
+        'Analyse des échanges gazeux avec le PNOE à Avon : VO2, seuils ventilatoires et zones d’entraînement personnalisées pour la course et le vélo.',
+    },
+    corps: [
+      { t: 'h2', texte: 'Ce que vous obtenez' },
+      {
+        t: 'ul',
+        items: [
+          'Votre consommation d’oxygène et vos seuils ventilatoires',
+          'Vos zones de fréquence cardiaque et d’allure, personnalisées',
+          'L’utilisation des graisses et des glucides selon l’intensité',
+          'Un plan pour structurer vos semaines d’entraînement',
+        ],
+      },
+      { t: 'h2', texte: 'Pour qui' },
+      {
+        t: 'p',
+        texte: 'Coureurs, traileurs, marathoniens, cyclistes, triathlètes, et toute personne qui veut s’entraîner à la bonne intensité.',
+      },
+      ...siRenseigne(v.prix.aerobie, (prix): Bloc => ({
+        t: 'p',
+        texte: `Tarif : ${[prix, v.durees.aerobie].filter(Boolean).join(', ')}.`,
+      })),
+    ],
+    proches: ['/sport/cross-training', '/bilans/sauts-force-vitesse', '/sport/coaching-individuel'],
   },
 ];
+
+/* Tarif du conseil en nutrition : la phrase n'apparaît qu'avec au moins un prix renseigné */
+function tarifNutrition(): Bloc[] {
+  const n = aRenseigner.prix.nutrition;
+  const parties = [...siRenseigne(n.premierRendezVous, (p) => `premier rendez-vous ${p}`), ...siRenseigne(n.suivi, (p) => `suivi ${p}`)];
+  return parties.length ? [{ t: 'p', texte: `Tarif : ${parties.join(', ')}.` }] : [];
+}
 
 export function soinsDu(pole: Pole) {
   return soins.filter((s) => s.pole === pole);

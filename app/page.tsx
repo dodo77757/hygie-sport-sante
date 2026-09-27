@@ -16,11 +16,13 @@ import { imagePartage, photos } from '@/content/images';
 import { articlesTries, categories, couleursCategories, dateCourte } from '@/content/journal';
 import { poles as polesSoins } from '@/content/soins';
 import { site } from '@/content/site';
+import { LIEN_ESSAI } from '@/content/valeurs';
 
+/* Textes : « Hygie — Textes du site, page par page » (25 septembre 2026), page Accueil. */
 export const metadata: Metadata = {
-  title: { absolute: 'Hygie Sport Santé et Performance · Santé, sport et récupération à Avon (77)' },
+  title: { absolute: 'Hygie · Santé, sport et récupération à Avon (77)' },
   description:
-    'À Avon (77), Hygie réunit kinésithérapeutes, étiopathes, orthoptiste, préparateurs physiques et soins de récupération. Bilans physiologiques, coaching et offres entreprises.',
+    'Kinés, étiopathe, orthoptiste, préparateurs physiques et récupération sous le même toit à Avon. Bilans mesurés, coaching et offres entreprises.',
   alternates: { canonical: '/' },
 };
 
@@ -29,8 +31,8 @@ const poles = [
     href: '/sante',
     tag: 'Santé',
     couleur: polesSoins.sante.couleur,
-    titre: 'Soigner la cause',
-    extrait: 'Kinésithérapeutes, étiopathes et orthoptiste consultent au centre, avec prise de rendez-vous en ligne.',
+    titre: 'Traiter la cause',
+    extrait: 'Kinésithérapeutes, étiopathe et orthoptiste consultent au centre. Rendez-vous en ligne sur Doctolib ou Calendly.',
     photo: 'mainsDos' as const,
   },
   {
@@ -38,15 +40,15 @@ const poles = [
     tag: 'Sport',
     couleur: polesSoins.sport.couleur,
     titre: 'Bouger avec méthode',
-    extrait: 'Coaching individuel, sport-santé et cross training, encadrés par nos préparateurs physiques à partir d’un bilan.',
+    extrait: 'Coaching individuel, sport-santé et cross training, encadrés par nos préparateurs physiques diplômés, toujours à partir d’un bilan.',
     photo: 'coachSquat' as const,
   },
   {
     href: '/recuperation',
     tag: 'Récupération',
     couleur: polesSoins.recuperation.couleur,
-    titre: 'Récupérer, prendre soin',
-    extrait: 'Pressothérapie, massages et conseil en nutrition pour relâcher les tensions et retrouver de l’énergie.',
+    titre: 'Relâcher, recharger',
+    extrait: 'Pressothérapie, massages et conseil en nutrition, pour récupérer entre deux séances ou deux semaines chargées.',
     photo: 'pressotherapie' as const,
   },
 ];
@@ -87,14 +89,22 @@ export default function Accueil() {
         }}
       />
 
-      <Hero title="Remettez-vous en mouvement" intro={site.accroche} cta={{ label: 'Découvrir les pôles', href: '#poles' }} />
+      <Hero
+        surtitre={site.accroche}
+        title="Remettez-vous en mouvement"
+        intro="On mesure d’abord, on construit ensuite. Quinze praticiens de la santé et du sport travaillent ensemble autour de votre parcours, du soin à la performance."
+        ctas={[
+          { label: 'Prendre rendez-vous', href: '/rendez-vous', variant: 'solid' },
+          { label: 'Réserver ma séance d’essai offerte', href: LIEN_ESSAI },
+        ]}
+      />
 
       <HeroMedia
         photo={photos.depart}
         card={{
-          title: 'Bilans physiologiques',
-          text: 'Force, mobilité, asymétries : un état des lieux précis avant de construire votre programme.',
-          cta: { label: 'En savoir plus', href: '/bilans' },
+          title: 'Des bilans qui mesurent, pas qui estiment',
+          text: 'Force, asymétries, mobilité, explosivité, capacité aérobie : nous testons avec les outils des clubs professionnels (dynamomètre isocinétique, plateformes de force, capteurs VALD et KINVENT, analyseur métabolique PNOE). Vous repartez avec un compte rendu chiffré et vos priorités de travail.',
+          cta: { label: 'Voir les bilans et les tarifs', href: '/bilans' },
         }}
       />
 
@@ -102,7 +112,7 @@ export default function Accueil() {
       <Section id="poles" titre="Nos trois pôles" titreId="titre-poles" aere>
         <div className="hk-grid hk-grid--3">
           {poles.map((p) => (
-            <ArticleCard key={p.href} href={p.href} tag={p.tag} tagCouleur={p.couleur} title={p.titre} excerpt={p.extrait} photo={p.photo} />
+            <ArticleCard key={p.href} href={p.href} tag={p.tag} tagCouleur={p.couleur} title={p.titre} excerpt={p.extrait} photo={p.photo} entier />
           ))}
         </div>
         <Button href="/soins">Voir tous les soins</Button>
@@ -115,13 +125,13 @@ export default function Accueil() {
         photo={<PhotoImg className="hk-media accueil-presentation__photo" photo={photos.johanPereira} sizes="(max-width: 1023px) 92vw, 46vw" />}
       >
         <Reveal as="p" className="courant texte-colonne">
-          Ancien footballeur devenu étiopathe et préparateur physique, Johan Pereira a fondé Hygie à Avon. Il y réunit professionnels de santé et du sport
-          autour d’un parcours personnalisé.
+          Ancien footballeur formé à l’ESTAC, Johan Pereira est étiopathe depuis 2012 et préparateur physique diplômé de deux universités. Il a fondé Hygie pour
+          que le soin, l’entraînement et la prévention se parlent enfin, dans un même lieu et un même dossier.
         </Reveal>
         <Button href="/methodologie">Découvrir la méthode</Button>
       </Section>
 
-      {/* Ils nous font confiance : panneau à part entière (partenariat, équipe, sportifs, avis Google) */}
+      {/* Ils nous font confiance : panneau à part entière (quatre preuves, avis Google) */}
       <Confiance />
 
       {/* Temps fort : bandeau, panneau jaune, bandeau */}
@@ -130,7 +140,7 @@ export default function Accueil() {
         <CoralPanel
           id="rappel-entreprises"
           title="Prenez soin de vos équipes"
-          text="Séances collectives, bilans et prévention pour vos collaborateurs. Laissez vos coordonnées professionnelles, nous vous rappelons."
+          text="Séances collectives, bilans individuels et campagnes de prévention des troubles musculosquelettiques, au centre ou sur site. Laissez vos coordonnées professionnelles : nous vous rappelons sous 48 h ouvrées."
         >
           <ContactForm type="rappel" submitLabel="Être rappelé" compact />
         </CoralPanel>
@@ -140,7 +150,7 @@ export default function Accueil() {
       {/* Articles récents : titre, texte, trois cartes, bouton */}
       <Section titre="Allez plus loin" titreId="titre-journal">
         <Reveal as="p" className="courant texte-colonne">
-          Conseils et retours d’expérience de l’équipe.
+          Conseils, décryptages et retours de terrain de l’équipe.
         </Reveal>
         <div className="hk-grid hk-grid--3">
           {recents.map((a) => (

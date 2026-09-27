@@ -10,8 +10,9 @@ export const metadata: Metadata = {
   alternates: { canonical: '/mentions-legales' },
 };
 
-function AC({ valeur, libelle }: { valeur: string | null; libelle: string }) {
-  return valeur ? <>{valeur}</> : <span className="a-completer">[{libelle} à compléter]</span>;
+/* Valeur à renseigner (content/site.ts) : tant qu'elle manque, « [à compléter] » s'affiche, comme dans les textes du site */
+function AC({ valeur, libelle }: { valeur: string | null; libelle?: string }) {
+  return valeur ? <>{valeur}</> : <span className="a-completer">[{libelle ? `${libelle} ` : ''}à compléter]</span>;
 }
 
 export default function MentionsLegales() {
@@ -22,37 +23,30 @@ export default function MentionsLegales() {
 
       <h2>Éditeur du site</h2>
       <p>
-        {site.nom}, <AC valeur={m.formeJuridique} libelle="forme juridique" /> au capital de <AC valeur={m.capital} libelle="capital" />
-        <br />
-        Siège social : {site.adresse.rue}, {site.adresse.codePostal} {site.adresse.ville}, France
-        <br />
-        SIRET : <AC valeur={m.siret} libelle="SIRET" /> · RCS : <AC valeur={m.rcs} libelle="RCS" />
-        <br />
-        TVA intracommunautaire : <AC valeur={m.tva} libelle="numéro de TVA" />
+        {m.raisonSociale}, {m.formeJuridique} au capital de <AC valeur={m.capital} /> €, exploitant l’enseigne {site.nom}. Siège social : {site.adresse.rue},{' '}
+        {site.adresse.codePostal} {site.adresse.ville}, France. SIRET : <AC valeur={m.siret} /> · RCS Melun <AC valeur={m.rcs} />. TVA intracommunautaire : FR
+        <AC valeur={m.tva} />.
         <br />
         Téléphone : <a href={site.telephone.lien}>{site.telephone.affichage}</a> · E-mail : <a href={`mailto:${site.email}`}>{site.email}</a>
       </p>
 
       <h2>Directeur de la publication</h2>
-      <p>
-        <AC valeur={m.directeurPublication} libelle="nom du directeur de la publication" />
-      </p>
+      <p>{m.directeurPublication}</p>
 
       <h2>Hébergement</h2>
-      <p>
-        <AC valeur={m.hebergeur} libelle="nom, adresse et téléphone de l’hébergeur" />
-      </p>
+      <p>{m.hebergeur}</p>
 
-      <h2>Professionnels de santé</h2>
+      <h2>Praticiens du centre</h2>
       <p>
-        Les kinésithérapeutes, étiopathes et l’orthoptiste qui consultent au centre exercent à titre libéral, sous leur propre responsabilité. La prise de
-        rendez-vous se fait sur leurs agendas en ligne (Doctolib, Calendly), soumis aux conditions de ces services.
+        Les kinésithérapeutes, l’orthoptiste et l’étiopathe qui consultent au centre exercent à titre libéral, sous leur propre responsabilité professionnelle.
+        Kinésithérapeutes et orthoptiste sont des professionnels de santé inscrits à leur ordre ou au répertoire national ; l’étiopathie n’est pas une
+        profession de santé réglementée. La prise de rendez-vous se fait sur leurs agendas en ligne (Doctolib, Calendly), soumis aux conditions de ces services.
       </p>
 
       <h2>Médiation de la consommation</h2>
       <p>
-        Conformément au Code de la consommation, vous pouvez recourir gratuitement à un médiateur en cas de litige non résolu :{' '}
-        <span className="a-completer">[médiateur à compléter]</span>.
+        Conformément au Code de la consommation, vous pouvez recourir gratuitement au médiateur suivant en cas de litige non résolu :{' '}
+        <AC valeur={m.mediateur} libelle="nom, adresse et site du médiateur" />.
       </p>
 
       <h2>Propriété intellectuelle</h2>

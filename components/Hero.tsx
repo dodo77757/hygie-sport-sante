@@ -5,20 +5,27 @@ import { PhotoImg } from './Photo';
 import { PointsLogo } from './ui/Primitives';
 import { Mots } from './ui/Mots';
 
-/* Hero d'accueil : intro à gauche, H1 italique centré, bouton à droite. Pas d'entrée animée. */
-export function Hero({ title, intro, cta }: { title: string; intro: string; cta?: { label: string; href: string } }) {
+type Lien = { label: string; href: string; variant?: 'solid' | 'contour' | 'jaune' };
+
+/* Hero d'accueil : surtitre et sous-titre à gauche, H1 italique centré, boutons à droite. Pas d'entrée animée. */
+export function Hero({ surtitre, title, intro, ctas = [] }: { surtitre?: string; title: string; intro: string; ctas?: Lien[] }) {
   return (
     <section className="hk-hero" aria-labelledby="titre-accueil">
       <div className="hk-hero__intro">
         <PointsLogo />
+        {surtitre ? <p className="etiquette hk-hero__surtitre">{surtitre}</p> : null}
         <p className="courant">{intro}</p>
       </div>
       <h1 id="titre-accueil" className="hk-hero__title titre-hero titre-hero--serre">
         <Mots texte={title} />
       </h1>
-      {cta ? (
-        <div className="hk-hero__cta">
-          <Button href={cta.href}>{cta.label}</Button>
+      {ctas.length ? (
+        <div className={ctas.length > 1 ? 'hk-hero__cta hk-hero__cta--rangee' : 'hk-hero__cta'}>
+          {ctas.map((c) => (
+            <Button key={c.href} href={c.href} variant={c.variant}>
+              {c.label}
+            </Button>
+          ))}
         </div>
       ) : (
         <div />

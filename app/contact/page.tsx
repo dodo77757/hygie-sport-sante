@@ -7,10 +7,11 @@ import { Section } from '@/components/ui/Section';
 import { Reveal } from '@/components/ui/Primitives';
 import { site } from '@/content/site';
 
+/* Textes : « Hygie — Textes du site, page par page » (25 septembre 2026), page Contact. */
 export const metadata: Metadata = {
-  title: 'Contact et accès : 9, rue de la Petite Vitesse, Avon',
+  title: { absolute: 'Contact et accès : 9, rue de la Petite Vitesse, Avon · Hygie' },
   description:
-    'Hygie Sport Santé et Performance, 9 rue de la Petite Vitesse, 77210 Avon. 01 84 74 34 20. Ouvert du lundi au vendredi de 8 h à 20 h et le samedi de 9 h à 13 h.',
+    'Hygie, 9 rue de la Petite Vitesse, 77210 Avon, à deux pas de la gare Fontainebleau-Avon. 01 84 74 34 20. Lundi-vendredi 8 h-20 h, samedi 9 h-13 h.',
   alternates: { canonical: '/contact' },
 };
 
@@ -46,12 +47,7 @@ export default function Contact() {
             <p>
               <span className="etiquette">Horaires</span>
               <br />
-              {site.horaires.map((h) => (
-                <span key={h.jours}>
-                  {h.jours} : {h.heures}
-                  <br />
-                </span>
-              ))}
+              {site.horairesPhrase.charAt(0).toUpperCase() + site.horairesPhrase.slice(1)}
             </p>
           </>
         }
@@ -69,7 +65,7 @@ export default function Contact() {
       {/* Réserver directement : titre, texte, bouton */}
       <Section titre="Réserver en ligne" titreId="titre-rdv-contact">
         <Reveal as="p" className="courant texte-colonne">
-          Kinésithérapeutes, étiopathes, orthoptiste et bilans se réservent en ligne, sans attendre notre réponse.
+          Kinésithérapeutes, étiopathe, orthoptiste et bilans se réservent en ligne, sans attendre notre réponse.
         </Reveal>
         <Button href="/rendez-vous" variant="solid">
           Prendre rendez-vous

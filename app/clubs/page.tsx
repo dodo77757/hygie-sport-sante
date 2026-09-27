@@ -7,13 +7,18 @@ import { Section } from '@/components/ui/Section';
 import { Reveal } from '@/components/ui/Primitives';
 import { photos } from '@/content/images';
 import { site } from '@/content/site';
+import { aRenseigner } from '@/content/valeurs';
 
+/* Textes : « Hygie — Textes du site, page par page » (25 septembre 2026), page Clubs.
+   Titre ramené à 60 caractères : sans « · Hygie ». */
 export const metadata: Metadata = {
-  title: 'Clubs sportifs : bilans de saison, stages, préparation physique',
-  description:
-    'Bilans physiologiques de pré-saison ou en cours de saison dès 290 € par sportif, stages sur mesure et préparation physique pour les clubs, au centre Hygie d’Avon (77).',
+  title: { absolute: 'Clubs sportifs : bilans de saison et préparation physique' },
+  description: 'Bilans de pré-saison et de mi-saison, stages sur mesure et préparation physique de l’effectif au centre Hygie d’Avon (77). Devis sur demande.',
   alternates: { canonical: '/clubs' },
 };
+
+/* Nombre de bilans inclus dans les 290 € : la précision n'apparaît qu'une fois renseignée (content/valeurs.ts) */
+const nombreBilans = aRenseigner.clubs.nombreBilans;
 
 export default function Clubs() {
   return (
@@ -41,40 +46,42 @@ export default function Clubs() {
         photo={<PhotoImg className="hk-media apropos-photo apropos-photo--paysage" photo={photos.football} sizes="(max-width: 1023px) 92vw, 46vw" />}
       >
         <Reveal as="p" className="courant texte-colonne">
-          Nous réalisons les bilans physiologiques de vos joueuses et joueurs, en pré-saison ou en cours de saison. Force, mobilité, sauts et asymétries :
-          chaque sportif repart avec ses priorités.
+          Nous testons tout l’effectif en pré-saison, puis en cours de saison pour suivre l’évolution : force et asymétries, sauts et réactivité, mobilité,
+          sprint si besoin. Chaque sportif repart avec ses priorités ; le staff reçoit un tableau de bord de l’effectif pour repérer les profils à risque.
         </Reveal>
         <div className="offre">
           <p className="offre__effectif">À partir de</p>
           <p className="offre__prix">
-            290 €<small>par sportif, pour les bilans de la saison</small>
+            290 €<small>par sportif pour la saison{nombreBilans ? `, soit ${nombreBilans} bilans` : ''}</small>
           </p>
         </div>
         <Button href="/bilans">Voir les bilans</Button>
       </Section>
 
-      {/* Stages : titre, texte, liste */}
+      {/* Stages : titre, texte */}
       <Section titre="Stages sur mesure" titreId="titre-stages" aere>
         <Reveal as="p" className="courant texte-colonne">
-          Nous organisons des stages adaptés à votre calendrier :
+          Pré-saison, trêve internationale, vacances scolaires, trêve hivernale : des stages adaptés à votre calendrier. Devis sur demande.
         </Reveal>
-        <ul className="puces courant">
-          <li>pré-saison</li>
-          <li>trêve internationale</li>
-          <li>vacances scolaires</li>
-          <li>trêve hivernale</li>
-        </ul>
-        <p className="courant">Devis sur demande.</p>
       </Section>
 
-      {/* Préparation physique : titre, texte, bouton, photo */}
+      {/* Préparation physique : titre, texte, photo */}
       <Section
         titre="Préparation physique"
         titreId="titre-prepa"
         photo={<PhotoImg className="hk-media apropos-photo apropos-photo--paysage" photo={photos.dribble} sizes="(max-width: 1023px) 92vw, 46vw" />}
       >
         <Reveal as="p" className="courant texte-colonne">
-          Du bilan à la préparation physique de l’effectif, nos préparateurs suivent vos sportifs avec des données objectives et s’adaptent à votre calendrier.
+          Du bilan à la préparation physique de l’effectif, nos préparateurs suivent vos sportifs avec des données objectives et s’adaptent à votre calendrier
+          de matchs.
+        </Reveal>
+      </Section>
+
+      {/* Jeunes et centres de formation : titre, texte, bouton */}
+      <Section titre="Jeunes et centres de formation" titreId="titre-jeunes" aere>
+        <Reveal as="p" className="courant texte-colonne">
+          Pour les catégories jeunes, nous estimons la maturité biologique de chaque joueur (pic de croissance) pour adapter les charges et prévenir les
+          blessures de croissance.
         </Reveal>
         <Button href="#formulaire">Demander un devis</Button>
       </Section>

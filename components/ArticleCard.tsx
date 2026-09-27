@@ -18,10 +18,25 @@ type Props = {
   variant?: 'feed' | 'blog' | 'recent' | 'mini';
   headingLevel?: 'h2' | 'h3';
   sizes?: string;
+  /** Extrait affiché en entier (cartes des pôles et des soins, dont le texte vient des textes du site) */
+  entier?: boolean;
 };
 
 /* Carte article : photo arrondie, bloc texte sur brume, étiquette de pôle ou de catégorie. */
-export function ArticleCard({ href, title, excerpt, tag, tagCouleur = 'encre', meta, photo, vignette, variant = 'feed', headingLevel = 'h3', sizes }: Props) {
+export function ArticleCard({
+  href,
+  title,
+  excerpt,
+  tag,
+  tagCouleur = 'encre',
+  meta,
+  photo,
+  vignette,
+  variant = 'feed',
+  headingLevel = 'h3',
+  sizes,
+  entier,
+}: Props) {
   const Heading = headingLevel;
   const p = photo ? photos[photo] : null;
   const defaultSizes =
@@ -30,7 +45,13 @@ export function ArticleCard({ href, title, excerpt, tag, tagCouleur = 'encre', m
   return (
     <Link
       href={href}
-      className={cx('hk-card', variant === 'blog' && 'hk-card--blog', variant === 'recent' && 'hk-card--recent', variant === 'mini' && 'hk-card--mini')}
+      className={cx(
+        'hk-card',
+        variant === 'blog' && 'hk-card--blog',
+        variant === 'recent' && 'hk-card--recent',
+        variant === 'mini' && 'hk-card--mini',
+        entier && 'hk-card--entier',
+      )}
     >
       {p ? (
         <PhotoImg className="hk-card__img" photo={p} decorative sizes={sizes ?? defaultSizes} />

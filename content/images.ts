@@ -54,7 +54,7 @@ export const photos = {
   antoineGras: { src: antoineGras, alt: 'Antoine Gras, kinésithérapeute', position: '50% 20%' } as Photo,
   aubinSalmon: { src: aubinSalmon, alt: 'Aubin Salmon, étiopathe', position: '50% 24%' } as Photo,
   gauthierArcache: { src: gauthierArcache, alt: 'Gauthier Arcache, kinésithérapeute et ostéopathe', position: '50% 24%' } as Photo,
-  jeanEtienneBoilot: { src: jeanEtienneBoilot, alt: 'Jean-Etienne Boilot, préparateur physique', position: '50% 28%' } as Photo,
+  jeanEtienneBoilot: { src: jeanEtienneBoilot, alt: 'Jean-Étienne Boilot, préparateur physique', position: '50% 28%' } as Photo,
   jeremyEscriva: { src: jeremyEscriva, alt: 'Jérémy Escriva, kinésithérapeute', position: '50% 20%' } as Photo,
   malikaPereira: { src: malikaPereira, alt: 'Malika Pereira, massages bien-être et conseil en nutrition', position: '50% 30%' } as Photo,
   margotDeOliveira: { src: margotDeOliveira, alt: 'Margot De Oliveira, kinésithérapeute', position: '50% 28%' } as Photo,

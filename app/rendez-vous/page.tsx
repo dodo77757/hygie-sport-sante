@@ -7,16 +7,20 @@ import { ListeTarifs } from '@/components/Lists';
 import { ContactGabarit } from '@/components/templates/ContactGabarit';
 import { Button } from '@/components/ui/Button';
 import { Cell, Row } from '@/components/ui/Row';
-import { bilans } from '@/content/bilans';
+import { lignesTarifsBilans } from '@/content/bilans';
 import { disciplines, type Discipline } from '@/content/praticiens';
 import { site } from '@/content/site';
+import { aRenseigner } from '@/content/valeurs';
 
+/* Textes : « Hygie — Textes du site, page par page » (25 septembre 2026), page Rendez-vous. */
 export const metadata: Metadata = {
-  title: 'Prendre rendez-vous : praticiens, bilans, séances',
-  description:
-    'Réservez en ligne un kinésithérapeute, un étiopathe, l’orthoptiste ou un bilan au centre Hygie d’Avon. Séances de sport et de récupération par téléphone ou formulaire.',
+  title: { absolute: 'Prendre rendez-vous : praticiens, bilans, séances · Hygie' },
+  description: 'Réservez en ligne un kiné, un étiopathe, l’orthoptiste ou un bilan au centre Hygie d’Avon. Séance d’essai sport offerte, rappel sous 48 h.',
   alternates: { canonical: '/rendez-vous' },
 };
+
+/* Lien de réservation de la séance d'essai (content/valeurs.ts) : tant qu'il manque, le formulaire de rappel est l'action principale de l'onglet Sport */
+const lienEssai = aRenseigner.liens.essai;
 
 function GroupeDiscipline({ discipline, titre }: { discipline: Discipline; titre?: string }) {
   const d = disciplines[discipline];
@@ -63,30 +67,25 @@ export default function RendezVous() {
           </Link>
         </Cell>
         <Cell span={3}>
-          <ListeTarifs
-            fluide
-            items={bilans.map((b) => ({
-              nom: b.nom,
-              detail: [b.detail, b.duree].filter(Boolean).join(' · '),
-              note: b.note,
-              prix: b.prix,
-              action: { label: 'Réserver', href: b.reservation },
-            }))}
-          />
+          <ListeTarifs fluide items={lignesTarifsBilans()} />
         </Cell>
       </Row>
     ),
     sport: (
       <Row className="rdv-groupe">
         <Cell className="hk-cell--stack">
-          <h2 className="titre-bloc">Séances de sport</h2>
+          <h2 className="titre-bloc">Votre première séance est offerte</h2>
           <p className="courant texte-colonne">
-            Séance d’essai offerte, coaching individuel, sport-santé ou cross training : appelez-nous ou laissez vos coordonnées, nous vous rappelons pour fixer
-            le créneau.
+            Une heure pour faire connaissance, parler de vos objectifs et tester la méthode, sans engagement. Choisissez votre créneau :
           </p>
-          {telephone}
+          {lienEssai ? (
+            <Button href={lienEssai} variant="solid">
+              Réserver ma séance d’essai
+            </Button>
+          ) : null}
         </Cell>
-        <Cell span={2}>
+        <Cell span={2} className="hk-cell--stack">
+          {lienEssai ? <p className="courant">Vous préférez être rappelé ? Laissez vos coordonnées.</p> : null}
           <ContactForm type="rendez-vous" motif="essai" motifDepuisUrl submitLabel="Être rappelé" />
         </Cell>
         <Cell mobile="hide" className="hk-cell--stack">
@@ -135,14 +134,14 @@ export default function RendezVous() {
         </Cell>
         <Cell className="hk-cell--stack">
           <p className="etiquette">Entreprises</p>
-          <p className="courant texte-colonne">De 2 à plus de 25 collaborateurs, au centre d’Avon.</p>
+          <p className="courant texte-colonne">De 2 à plus de 25 collaborateurs, au centre ou sur site.</p>
           <Button href="/entreprises#formulaire" variant="solid">
             Demander un devis
           </Button>
         </Cell>
         <Cell className="hk-cell--stack">
           <p className="etiquette">Clubs</p>
-          <p className="courant texte-colonne">Bilans de pré-saison ou en cours de saison, dès 290 € par sportif.</p>
+          <p className="courant texte-colonne">Bilans de saison, stages et préparation physique.</p>
           <Button href="/clubs#formulaire" variant="solid">
             Demander un devis
           </Button>
@@ -158,23 +157,16 @@ export default function RendezVous() {
         id="rendez-vous"
         titre="Prendre rendez-vous"
         infos={
-          <>
-            <p className="etiquette">Par téléphone</p>
-            {telephone}
-            <p>
-              {site.horaires.map((h) => (
-                <span key={h.jours}>
-                  {h.jours} : {h.heures}
-                  <br />
-                </span>
-              ))}
-            </p>
-          </>
+          <p>
+            Praticiens et bilans se réservent directement en ligne. Pour une séance de sport ou de récupération, appelez-nous ou laissez vos coordonnées : nous
+            vous rappelons.
+          </p>
         }
         colonne4={
           <div className="rdv-infos courant">
-            <p>Praticiens et bilans se réservent directement en ligne, sur Doctolib ou sur notre agenda.</p>
-            <p>Pour une séance de sport ou de récupération, appelez-nous ou laissez vos coordonnées : nous vous rappelons.</p>
+            <p className="etiquette">Par téléphone</p>
+            {telephone}
+            <p>{site.horairesPhrase.charAt(0).toUpperCase() + site.horairesPhrase.slice(1)}.</p>
           </div>
         }
       />

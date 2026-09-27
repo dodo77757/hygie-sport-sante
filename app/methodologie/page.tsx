@@ -10,53 +10,55 @@ import { Cell, Row } from '@/components/ui/Row';
 import { Section } from '@/components/ui/Section';
 import { Quote, Reveal } from '@/components/ui/Primitives';
 import { photos } from '@/content/images';
+import { RESERVATION_ETIOPATHIE_JOHAN } from '@/content/praticiens';
+import { LIEN_ESSAI } from '@/content/valeurs';
 import { Mots } from '@/components/ui/Mots';
 
 export const metadata: Metadata = {
-  title: 'La méthode Hygie : évaluer, bouger, accompagner',
-  description:
-    'Une méthode issue du sport de haut niveau, fondée sur trois piliers : un bilan individualisé, des séances non standardisées et un suivi dans la durée. Johan Pereira et l’équipe sport d’Hygie, à Avon (77).',
+  title: { absolute: 'La méthode Hygie : évaluer, bouger, accompagner' },
+  description: 'Une méthode issue du haut niveau : un bilan mesuré, des séances construites pour vous, un suivi avec bilans intermédiaires. À Avon (77).',
   alternates: { canonical: '/methodologie' },
 };
 
-/* Contenus repris du site actuel (page Activités physiques, article « Découvrez la méthode Hygie », page Étiopathe). */
+/* Textes : « Hygie — Textes du site, page par page » (25 septembre 2026), page Méthode. */
 
 const mesures = [
   {
     nom: 'Mobilités fonctionnelles',
-    texte: 'Analyse de vos mouvements pour repérer restrictions et compensations, et cibler étirements et renforcement.',
+    texte: 'Analyse des mouvements clés (squat, fente, épaules, hanches) pour repérer restrictions et compensations.',
   },
   {
     nom: 'Forces musculaires',
-    texte: 'Tests spécifiques pour mesurer les asymétries, essentielles pour éviter les blessures et progresser.',
+    texte: 'Tests isométriques sur capteurs VALD et KINVENT, gauche contre droite, pour chiffrer les asymétries qui exposent aux blessures.',
   },
   {
     nom: 'Capacités aérobies',
-    texte: 'Test de marche ou détermination de vos zones d’entraînement avec le capteur PNOE, pour un programme sur mesure.',
+    texte: 'Test de marche ou détermination de vos zones d’entraînement avec l’analyseur métabolique PNOE.',
   },
   {
     nom: 'Composition corporelle',
-    texte: 'Mesure par impédancemètre, si elle est utile, pour comprendre d’où vous partez.',
+    texte: 'Mesure par impédancemètre, quand elle sert votre objectif.',
   },
   {
     nom: 'Puissance et explosivité',
-    texte: 'Sauts sur plateforme de force, deux qualités décisives dans de nombreux sports.',
+    texte: 'Sauts sur plateforme de force (saut vertical, sauts unipodaux, drop jump) et indice de réactivité.',
   },
 ];
 
 const objectifs = [
-  { nom: 'Reprise du sport', texte: 'Après une blessure ou une longue pause, nous guidons votre retour à la forme.' },
-  { nom: 'Prévention des blessures', texte: 'Renforcer les zones fragiles et améliorer votre mobilité.' },
-  { nom: 'Optimisation des performances', texte: 'Pour les athlètes, chaque détail compte : nous travaillons ensemble à maximiser votre potentiel.' },
-  { nom: 'Perte de poids', texte: 'Une approche globale, pour des résultats sains et durables.' },
+  { nom: 'Reprise du sport', texte: 'Après une blessure ou une longue pause, un retour progressif appuyé sur des critères mesurés.' },
+  { nom: 'Prévention des blessures', texte: 'Renforcer les zones fragiles, corriger les asymétries, améliorer la mobilité.' },
+  { nom: 'Performance', texte: 'Pour les compétiteurs : chaque détail compte, du profil force-vitesse à la récupération.' },
+  { nom: 'Perte de poids', texte: 'Une approche globale, activité et alimentation, pour des résultats sains et durables.' },
+  { nom: 'Jeunes sportifs', texte: 'Une préparation adaptée à la croissance, avec estimation de la maturité biologique.' },
   { nom: 'Autonomie', texte: 'Vous donner les outils pour continuer à progresser seul.' },
 ];
 
 const raisons = [
-  { nom: 'Une approche globale et personnalisée', texte: 'Santé, sport et prévention réunis au même endroit, autour de vos objectifs.' },
-  { nom: 'Un suivi pluridisciplinaire', texte: 'Kinésithérapeutes, étiopathes, orthoptiste, préparateurs physiques : une seule équipe.' },
-  { nom: 'Des technologies de pointe', texte: 'Isocinétisme, plateforme de force, capteur PNOE, impédancemètre : des mesures, pas des impressions.' },
-  { nom: 'Une ambiance conviviale', texte: 'Un accompagnement bienveillant et motivant, à tout âge et à tout niveau.' },
+  { nom: 'Une approche globale', texte: 'Santé, sport et récupération réunis, autour de vos objectifs.' },
+  { nom: 'Une équipe qui se parle', texte: 'Kinés, étiopathe, orthoptiste et préparateurs physiques partagent l’information utile à votre parcours.' },
+  { nom: 'Des mesures, pas des impressions', texte: 'Isocinétisme, plateformes de force, capteurs VALD et KINVENT, PNOE, impédancemètre.' },
+  { nom: 'Une ambiance conviviale', texte: 'Un accompagnement exigeant et bienveillant, à tout âge et à tout niveau.' },
 ];
 
 export default function Methodologie() {
@@ -73,8 +75,8 @@ export default function Methodologie() {
             <span className="titre-point c-jaune" style={{ '--n': 3 } as CSSProperties} aria-hidden="true" />
           </h1>
           <p className="chapo apropos-hero__chapo">
-            Il n’y a pas de santé sans mouvement, ni de performance durable sans équilibre. Nous avons donc développé une méthode unique, issue du sport de haut
-            niveau, fondée sur trois piliers.
+            Il n’y a pas de santé sans mouvement, ni de performance durable sans équilibre. Notre méthode vient du sport de haut niveau et repose sur trois
+            piliers : évaluer, bouger, accompagner.
           </p>
           <p className="etiquette apropos-hero__sommaire">Évaluer · Bouger · Accompagner</p>
         </Cell>
@@ -85,16 +87,18 @@ export default function Methodologie() {
         numero="01"
         titre="Évaluer"
         titreId="pilier-evaluer"
-        sousTitre="Pour mieux accompagner"
+        sousTitre="Pour savoir d’où vous partez"
         photo={<PhotoImg className="hk-media apropos-photo apropos-photo--paysage" photo={photos.coachTablette} sizes="(max-width: 1023px) 92vw, 46vw" />}
       >
         <Reveal as="p" className="courant texte-colonne">
-          Chaque parcours débute par un bilan individualisé. Nous savons ainsi d’où vous partez, et nous mesurons ensuite le chemin parcouru.
+          Chaque parcours commence par un bilan. Nous mesurons avant de programmer, puis nous mesurons à nouveau pour objectiver vos progrès.
         </Reveal>
         <ul className="puces courant texte-colonne">
-          <li>Posture, mobilité, composition corporelle</li>
-          <li>Mode de vie, sommeil, alimentation</li>
-          <li>Objectifs personnels : santé, reprise d’activité, performance</li>
+          <li>Mobilité, posture, contrôle moteur et équilibre</li>
+          <li>Force et asymétries, membre par membre</li>
+          <li>Explosivité, capacité aérobie, composition corporelle si elle est utile</li>
+          <li>Mode de vie, sommeil, alimentation, antécédents</li>
+          <li>Vos objectifs : santé, reprise, performance</li>
         </ul>
         <Button href="/bilans">Découvrir les bilans</Button>
       </Section>
@@ -107,12 +111,12 @@ export default function Methodologie() {
         photo={<PhotoImg className="hk-media apropos-photo apropos-photo--paysage" photo={photos.coachSquat} sizes="(max-width: 1023px) 92vw, 46vw" />}
       >
         <Reveal as="p" className="courant texte-colonne">
-          Nos coachings ne sont pas standardisés. Ils s’adaptent à votre niveau, à vos contraintes et à vos objectifs.
+          Aucune séance n’est standardisée. Le programme découle des chiffres du bilan, de votre niveau, de vos contraintes et de votre calendrier.
         </Reveal>
         <ul className="puces courant texte-colonne">
-          <li>Activité physique adaptée</li>
-          <li>Renforcement global, mobilité, prévention</li>
-          <li>Préparation physique ciblée</li>
+          <li>Activité physique adaptée et sport-santé</li>
+          <li>Renforcement global, mobilité, prévention des blessures</li>
+          <li>Préparation physique ciblée par sport</li>
         </ul>
         <Button href="/sport">Voir les séances</Button>
       </Section>
@@ -125,12 +129,12 @@ export default function Methodologie() {
         photo={<PhotoImg className="hk-media apropos-photo apropos-photo--paysage" photo={photos.course} sizes="(max-width: 1023px) 92vw, 46vw" />}
       >
         <Reveal as="p" className="courant texte-colonne">
-          Parce que la régularité est la clé, nous misons sur le temps long plutôt que sur les coups d’éclat.
+          La régularité fait les résultats. Nous misons sur le temps long plutôt que sur les coups d’éclat.
         </Reveal>
         <ul className="puces courant texte-colonne">
-          <li>Un suivi régulier et personnalisé</li>
+          <li>Un coach référent qui suit votre dossier</li>
           <li>Des bilans intermédiaires pour ajuster le cap</li>
-          <li>Une approche bienveillante, motivante et durable</li>
+          <li>Un lien direct avec les kinés et l’étiopathe du centre en cas de douleur ou de blessure</li>
         </ul>
         <Button href="/sport/coaching-individuel">Découvrir les formules</Button>
       </Section>
@@ -144,10 +148,10 @@ export default function Methodologie() {
       </Row>
 
       {/* Le bilan de départ, en détail */}
-      <Section titre="Ce que mesure le bilan de départ" titreId="titre-bilan-depart" sousTitre="Le premier pas de la méthode" aere>
+      <Section titre="Ce que mesure le bilan de départ" titreId="titre-bilan-depart" aere>
         <Reveal as="p" className="courant texte-colonne">
-          Chez Hygie, chaque personne est considérée comme un sportif de haut niveau, quel que soit son niveau d’expérience. Le premier pas est un bilan
-          physiologique complet, qui nous permet de comprendre vos besoins.
+          Chez Hygie, chaque personne est suivie avec l’exigence réservée aux sportifs de haut niveau, quel que soit son niveau. Le bilan d’entrée couvre cinq
+          dimensions :
         </Reveal>
         <ol className="mesures">
           {mesures.map((m, i) => (
@@ -165,24 +169,16 @@ export default function Methodologie() {
         <Button href="/bilans">Comparer les bilans</Button>
       </Section>
 
-      {/* Deux parcours : textes du site actuel */}
+      {/* Deux parcours */}
       <Section titre="Deux parcours, une même exigence" titreId="titre-parcours" aere>
-        <Reveal as="p" className="courant texte-colonne">
-          Chez Hygie, chaque personne compte. Que vous repreniez doucement une activité physique ou que vous soyez à la recherche de performance, notre exigence
-          reste la même : un accompagnement sur mesure, encadré par des professionnels de la santé et du sport.
-        </Reveal>
         <div className="section__deux parcours">
           <div>
             <p className="etiquette">Parcours</p>
             <h3 className="titre-bloc">Bien-être</h3>
-            <p className="parcours__promesse">Retrouvez énergie, mobilité et vitalité, en douceur et durablement.</p>
+            <p className="parcours__promesse">Retrouver énergie, mobilité et confiance, en douceur.</p>
             <p className="courant">
-              Conçu pour les femmes et les hommes qui souhaitent prendre soin de leur santé globale, ce parcours vous accompagne à chaque étape, quel que soit
-              votre âge ou votre condition physique. Nos professionnels vous proposent un suivi personnalisé axé sur la remise en mouvement, la gestion du
-              stress, la prévention des douleurs et l’amélioration de la qualité de vie.
-            </p>
-            <p className="courant">
-              <strong>Objectif :</strong> vous sentir mieux dans votre corps, retrouver confiance en vos capacités et vivre pleinement votre quotidien.
+              Pour les femmes et les hommes de tout âge qui veulent prendre soin de leur santé globale : remise en mouvement, gestion du stress, prévention des
+              douleurs.
             </p>
             <Link className="lien courant" href="/sport/sport-sante">
               Voir le sport-santé
@@ -191,14 +187,10 @@ export default function Methodologie() {
           <div>
             <p className="etiquette">Parcours</p>
             <h3 className="titre-bloc">Performance</h3>
-            <p className="parcours__promesse">Optimisez vos résultats, prévenez les blessures et récupérez plus vite.</p>
+            <p className="parcours__promesse">Progresser sans se blesser.</p>
             <p className="courant">
-              Destiné aux sportifs réguliers, compétiteurs ou amateurs exigeants, ce parcours vous aide à repousser vos limites tout en protégeant votre capital
-              santé. Une approche individualisée, mêlant expertise biomécanique, kinésithérapie du sport, technologies de pointe et coaching ciblé, pour
-              progresser de manière efficace et durable.
-            </p>
-            <p className="courant">
-              <strong>Objectif :</strong> performer au meilleur de votre potentiel, en respectant votre corps et en réduisant les risques de blessure.
+              Pour les sportifs réguliers, compétiteurs et amateurs exigeants : biomécanique, préparation physique ciblée, récupération et lien avec la
+              kinésithérapie du sport.
             </p>
             <Link className="lien courant" href="/sport/coaching-individuel">
               Voir le coaching individuel
@@ -209,9 +201,6 @@ export default function Methodologie() {
 
       {/* Objectifs et raisons de choisir Hygie */}
       <Section titre="Pour quels objectifs ?" titreId="titre-objectifs" aere>
-        <Reveal as="p" className="courant texte-colonne">
-          La méthode ne se limite pas à la performance sportive. Elle s’adapte à ce que vous cherchez.
-        </Reveal>
         <ul className="objectifs">
           {objectifs.map((o) => (
             <li className="objectifs__item" key={o.nom}>
@@ -234,7 +223,7 @@ export default function Methodologie() {
             </li>
           ))}
         </ol>
-        <Button href="/rendez-vous?motif=sport&objet=essai">Réserver la séance offerte</Button>
+        <Button href={LIEN_ESSAI}>Réserver la séance offerte</Button>
       </Section>
 
       {/* Johan Pereira : fonction, parcours, formation, photo */}
@@ -248,16 +237,13 @@ export default function Methodologie() {
       >
         <Reveal className="intro-colonne courant texte-colonne">
           <p>
-            Ancien footballeur à l’ESTAC, Johan Pereira voit sa carrière interrompue par une blessure au genou. Cet événement le conduit à une nouvelle vocation
-            : soigner.
+            Formé comme footballeur à l’ESTAC, Johan Pereira voit sa carrière interrompue par une blessure au genou. Cette expérience le conduit à une nouvelle
+            vocation : soigner, puis prévenir.
           </p>
           <p>
-            D’abord engagé dans une prépa-kiné, il se tourne vers l’étiopathie, une discipline qui le passionne. Après six années d’études à la faculté
-            d’étiopathie de Paris, il s’installe à Avon en 2012.
-          </p>
-          <p>
-            Pour affiner son expertise auprès des sportifs, il complète sa formation par deux diplômes universitaires. Sa pratique ne se limite pas aux sportifs
-            : il prend en charge l’ensemble des troubles relevant de l’étiopathie, avec un accompagnement adapté à chaque patient.
+            Après six années d’études à la faculté d’étiopathie de Paris, il s’installe à Avon en 2012. Il complète sa formation par deux diplômes
+            universitaires tournés vers le sport, puis fonde Hygie pour réunir soin, entraînement et prévention. Sa pratique d’étiopathe ne se limite pas aux
+            sportifs.
           </p>
         </Reveal>
         <ul className="puces courant texte-colonne" aria-label="Formation">
@@ -265,14 +251,13 @@ export default function Methodologie() {
           <li>D.U. préparation physique et réathlétisation, Évry</li>
           <li>D.U. sport et locomotion : biomécanique, prévention et performance, Saint-Étienne</li>
         </ul>
-        <Button href="/sante/etiopathie">Consulter Johan</Button>
+        <Button href={RESERVATION_ETIOPATHIE_JOHAN}>Consulter Johan</Button>
       </Section>
 
       {/* Les sportifs suivis */}
-      <Section titre="Ils lui font confiance" titreId="titre-athletes" sousTitre="Sportifs professionnels suivis par Johan Pereira" aere>
+      <Section titre="Ils lui font confiance" titreId="titre-athletes" aere>
         <Reveal as="p" className="courant texte-colonne">
-          Marathon, football, cyclisme sur piste, athlétisme, sports de combat : la méthode s’est construite auprès d’athlètes de haut niveau, et elle profite à
-          chacun.
+          Marathon, football, cyclisme sur piste, athlétisme, sports de combat : la méthode s’est construite auprès d’athlètes de haut niveau.
         </Reveal>
         <Athletes />
       </Section>
@@ -280,15 +265,11 @@ export default function Methodologie() {
       {/* L'équipe sport : titre, texte, les trois cartes */}
       <Section titre="L’équipe sport" titreId="titre-equipe" aere>
         <Reveal as="p" className="courant texte-colonne">
-          Trois préparateurs physiques, diplômés, qui construisent chaque programme à partir d’un bilan. La première séance d’une heure est offerte.
+          Des préparateurs physiques diplômés, qui construisent chaque programme à partir d’un bilan. La première séance d’une heure est offerte.
         </Reveal>
         <CartesPraticiens discipline="preparation" />
         <p className="courant texte-large">
-          Au centre, ils travaillent avec les kinésithérapeutes, les étiopathes, l’orthoptiste et la praticienne en massages et nutrition. Découvrez le{' '}
-          <Link className="lien" href="/sante">
-            pôle Santé
-          </Link>
-          .
+          Au centre, ils travaillent avec les kinésithérapeutes, l’étiopathe, l’orthoptiste et la praticienne en massages et nutrition.
         </p>
       </Section>
 
@@ -300,7 +281,7 @@ export default function Methodologie() {
           text="Une heure pour faire connaissance, parler de vos objectifs et tester la méthode, sans engagement."
         >
           <div className="hk-panel__body--center">
-            <Button href="/rendez-vous?motif=sport&objet=essai" variant="jaune">
+            <Button href={LIEN_ESSAI} variant="jaune">
               Réserver l’essai
             </Button>
           </div>
