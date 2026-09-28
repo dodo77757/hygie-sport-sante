@@ -3,8 +3,8 @@ import type { CSSProperties } from 'react';
 /* Titre découpé en mots qui montent l'un après l'autre à l'arrivée sur la page (60 ms d'écart).
    Les espaces restent de vraies espaces : le titre se lit et se copie normalement.
    Les mots composés sont coupés après le trait d'union (« Remettez- » « vous ») : le titre garde ses retours à la ligne. */
-export function Mots({ texte }: { texte: string }) {
-  let i = 0;
+export function Mots({ texte, depart = 0 }: { texte: string; /** Rang du premier mot, quand un titre est découpé en plusieurs lignes */ depart?: number }) {
+  let i = depart;
   return (
     <>
       {texte

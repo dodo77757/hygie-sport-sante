@@ -254,21 +254,153 @@ a.hk-tag--bleu:hover, a.hk-tag--jaune:hover, a.hk-tag--gris:hover { background: 
 .hk-menu__tel { margin-top: 20px; font: 400 14px/1.25 var(--font-texte); text-decoration: none; }
 @keyframes hk-fade { from { opacity: 0; } to { opacity: 1; } }
 
-/* ---------- Hero d'accueil ---------- */
+/* ---------- Hero d'accueil : le texte seul, en très grand ----------
+   Tout le premier écran : surtitre en haut, H1 sur toute la largeur, sous-titre et boutons en bas.
+   Le H1 est calé sur la largeur du cadre : « en mouvement », sa ligne la plus longue, mesure 5,54 em en Anton (approche -0,04 em),
+   plus l'inclinaison de l'italique ; il ne dépasse pas non plus la hauteur disponible (fenêtres basses). */
 .hk-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) calc(672 * var(--u)) minmax(0, 1fr);
-  align-items: end;
-  margin: calc(16 * var(--u)) var(--marge) 0;
-  padding: calc(168 * var(--u)) 0 calc(103 * var(--u));
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: calc(36 * var(--u));
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0 var(--marge);
+  padding: calc(var(--hauteur-header) + 34 * var(--u)) var(--retrait) calc(30 * var(--u));
   border-inline: var(--filet) solid var(--encre);
 }
-.hk-hero__intro { padding-left: calc(19 * var(--u)); max-width: calc(247 * var(--u)); }
-.hk-hero__title { text-align: center; }
-.hk-hero__cta { justify-self: end; padding-right: calc(23 * var(--u)); display: flex; flex-direction: column; align-items: flex-end; gap: calc(10 * var(--u)); }
-/* Deux boutons : une rangée centrée sous le titre, pour que le libellé long ne touche jamais le H1 */
-.hk-hero__cta--rangee { grid-column: 1 / -1; justify-self: center; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; padding: calc(44 * var(--u)) 0 0; }
-.hk-hero__surtitre { margin-bottom: calc(10 * var(--u)); }
+.hk-hero__haut { display: flex; align-items: center; gap: calc(14 * var(--u)); margin-bottom: auto; }
+.hk-hero__haut .points-logo { flex: none; margin: 0; }
+.hk-hero__title {
+  font-size: min(calc(100cqw / 5.9), calc((100vh - var(--hauteur-header) - 250 * var(--u)) / 1.76));
+  font-size: min(calc(100cqw / 5.9), calc((100svh - var(--hauteur-header) - 250 * var(--u)) / 1.76));
+  line-height: 0.88;
+  padding-right: 0.08em;
+}
+.hk-hero__ligne { display: block; white-space: nowrap; }
+.hk-hero__bas { display: flex; align-items: flex-end; justify-content: space-between; gap: calc(32 * var(--u)); }
+.hk-hero__intro { max-width: calc(470 * var(--u)); }
+.hk-hero__cta { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
+
+/* ---------- Accueil : planche d'anatomie (bilans) ----------
+   Texte et bouton à gauche ; à droite la photo en 3/2, jamais plus haute que l'écran, et sa légende numérotée (les quatre zones).
+   Calques superposés au même cadrage (object-fit: cover, centré) : photo, voile, squelette, muscles des quatre zones.
+   Les repères se placent en coordonnées de la photo (cadre 1 500 × 1 000) grâce aux unités de conteneur. */
+.anatomie {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "texte planche" "action planche";
+  column-gap: calc(48 * var(--u));
+  margin: 0 var(--marge);
+  padding: calc(72 * var(--u)) var(--retrait) calc(88 * var(--u));
+  border-inline: var(--filet) solid var(--encre);
+}
+.anatomie__texte { grid-area: texte; display: flex; flex-direction: column; gap: calc(22 * var(--u)); }
+.anatomie__texte .chapo { max-width: calc(460 * var(--u)); }
+.anatomie__planche { grid-area: planche; margin: 0; align-self: start; }
+.anatomie__cadre {
+  --muscle: #F08A74;
+  position: relative;
+  container-type: size;
+  width: min(calc(880 * var(--u)), calc((100vh - var(--hauteur-header) - 150 * var(--u)) * 1.5));
+  width: min(calc(880 * var(--u)), calc((100svh - var(--hauteur-header) - 150 * var(--u)) * 1.5));
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: #262626;
+}
+.anatomie__calque { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.anatomie__voile { position: absolute; inset: 0; background: rgba(19, 19, 19, 0.24); pointer-events: none; }
+.anatomie__squelette { transition: opacity 0.35s ease; }
+.anatomie__muscles { opacity: 0; transition: opacity 0.35s ease; pointer-events: none; }
+.anatomie__planche[data-zone] .anatomie__squelette { opacity: 0.8; }
+.anatomie__planche[data-zone="epaule"] .anatomie__muscles[data-z="epaule"],
+.anatomie__planche[data-zone="hanche"] .anatomie__muscles[data-z="hanche"],
+.anatomie__planche[data-zone="genou"] .anatomie__muscles[data-z="genou"],
+.anatomie__planche[data-zone="mollet"] .anatomie__muscles[data-z="mollet"] { opacity: 1; }
+.anatomie__sensible { position: absolute; inset: 0; width: 100%; height: 100%; }
+.anatomie__sensible ellipse { fill: transparent; cursor: pointer; }
+/* Repères numérotés, placés en coordonnées de la photo (couverture centrée du cadre 1 500 × 1 000) */
+.anatomie__repere {
+  --s: max(100cqw / 1500, 100cqh / 1000);
+  position: absolute;
+  left: calc(50cqw + (var(--x) - 750) * var(--s));
+  top: calc(50cqh + (var(--y) - 500) * var(--s));
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border: 1.5px solid #F7F5EE;
+  border-radius: 50%;
+  background: rgba(19, 19, 19, 0.45);
+  color: #F7F5EE;
+  font: 400 12px/1 var(--font-mono);
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+.anatomie__planche[data-zone="epaule"] .anatomie__repere[data-z="epaule"],
+.anatomie__planche[data-zone="hanche"] .anatomie__repere[data-z="hanche"],
+.anatomie__planche[data-zone="genou"] .anatomie__repere[data-z="genou"],
+.anatomie__planche[data-zone="mollet"] .anatomie__repere[data-z="mollet"] { background: var(--muscle); border-color: var(--muscle); color: var(--encre); transform: scale(1.12); }
+.anatomie__credit { margin-top: calc(14 * var(--u)); font: 400 12px/1.4 var(--font-texte); color: rgba(19, 19, 19, 0.62); }
+.anatomie__credit cite { font-style: italic; }
+/* Liste des zones : légende de la planche, et commande au clavier */
+.anatomie__liste {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: calc(20 * var(--u));
+  width: 0;
+  min-width: 100%;
+  list-style: none;
+  margin: calc(16 * var(--u)) 0 0;
+  padding: 0;
+}
+.anatomie__zone {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  column-gap: 10px;
+  row-gap: 6px;
+  align-items: center;
+  align-content: start;
+  width: 100%;
+  height: 100%;
+  padding: calc(12 * var(--u)) 0 calc(4 * var(--u));
+  border: 0;
+  border-top: 1px solid var(--encre);
+  background: none;
+  color: var(--encre);
+  text-align: left;
+  cursor: pointer;
+}
+.anatomie__num {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--encre);
+  border-radius: 50%;
+  font: 400 12px/1 var(--font-mono);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.anatomie__nom { font: 400 max(16px, calc(18 * var(--u)))/1.1 var(--font-display); }
+.anatomie__detail { grid-column: 1 / -1; align-self: start; font: 400 max(12px, calc(13 * var(--u)))/1.35 var(--font-texte); color: rgba(19, 19, 19, 0.7); }
+.anatomie__zone[aria-pressed="true"] .anatomie__num { background: var(--muscle, #F08A74); border-color: var(--muscle, #F08A74); }
+.anatomie__zone[aria-pressed="true"] .anatomie__nom { text-decoration: underline; text-underline-offset: 3px; }
+.anatomie__zone:focus-visible { outline: 2px solid var(--encre); outline-offset: 2px; }
+.anatomie__action { grid-area: action; align-self: start; margin-top: calc(32 * var(--u)); }
+/* Entrée : balayage du squelette, de gauche à droite, avec un trait corail qui traverse la photo */
+.anatomie__planche[data-balayage="attente"] .anatomie__squelette { clip-path: inset(0 100% 0 0); }
+.anatomie__planche[data-balayage="en-cours"] .anatomie__squelette { animation: hk-scan 1.8s var(--courbe-rideau) both; }
+.anatomie__cadre::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: var(--muscle); opacity: 0; pointer-events: none; }
+.anatomie__planche[data-balayage="en-cours"] .anatomie__cadre::after { animation: hk-scan-trait 1.8s var(--courbe-rideau) both; }
+@keyframes hk-scan { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes hk-scan-trait { 0% { transform: translateX(0); opacity: 1; } 92% { opacity: 1; } 100% { transform: translateX(100cqw); opacity: 0; } }
+
+/* Journal : un peu d'air sous le bandeau qui le précède */
+.accueil-journal > .hk-cell { padding-top: calc(64 * var(--u)); }
 
 /* ---------- Grande photo et carte en verre ---------- */
 .hk-hero-media {
@@ -547,7 +679,7 @@ select.hk-field__input {
    ========================================================= */
 
 /* ---------- Accueil ---------- */
-.accueil-presentation__photo { aspect-ratio: 584 / 493; object-position: 50% 22%; }
+.accueil-presentation__photo { aspect-ratio: 4 / 5; object-position: 50% 22%; }
 .accueil-flux__h2 { max-width: calc(241 * var(--u)); }
 .accueil-recents__h2 { max-width: calc(280 * var(--u)); }
 .accueil-recents__texte { max-width: calc(176 * var(--u)); }
@@ -1015,8 +1147,8 @@ html:has(#entree) { --retard-entree: 3.65s; }
 @media (prefers-reduced-motion: no-preference) {
   .w { animation: hk-mot 0.9s var(--courbe-sortie) calc(var(--retard-entree) + 0.1s + var(--i, 0) * 0.06s) both; }
   .titre-point { animation: hk-point 0.6s var(--courbe-rebond) calc(var(--retard-entree) + 0.45s + var(--n, 3) * 0.06s) both; }
-  .hk-hero__intro { animation: hk-apparait 0.9s var(--courbe-sortie) calc(var(--retard-entree) + 0.3s) both; }
-  .hk-hero__cta { animation: hk-apparait 0.9s var(--courbe-sortie) calc(var(--retard-entree) + 0.45s) both; }
+  .hk-hero__haut { animation: hk-apparait 0.9s var(--courbe-sortie) calc(var(--retard-entree) + 0.15s) both; }
+  .hk-hero__bas { animation: hk-apparait 0.9s var(--courbe-sortie) calc(var(--retard-entree) + 0.45s) both; }
   .hk-hero-media__img { animation: hk-photo 1.8s var(--courbe-sortie) calc(var(--retard-entree) - 0.2s) both; }
 }
 @keyframes hk-mot { from { opacity: 0; transform: translateY(0.35em); } to { opacity: 1; transform: none; } }
@@ -1084,7 +1216,7 @@ html:has(#entree) { --retard-entree: 3.65s; }
 ::view-transition-old(.page-sortie) { animation: hk-page-recule 0.45s var(--courbe-sortie) both; transform-origin: 50% 30%; }
 ::view-transition-new(.page-entree) { animation: hk-page-monte 0.7s var(--courbe-sortie) 0.72s both; }
 /* Pendant la transition, le titre de la nouvelle page attend le passage du rideau pour monter mot par mot */
-html:active-view-transition :is(.w, .titre-point, .hk-hero__intro, .hk-hero__cta, .hk-hero-media__img) { animation-play-state: paused; }
+html:active-view-transition :is(.w, .titre-point, .hk-hero__haut, .hk-hero__bas, .hk-hero-media__img) { animation-play-state: paused; }
 @keyframes hk-balayage {
   0% { transform: translateY(100vh); animation-timing-function: var(--courbe-rideau); }
   32% { transform: translateY(0); animation-timing-function: linear; }
@@ -1184,22 +1316,28 @@ html:active-view-transition :is(.w, .titre-point, .hk-hero__intro, .hk-hero__cta
   .hk-header__right { display: none; }
   .hk-burger { display: grid; }
 
-  .hk-hero {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: 0;
-    margin: 0 var(--marge);
-    padding: calc(112 * var(--u)) var(--retrait) calc(60 * var(--u));
-    text-align: center;
-  }
-  .hk-hero__title { order: 1; font-size: calc(66 * var(--u)); } /* « mouvement » : mot long, on garde de l'air près des filets */
-  /* Ordre des textes du site : surtitre, H1, puis les points et le sous-titre */
-  .hk-hero__intro { display: contents; }
-  .hk-hero__intro > * { max-width: calc(250 * var(--u)); animation: inherit; }
-  .hk-hero__surtitre { order: 0; margin: 0 0 calc(18 * var(--u)); }
-  .hk-hero .points-logo { order: 2; justify-content: center; margin: calc(32 * var(--u)) 0 calc(18 * var(--u)); }
-  .hk-hero__intro > .courant { order: 2; }
-  .hk-hero__cta { order: 3; justify-self: center; padding: calc(32 * var(--u)) 0 0; flex-direction: column; align-items: center; }
+  /* Hero d'accueil : le H1 passe sur trois lignes (« Remettez- / vous en / mouvement »), calé sur la largeur ; boutons empilés */
+  .hk-hero { gap: calc(26 * var(--u)); min-height: calc(100vh - 64px); min-height: calc(100svh - 64px - env(safe-area-inset-bottom, 0px)); padding: calc(var(--hauteur-header) + 26 * var(--u)) var(--retrait) calc(28 * var(--u)); }
+  .hk-hero__haut { align-items: flex-start; gap: calc(12 * var(--u)); }
+  .hk-hero__haut .points-logo { margin-top: 3px; }
+  .hk-hero__title { font-size: calc(100cqw / 4.8); line-height: 0.9; }
+  .hk-hero__ligne { display: inline; white-space: normal; }
+  .hk-hero__bas { flex-direction: column; align-items: stretch; gap: calc(26 * var(--u)); }
+  .hk-hero__intro { max-width: none; }
+  .hk-hero__cta { flex-direction: column; align-items: stretch; gap: 10px; }
+
+  /* Planche d'anatomie : texte, photo recadrée au carré (la sportive entière), liste des zones en deux colonnes, bouton */
+  .anatomie { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-template-areas: "texte" "planche" "action"; padding: calc(48 * var(--u)) var(--retrait) calc(48 * var(--u)); }
+  .anatomie__texte .chapo { max-width: none; }
+  .anatomie__planche { margin-top: calc(28 * var(--u)); }
+  .anatomie__cadre { width: 100%; aspect-ratio: 1 / 1; }
+  .anatomie__repere { width: 28px; height: 28px; margin: -14px 0 0 -14px; }
+  .anatomie__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 12px; margin-top: calc(18 * var(--u)); }
+  .anatomie__zone { padding: 12px 0 10px; }
+  .anatomie__action { margin-top: calc(28 * var(--u)); }
+
+  .accueil-journal > .hk-cell:first-child { padding-top: calc(40 * var(--u)); }
+  .accueil-journal > .hk-cell + .hk-cell { padding-top: 0; }
 
   .hk-hero-media__img { aspect-ratio: 322 / 492; object-position: 72% 50%; }
   /* Carte en verre : toute la largeur de la photo moins une marge, pour le texte du bloc Bilans et son bouton */

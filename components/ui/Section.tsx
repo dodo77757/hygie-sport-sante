@@ -5,7 +5,7 @@ import { Cell, Row } from './Row';
 
 /* Section ordonnée : le titre occupe toujours la première colonne, tout le reste (texte, boutons, cartes, photo)
    est empilé dans les trois colonnes de droite, dans le même ordre d'une section à l'autre.
-   Avec `photo`, le corps se partage en texte (colonne 2) et photo (colonnes 3-4). */
+   Avec `photo`, le corps se partage en texte (colonne 2) et photo (colonnes 3-4) ; avec `photoEtroite`, texte (colonnes 2-3) et photo (colonne 4). */
 export function Section({
   id,
   numero,
@@ -13,6 +13,7 @@ export function Section({
   titreId,
   sousTitre,
   photo,
+  photoEtroite,
   children,
   aere,
   className,
@@ -26,6 +27,8 @@ export function Section({
   sousTitre?: ReactNode;
   /** Photo affichée sur les deux colonnes de droite, le texte restant en colonne 2 */
   photo?: ReactNode;
+  /** Photo sur la seule colonne 4, le texte sur les colonnes 2 et 3 */
+  photoEtroite?: boolean;
   children: ReactNode;
   aere?: boolean;
   className?: string;
@@ -45,8 +48,10 @@ export function Section({
       </Cell>
       {photo ? (
         <>
-          <Cell className="section__corps hk-cell--stack">{children}</Cell>
-          <Cell span={2} className="section__photo">
+          <Cell span={photoEtroite ? 2 : 1} className="section__corps hk-cell--stack">
+            {children}
+          </Cell>
+          <Cell span={photoEtroite ? 1 : 2} className="section__photo">
             {photo}
           </Cell>
         </>

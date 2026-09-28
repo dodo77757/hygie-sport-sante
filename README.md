@@ -71,7 +71,7 @@ Les anciennes adresses du site Wix redirigent en 308 vers les nouvelles pages (`
 
 | Adresse | Gabarit du design system | Contenu |
 | --- | --- | --- |
-| `/` | Accueil | hero (surtitre, sous-titre, deux boutons), grande photo et carte en verre (bilans), trois pôles, Johan Pereira, panneau sombre « Ils nous font confiance » (quatre preuves, avis Google, partenaires), panneau jaune entreprises, articles récents |
+| `/` | Accueil | hero en texte seul sur tout le premier écran (H1 en très grand, calé sur la largeur), planche d'anatomie des bilans (la sportive au départ, son squelette dessiné sur la photo, les muscles de quatre zones au survol ou au toucher, légende numérotée), trois pôles, Johan Pereira (portrait en colonne 4), panneau sombre « Ils nous font confiance » (quatre preuves, avis Google, partenaires), panneau jaune entreprises, articles récents |
 | `/methodologie` | À propos | les trois piliers, le bilan de départ en cinq mesures, deux parcours, objectifs, pourquoi Hygie, Johan Pereira (parcours et formation), les sportifs qu'il suit, l'équipe sport, séance offerte (panneau bleu) |
 | `/soins`, `/sante`, `/sport`, `/recuperation` | Journal | titre, une phrase, un soin par carte sur trois colonnes (`/soins` : une grille par pôle ; `/sport` : la carte Clubs sportifs et la préparation par discipline), puis une rangée « Et ensuite » avec la prise de rendez-vous |
 | `/sante/…`, `/sport/…`, `/recuperation/…`, `/bilans/…` | Article | 15 fiches, dont Réathlétisation (`/sport/reathletisation`) et Bilan aérobie PNOE (`/bilans/aerobie`) : l'essentiel et l'action en tête, pour qui, déroulé, tarifs, cartes des praticiens, questions fréquentes, soins proches |
@@ -121,7 +121,7 @@ Règles de rédaction du design system (les textes du site priment : ils ne sont
 - `app/styles/hygie.css` : reprise de `bundle.css` à l'échelle fluide, plus les gabarits de pages.
 - `components/` : les composants du design system en TSX.
   - Mise en page et actions : `Row`/`Cell`, `Section` (titre à gauche, reste à droite), `Header` et menu mobile, `LogoLockup`, `Footer`, `Button`, `Tag`, `PointsLogo`.
-  - Accueil et contenus : `Hero`, `HeroMedia`, `GlassCard`, `ArticleCard`, `Marquee`, `CoralPanel` (panneau jaune ou bleu), `Quote`, `PhotoImg`, `Mots`.
+  - Accueil et contenus : `Hero` (texte seul, en très grand), `Anatomie` (planche d'anatomie des bilans, composant client), `ArticleCard`, `Marquee`, `CoralPanel` (panneau jaune ou bleu), `Quote`, `PhotoImg`, `Mots`. `HeroMedia` et `GlassCard` (grande photo et carte en verre qui dérive) restent disponibles ; l'accueil ne les utilise plus.
   - Mouvement : `Entree` et `LogoTrace` (rideau d'entrée), `TransitionPage` (transitions entre les pages).
   - Formulaires : `Field`, `Checkbox`.
   - Entrées au défilement : `Reveal` et `RevealObserver`.
@@ -139,7 +139,8 @@ Règles de rédaction du design system (les textes du site priment : ils ne sont
   Le nom tient toujours dans l'écran, du téléphone au grand écran : `TransitionPage` mesure la largeur de son mot le plus long (point compris, en em) et `.rideau-page__nom` en déduit la taille, plafonnée à celle des grands titres et à 40 % de la hauteur visible (téléphone à l'horizontale) ; un nom de plusieurs mots (« Mentions légales ») passe sur deux lignes entre les mots. Il est centré dans la partie visible, sous la barre du header (`--hauteur-header`), avec une petite compensation de l'oblique. Sur téléphone, la barre du bas (rendez-vous, appel) reste en place sous le rideau. `.page` ne laisse rien dépasser en largeur : sur téléphone, un débordement pendant une animation (panneaux de rendez-vous) élargissait la fenêtre et annulait la transition vers `/rendez-vous`.
 - **Onglets** : un trait jaune glisse sous l'onglet actif, dans le menu comme dans la prise de rendez-vous ; les panneaux de rendez-vous glissent dans le sens du changement, rangée après rangée, avec un léger flou.
 - **Titres** : chaque H1 monte mot par mot (`components/ui/Mots.tsx`).
-- Entrées « flottement » et « glissement » au défilement, dérive de la carte en verre, bandeau à 90 px par seconde (pause au survol).
+- **Planche d'anatomie** (accueil) : quand elle arrive à l'écran, le squelette apparaît de gauche à droite, comme sous un scanner, derrière un trait corail (1,8 s) ; les muscles d'une zone s'allument au survol, au toucher ou au clavier.
+- Entrées « flottement » et « glissement » au défilement, bandeau à 90 px par seconde (pause au survol) ; dérive de la carte en verre (`GlassCard`, disponible).
 
 Tout est coupé si le visiteur a choisi de réduire les animations. Sans JavaScript, le rideau se lève quand même.
 
@@ -233,3 +234,9 @@ Une photo supprimée d'Unsplash par son auteur disparaîtrait du site. Pour ne p
 Pour changer une photo, modifiez son entrée dans `content/images.ts` : identifiant Unsplash, dimensions, texte alternatif, couleur, auteur et cadrage (`position`, par exemple `'62% 45%'`). Les fiches et les articles désignent leur photo par sa clé (`photo: 'kine'`).
 
 Une séance photo au centre reste la meilleure option à terme : l'équipe, les machines de bilan et les salles réelles.
+
+### Planche d'anatomie de l'accueil
+
+Le squelette et les muscles dessinés sur la photo de la sportive (`photos.depart`) viennent des planches du Dr Paul Richer, *Anatomie artistique* (1890), dans le domaine public ([Wikimedia Commons](https://commons.wikimedia.org/wiki/Category:Anatomie_artistique_(Paul_Richer))) : squelette et muscles de la tête et du tronc, du membre supérieur et du membre inférieur, vus de profil. Chaque os a été recalé sur la pose de la sportive (hanche, genou, cheville, épaule, coude, poignet, colonne, crâne), puis découpé à sa silhouette. Ce ne sont pas des images générées.
+
+Les calques sont dans `assets/anatomie/` (2 400 × 1 600, transparents, même cadrage que la photo) : `squelette.png` (traits blancs), et `muscles-epaule.png`, `muscles-hanche.png`, `muscles-genou.png`, `muscles-mollet.png` (traits corail). Ils sont calés au pixel sur cette photo et ce cadrage (3/2, centré ; carré centré sur mobile) : si la photo change, il faut les refaire. Les zones sensibles et les repères numérotés sont dans `components/Anatomie.tsx` (coordonnées d'un cadre de 1 500 × 1 000), le crédit dans les mentions légales.

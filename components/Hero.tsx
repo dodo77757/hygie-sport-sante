@@ -3,33 +3,41 @@ import type { Photo } from '@/content/images';
 import { Button } from './ui/Button';
 import { PhotoImg } from './Photo';
 import { PointsLogo } from './ui/Primitives';
-import { Mots } from './ui/Mots';
+import { Mots, nombreDeMots } from './ui/Mots';
 
 type Lien = { label: string; href: string; variant?: 'solid' | 'contour' | 'jaune' };
 
-/* Hero d'accueil : surtitre et sous-titre à gauche, H1 italique centré, boutons à droite. Pas d'entrée animée. */
-export function Hero({ surtitre, title, intro, ctas = [] }: { surtitre?: string; title: string; intro: string; ctas?: Lien[] }) {
+/* Hero d'accueil : le texte seul, en très grand, sur tout le premier écran.
+   Surtitre en haut ; le H1 sur toute la largeur (deux lignes sur ordinateur, trois sur mobile) ; sous-titre et boutons en bas.
+   La taille du H1 est calculée pour que « en mouvement », la ligne la plus longue, remplisse la largeur du cadre. */
+export function Hero({ surtitre, titre, intro, ctas = [] }: { surtitre?: string; titre: [string, string]; intro: string; ctas?: Lien[] }) {
+  const [l1, l2] = titre;
   return (
     <section className="hk-hero" aria-labelledby="titre-accueil">
-      <div className="hk-hero__intro">
+      <div className="hk-hero__haut">
         <PointsLogo />
         {surtitre ? <p className="etiquette hk-hero__surtitre">{surtitre}</p> : null}
-        <p className="courant">{intro}</p>
       </div>
       <h1 id="titre-accueil" className="hk-hero__title titre-hero titre-hero--serre">
-        <Mots texte={title} />
+        <span className="hk-hero__ligne">
+          <Mots texte={l1} />
+        </span>{' '}
+        <span className="hk-hero__ligne">
+          <Mots texte={l2} depart={nombreDeMots(l1)} />
+        </span>
       </h1>
-      {ctas.length ? (
-        <div className={ctas.length > 1 ? 'hk-hero__cta hk-hero__cta--rangee' : 'hk-hero__cta'}>
-          {ctas.map((c) => (
-            <Button key={c.href} href={c.href} variant={c.variant}>
-              {c.label}
-            </Button>
-          ))}
-        </div>
-      ) : (
-        <div />
-      )}
+      <div className="hk-hero__bas">
+        <p className="chapo hk-hero__intro">{intro}</p>
+        {ctas.length ? (
+          <div className="hk-hero__cta">
+            {ctas.map((c) => (
+              <Button key={c.href} href={c.href} variant={c.variant}>
+                {c.label}
+              </Button>
+            ))}
+          </div>
+        ) : null}
+      </div>
     </section>
   );
 }

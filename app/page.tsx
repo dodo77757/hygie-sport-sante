@@ -4,7 +4,8 @@ import { ArticleCard } from '@/components/ArticleCard';
 import { Confiance } from '@/components/Confiance';
 import { ContactForm } from '@/components/ContactForm';
 import { CoralPanel } from '@/components/CoralPanel';
-import { Hero, HeroMedia } from '@/components/Hero';
+import { Anatomie } from '@/components/Anatomie';
+import { Hero } from '@/components/Hero';
 import { JsonLd } from '@/components/JsonLd';
 import { Marquee } from '@/components/Marquee';
 import { PhotoImg } from '@/components/Photo';
@@ -91,7 +92,7 @@ export default function Accueil() {
 
       <Hero
         surtitre={site.accroche}
-        title="Remettez-vous en mouvement"
+        titre={['Remettez-vous', 'en mouvement']}
         intro="On mesure d’abord, on construit ensuite. Quinze praticiens de la santé et du sport travaillent ensemble autour de votre parcours, du soin à la performance."
         ctas={[
           { label: 'Prendre rendez-vous', href: '/rendez-vous', variant: 'solid' },
@@ -99,14 +100,23 @@ export default function Accueil() {
         ]}
       />
 
-      <HeroMedia
+      {/* Bilans : la planche d'anatomie (squelette sur la photo, muscles par zone) */}
+      <Anatomie
         photo={photos.depart}
-        card={{
-          title: 'Des bilans qui mesurent, pas qui estiment',
-          text: 'Force, asymétries, mobilité, explosivité, capacité aérobie : nous testons avec les outils des clubs professionnels (dynamomètre isocinétique, plateformes de force, capteurs VALD et KINVENT, analyseur métabolique PNOE). Vous repartez avec un compte rendu chiffré et vos priorités de travail.',
-          cta: { label: 'Voir les bilans et les tarifs', href: '/bilans' },
-        }}
-      />
+        bouton={
+          <Button href="/bilans" variant="jaune">
+            Voir les bilans et les tarifs
+          </Button>
+        }
+      >
+        <Reveal as="h2" id="titre-bilans" className="titre-section">
+          Des bilans qui mesurent, pas qui estiment
+        </Reveal>
+        <p className="chapo">
+          Force, asymétries, mobilité, explosivité, capacité aérobie : nous testons avec les outils des clubs professionnels (dynamomètre isocinétique,
+          plateformes de force, capteurs VALD et KINVENT, analyseur métabolique PNOE). Vous repartez avec un compte rendu chiffré et vos priorités de travail.
+        </p>
+      </Anatomie>
 
       {/* Les trois pôles : titre, trois cartes, bouton */}
       <Section id="poles" titre="Nos trois pôles" titreId="titre-poles" aere>
@@ -122,7 +132,8 @@ export default function Accueil() {
       <Section
         titre="Rencontrez Johan Pereira"
         titreId="titre-johan"
-        photo={<PhotoImg className="hk-media accueil-presentation__photo" photo={photos.johanPereira} sizes="(max-width: 1023px) 92vw, 46vw" />}
+        photoEtroite
+        photo={<PhotoImg className="hk-media accueil-presentation__photo" photo={photos.johanPereira} sizes="(max-width: 1023px) 92vw, 23vw" />}
       >
         <Reveal as="p" className="courant texte-colonne">
           Ancien footballeur formé à l’ESTAC, Johan Pereira est étiopathe depuis 2012 et préparateur physique diplômé de deux universités. Il a fondé Hygie pour
@@ -148,7 +159,7 @@ export default function Accueil() {
       </section>
 
       {/* Articles récents : titre, texte, trois cartes, bouton */}
-      <Section titre="Allez plus loin" titreId="titre-journal">
+      <Section titre="Allez plus loin" titreId="titre-journal" className="accueil-journal">
         <Reveal as="p" className="courant texte-colonne">
           Conseils, décryptages et retours de terrain de l’équipe.
         </Reveal>

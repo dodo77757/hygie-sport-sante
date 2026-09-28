@@ -74,7 +74,7 @@ export const photos = {
     '#8ca6a6',
     'Eagle Media Pro',
     'eaglemediapro',
-    '52% 100%',
+    '52% 58%', // image de partage : la sportive entière. Sur l'accueil, la planche d'anatomie la cadre au centre (calques calés sur ce cadrage)
   ),
   mainsDos: unsplash(
     'photo-1699523229208-be1e1dd9252d',

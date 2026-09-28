@@ -88,6 +88,13 @@ export default function MentionsLegales() {
         ))}
       </p>
       <p>
+        Planche d’anatomie de l’accueil : squelette et muscles d’après les planches du Dr Paul Richer, <cite>Anatomie artistique</cite> (1890), domaine public,{' '}
+        <a href="https://commons.wikimedia.org/wiki/Category:Anatomie_artistique_(Paul_Richer)" rel="noopener">
+          Wikimedia Commons
+        </a>
+        .
+      </p>
+      <p>
         Icônes des réseaux sociaux :{' '}
         <a href="https://fontawesome.com/license/free" rel="noopener">
           Font Awesome Free
