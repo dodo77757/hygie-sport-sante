@@ -6,6 +6,8 @@ export const anciennes: Array<[string, string]> = [
   ['/activites-physiques/offres-entreprises', '/entreprises'],
   ['/qvct-entreprises', '/entreprises'],
   ['/qvct', '/entreprises'],
+  ['/entreprises/faq', '/entreprises/questions'],
+  ['/entreprises/devis', '/entreprises/contact'],
   ['/pole-sport-sante', '/sport/sport-sante'],
   ['/tarifs-forfait-sport', '/sport/coaching-individuel'],
   ['/plans-pricing', '/sport/coaching-individuel'],

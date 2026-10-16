@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import type { CSSProperties } from 'react';
-import { ContactForm } from '@/components/ContactForm';
 import { JsonLd } from '@/components/JsonLd';
 import { PhotoImg } from '@/components/Photo';
+import { SousNavEntreprises } from '@/components/SousNavEntreprises';
 import { Button } from '@/components/ui/Button';
 import { Cell, Row } from '@/components/ui/Row';
 import { Section } from '@/components/ui/Section';
@@ -24,34 +24,6 @@ export const metadata: Metadata = {
     type: 'website',
   },
 };
-
-/* 8. Questions fréquentes */
-const faqs = [
-  {
-    q: 'Faut-il prévoir une tenue ou un équipement particulier ?',
-    r: 'Non. Les tests se font en tenue de travail, et nous apportons tout le matériel. Il suffit d’une pièce calme.',
-  },
-  {
-    q: 'Les tests sont-ils difficiles ou douloureux ?',
-    r: 'Non. Ce sont des mouvements simples du quotidien : se tenir en équilibre, faire un squat, serrer une poignée. Ils sont adaptés à tous les âges et à toutes les conditions physiques.',
-  },
-  {
-    q: 'Mon employeur verra-t-il mes résultats ?',
-    r: 'Non. Votre bilan individuel vous est réservé. L’entreprise reçoit uniquement une synthèse collective et anonymisée.',
-  },
-  {
-    q: 'À quels secteurs s’adresse l’offre ?',
-    r: 'À toutes les entreprises : métiers physiques (BTP, logistique, industrie) comme postes sédentaires (bureaux, services). Les tests sont ajustés selon les postes.',
-  },
-  {
-    q: 'Est-ce que cela remplace la médecine du travail ?',
-    r: 'Non, c’est complémentaire. Notre rôle est de repérer les risques en amont et d’orienter vers la médecine du travail lorsque c’est nécessaire.',
-  },
-  {
-    q: 'Ces bilans peuvent-ils être reprochés à l’entreprise ?',
-    r: 'Notre démarche est construite pour l’inverse. L’entreprise ne reçoit aucun résultat individuel, nos constats sont fonctionnels et non médicaux, et chaque point de vigilance s’accompagne d’une action concrète. Le dossier qui en résulte documente une prévention active, ce que la réglementation attend de l’employeur.',
-  },
-];
 
 /* 4. Le déroulé */
 const etapes = [
@@ -121,19 +93,6 @@ const engagements = [
 ];
 
 export default function EntreprisesPage() {
-  const schemaFaq = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map((f) => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: f.r,
-      },
-    })),
-  };
-
   const schemaService = {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -162,7 +121,7 @@ export default function EntreprisesPage() {
 
   return (
     <>
-      <JsonLd data={[schemaService, schemaFaq]} />
+      <JsonLd data={schemaService} />
 
       {/* 1. Bandeau d'accroche (Hero) */}
       <Row as="section" className="apropos-hero" aria-labelledby="titre-entreprises">
@@ -176,6 +135,7 @@ export default function EntreprisesPage() {
           />
         </Cell>
         <Cell span={2} className="apropos-hero__texte">
+          <SousNavEntreprises />
           <h1 id="titre-entreprises" className="titre-hero">
             <Mots texte="Prévenir les TMS de vos équipes, mesure à l’appui" />
             <span className="titre-point c-bleu" style={{ '--n': 10 } as CSSProperties} aria-hidden="true" />
@@ -185,7 +145,7 @@ export default function EntreprisesPage() {
             fondé sur des mesures objectives et des données collectives anonymisées.
           </p>
           <div className="hk-actions" style={{ marginTop: 'calc(24 * var(--u))', display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-            <Button href="#formulaire" variant="jaune">
+            <Button href="/entreprises/contact" variant="jaune">
               Demander une présentation
             </Button>
             <Button href="#deroule" variant="contour">
@@ -244,7 +204,7 @@ export default function EntreprisesPage() {
         </Reveal>
       </Section>
 
-      {/* 4. Le déroulé */}
+      {/* 4. Le déroulé (CORRIGÉ : wrapper div pour éviter la colonne écrasée) */}
       <Section
         id="deroule"
         titre="Le déroulé"
@@ -258,10 +218,14 @@ export default function EntreprisesPage() {
               <span className="mesures__numero" aria-hidden="true">
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <h3 className="titre-bloc" style={{ marginTop: '8px' }}>
-                {e.titre}
-              </h3>
-              <p className="courant">{e.texte}</p>
+              <div>
+                <h3 className="titre-bloc" style={{ marginTop: 0, marginBottom: '8px' }}>
+                  {e.titre}
+                </h3>
+                <p className="courant" style={{ maxWidth: '62ch' }}>
+                  {e.texte}
+                </p>
+              </div>
             </li>
           ))}
         </ol>
@@ -426,76 +390,44 @@ export default function EntreprisesPage() {
         </div>
       </Section>
 
-      {/* 8. Questions fréquentes */}
-      <Row as="section" aria-labelledby="titre-faq" aere>
-        <Cell>
-          <Reveal as="h2" id="titre-faq" className="titre-section">
-            Vos questions
-          </Reveal>
-          <p className="etiquette section__sous-titre">Tout ce que vous devez savoir</p>
-        </Cell>
-        <Cell span={3}>
-          <div className="faq">
-            {faqs.map((f) => (
-              <details key={f.q} className="faq__item">
-                <summary>
-                  <span className="titre-liste">{f.q}</span>
-                </summary>
-                <p className="faq__reponse">{f.r}</p>
-              </details>
-            ))}
-          </div>
-        </Cell>
-      </Row>
-
-      {/* 9. Appel à l'action et formulaire */}
+      {/* Deux cartes d'orientation aérées : Vos questions & Contact et devis */}
       <Section
-        id="formulaire"
-        titre="Contact & Devis"
-        titreId="titre-cta"
-        sousTitre="Parlons de votre projet"
+        titre="Aller plus loin"
+        titreId="titre-aller-plus-loin"
+        sousTitre="Questions & contact"
         aere
       >
-        <Reveal as="h3" className="titre-bloc">
-          Faites le point sur la santé physique de vos équipes
-        </Reveal>
-        <Reveal as="p" className="courant texte-colonne">
-          Parlons de votre contexte : nombre de collaborateurs, types de postes, sites concernés. Nous vous proposons une intervention adaptée.
-        </Reveal>
-
-        <div className="hk-grid" style={{ marginTop: 'calc(24 * var(--u))', alignItems: 'start' }}>
-          <div className="hk-card" style={{ padding: '32px 28px' }}>
-            <span className="hk-tag hk-tag--gris">Votre interlocuteur</span>
+        <div className="hk-grid" style={{ marginTop: 'calc(16 * var(--u))' }}>
+          {/* Carte 1 : Vos questions */}
+          <div className="hk-card" style={{ padding: '32px 28px', display: 'flex', flexDirection: 'column' }}>
+            <span className="hk-tag hk-tag--gris">Foire aux questions</span>
             <h4 className="titre-bloc" style={{ marginTop: '16px' }}>
-              Johan Pereira
+              Vos questions fréquentes
             </h4>
-            <p className="courant" style={{ marginTop: '6px' }}>
-              Fondateur d’Hygie · Étiopathe &amp; Préparateur physique
+            <p className="courant" style={{ marginTop: '10px', flex: 1 }}>
+              Tenue requise, difficulté des tests, confidentialité employeur, complémentarité avec la médecine du travail, conformité DUERP…
             </p>
-            <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <p className="courant">
-                Téléphone :{' '}
-                <a href={site.telephone.lien} style={{ fontWeight: 600 }}>
-                  {site.telephone.affichage}
-                </a>
-              </p>
-              <p className="courant">
-                E-mail :{' '}
-                <a href={`mailto:${site.email}`} style={{ fontWeight: 600 }}>
-                  {site.email}
-                </a>
-              </p>
-              <p className="courant">
-                Lieu : {site.adresse.rue}, {site.adresse.codePostal} {site.adresse.ville} (ou intervention directe dans vos locaux).
-              </p>
+            <div style={{ marginTop: '24px' }}>
+              <Button href="/entreprises/questions" variant="contour">
+                Consulter toutes les réponses
+              </Button>
             </div>
           </div>
 
-          <div style={{ background: 'var(--brume)', padding: '32px 28px', borderRadius: 'var(--rayon)' }}>
-            <h4 className="titre-bloc" style={{ marginBottom: '20px' }}>
-              Demander une présentation
+          {/* Carte 2 : Contact et devis */}
+          <div className="hk-card" style={{ padding: '32px 28px', display: 'flex', flexDirection: 'column' }}>
+            <span className="hk-tag hk-tag--jaune">Échange direct</span>
+            <h4 className="titre-bloc" style={{ marginTop: '16px' }}>
+              Contact &amp; devis entreprise
             </h4>
-            <ContactForm type="entreprise" submitLabel="Demander une présentation" />
+            <p className="courant" style={{ marginTop: '10px', flex: 1 }}>
+              Échangez avec Johan Pereira. Nous calibrons une proposition sur mesure selon votre effectif et vos contraintes d’organisation. Réponse sous 48 h.
+            </p>
+            <div style={{ marginTop: '24px' }}>
+              <Button href="/entreprises/contact" variant="jaune">
+                Demander une présentation
+              </Button>
+            </div>
           </div>
         </div>
       </Section>

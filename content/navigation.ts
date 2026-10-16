@@ -1,4 +1,4 @@
-export type Lien = { label: string; href: string };
+export type Lien = { label: string; href: string; enfants?: Lien[] };
 
 /* Menu principal (header et menu mobile) */
 export const menu: Lien[] = [
@@ -7,7 +7,15 @@ export const menu: Lien[] = [
   { label: 'Sport', href: '/sport' },
   { label: 'Récupération', href: '/recuperation' },
   { label: 'Bilans', href: '/bilans' },
-  { label: 'Entreprises', href: '/entreprises' },
+  {
+    label: 'Entreprises',
+    href: '/entreprises',
+    enfants: [
+      { label: 'Démarche QVCT', href: '/entreprises' },
+      { label: 'Vos questions', href: '/entreprises/questions' },
+      { label: 'Contact et devis', href: '/entreprises/contact' },
+    ],
+  },
 ];
 
 export const actionPrincipale: Lien = { label: 'Prendre rendez-vous', href: '/rendez-vous' };

@@ -13,6 +13,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/recuperation', priority: 0.9 },
     { path: '/bilans', priority: 0.9 },
     { path: '/entreprises', priority: 0.8 },
+    { path: '/entreprises/questions', priority: 0.7 },
+    { path: '/entreprises/contact', priority: 0.7 },
     { path: '/clubs', priority: 0.7 },
     { path: '/rendez-vous', priority: 0.9 },
     { path: '/contact', priority: 0.7 },
