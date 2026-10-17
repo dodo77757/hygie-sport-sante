@@ -3,10 +3,11 @@ import type { CSSProperties } from 'react';
 /* Logo Hygie redessiné en traits (arrondis) à partir du fichier d'origine, pour être tracé à l'écran :
    chaque trait se dessine dans l'ordre de lecture, puis les trois points apparaissent (bleu, jaune, gris).
    --d : départ du trait, --t : durée. Couleur des traits : currentColor. */
-export function LogoTrace({ className }: { className?: string }) {
+export function LogoTrace({ className, style }: { className?: string; style?: CSSProperties }) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 1037 554"
       fill="none"
       stroke="currentColor"
@@ -35,9 +36,9 @@ export function LogoTrace({ className }: { className?: string }) {
       <path className="t" d="M298.2 17.8H333" strokeWidth={23} pathLength={1} style={{ '--d': '0.90s', '--t': '0.20s' } as CSSProperties} />
       <path className="t" d="M519.6 510.2H485" strokeWidth={23} pathLength={1} style={{ '--d': '0.96s', '--t': '0.20s' } as CSSProperties} />
       <path className="t" d="M519.6 510.2H554.2" strokeWidth={23} pathLength={1} style={{ '--d': '0.96s', '--t': '0.20s' } as CSSProperties} />
-      <circle className="p p--bleu" cx="705.2" cy="129.2" r="26" style={{ '--d': '0.98s' } as CSSProperties} />
-      <circle className="p p--jaune" cx="891.6" cy="343.2" r="26" style={{ '--d': '1.08s' } as CSSProperties} />
-      <circle className="p p--gris" cx="123.9" cy="481.3" r="26" style={{ '--d': '1.18s' } as CSSProperties} />
+      <circle className="p p--bleu" cx="705.2" cy="129.2" r="26" fill="var(--bleu, #1B5E8C)" style={{ '--d': '0.98s' } as CSSProperties} />
+      <circle className="p p--jaune" cx="891.6" cy="343.2" r="26" fill="var(--jaune, #F4C646)" style={{ '--d': '1.08s' } as CSSProperties} />
+      <circle className="p p--gris" cx="123.9" cy="481.3" r="26" fill="var(--gris-logo, #A8A8A8)" style={{ '--d': '1.18s' } as CSSProperties} />
     </svg>
   );
 }

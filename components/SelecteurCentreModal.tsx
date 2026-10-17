@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useCentre } from '@/context/CentreContext';
+import { LogoTrace } from './LogoTrace';
 
 /* Icônes vectorielles fines monochromes */
 function IconePin() {
@@ -159,19 +160,25 @@ export function SelecteurCentreModal() {
 
         {/* En-tête centré à fort contraste */}
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <p
+          {/* Logo Hygie officiel en haut */}
+          <div
             style={{
-              margin: '0 0 10px',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '11px',
-              fontWeight: 600,
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color: '#E2B33C',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '16px',
+              color: '#FFFFFF',
             }}
+            aria-label="Hygie"
           >
-            • HYGIE SPORT SANTÉ &amp; PERFORMANCE
-          </p>
+            <LogoTrace
+              style={{
+                width: 'clamp(95px, 11vw, 120px)',
+                height: 'auto',
+                display: 'block',
+              }}
+            />
+          </div>
 
           <h2
             id="titre-selecteur-centre"
