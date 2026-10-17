@@ -1,11 +1,8 @@
-'use client';
-
 import Link from 'next/link';
 import { AvisGoogle } from './AvisGoogle';
 import { Reveal } from './ui/Primitives';
 import { maisonSportSante, partenaires } from '@/content/confiance';
 import { praticiensAffiches } from '@/content/praticiens';
-import { useCentre } from '@/context/CentreContext';
 
 type Preuve = { titre: string; texte: string; lien?: { href: string; label: string; externe?: boolean } };
 
@@ -13,23 +10,7 @@ type Preuve = { titre: string; texte: string; lien?: { href: string; label: stri
    Les quatre preuves des textes du site (25 septembre 2026), avec les liens déjà en place, puis les avis Google
    (s'ils sont configurés) et les logos de partenaires (s'il y en a). Rien n'est inventé. */
 export function Confiance() {
-  const { centre } = useCentre();
   const nbPraticiens = new Set(praticiensAffiches.map((p) => p.nom)).size;
-
-  const preuvePraticiens: Preuve =
-    centre === 'bondoufle'
-      ? {
-          titre: 'Équipe en cours de constitution',
-          texte:
-            'Kinés, étiopathes, préparateurs physiques, massages et nutrition : l’équipe pluridisciplinaire de Bondoufle est en cours de recrutement pour l’ouverture.',
-          lien: { href: '/soins', label: 'Découvrir les spécialités' },
-        }
-      : {
-          titre: `${nbPraticiens} praticiens sous le même toit`,
-          texte:
-            'Kinés, étiopathe, orthoptiste, préparateurs physiques, massages et nutrition : un seul parcours, des professionnels qui se transmettent l’information.',
-          lien: { href: '/soins', label: 'Tous les soins' },
-        };
 
   const preuves: Preuve[] = [
     {
@@ -38,7 +19,12 @@ export function Confiance() {
         'Hygie est centre partenaire de ce dispositif labellisé par l’État, qui oriente vers une activité physique adaptée les personnes atteintes de maladies chroniques ou éloignées du sport.',
       lien: { href: maisonSportSante.url, label: 'Le dispositif', externe: true },
     },
-    preuvePraticiens,
+    {
+      titre: `${nbPraticiens} praticiens sous le même toit`,
+      texte:
+        'Kinés, étiopathe, orthoptiste, préparateurs physiques, massages et nutrition : un seul parcours, des professionnels qui se transmettent l’information.',
+      lien: { href: '/soins', label: 'Tous les soins' },
+    },
     {
       titre: 'Des sportifs de haut niveau suivis',
       texte:

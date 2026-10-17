@@ -42,7 +42,7 @@ export function SelecteurCentreModal() {
         display: 'grid',
         placeItems: 'center',
         padding: '20px',
-        background: 'rgba(17, 18, 16, 0.82)',
+        background: 'rgba(17, 18, 16, 0.85)',
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
         animation: 'hk-apparait 0.3s ease forwards',
@@ -63,7 +63,7 @@ export function SelecteurCentreModal() {
           color: 'var(--encre)',
         }}
       >
-        {/* Bouton de fermeture discret */}
+        {/* Bouton de fermeture */}
         <button
           type="button"
           onClick={fermerSelecteur}
@@ -92,7 +92,7 @@ export function SelecteurCentreModal() {
           <span className="etiquette" style={{ color: 'var(--bleu-fonce)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
             Hygie Sport Santé &amp; Performance
           </span>
-          <h2 id="titre-selecteur-centre" className="titre-section" style={{ fontSize: 'clamp(28px, 4vw, 38px)', margin: '10px 0 8px' }}>
+          <h2 id="titre-selecteur-centre" className="titre-section" style={{ fontSize: 'clamp(26px, 4vw, 36px)', margin: '10px 0 8px' }}>
             Choisissez votre centre
           </h2>
           <p className="courant" style={{ maxWidth: '50ch', margin: '0 auto', opacity: 0.85 }}>
@@ -109,16 +109,9 @@ export function SelecteurCentreModal() {
           }}
         >
           {/* Option 1 : Fontainebleau - Avon */}
-          <div
+          <button
+            type="button"
             onClick={() => choisirCentre('avon')}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                choisirCentre('avon');
-              }
-            }}
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -127,9 +120,11 @@ export function SelecteurCentreModal() {
               background: centre === 'avon' ? 'var(--surface)' : 'var(--fond)',
               border: centre === 'avon' ? '2px solid var(--bleu-fonce)' : '1px solid var(--filet-doux)',
               cursor: 'pointer',
-              transition: 'transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease',
-              boxShadow: centre === 'avon' ? '0 8px 24px rgba(44, 91, 143, 0.12)' : 'none',
               textAlign: 'left',
+              font: 'inherit',
+              color: 'inherit',
+              boxShadow: centre === 'avon' ? '0 8px 24px rgba(44, 91, 143, 0.12)' : 'none',
+              transition: 'transform 0.15s ease, border-color 0.15s ease',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
@@ -140,7 +135,7 @@ export function SelecteurCentreModal() {
               e.currentTarget.style.borderColor = centre === 'avon' ? 'var(--bleu-fonce)' : 'var(--filet-doux)';
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: '14px' }}>
               <span className="hk-tag hk-tag--bleu">{centres.avon.badge}</span>
               {centre === 'avon' && (
                 <span className="prose-note" style={{ color: 'var(--bleu-fonce)', fontWeight: 600 }}>
@@ -161,26 +156,18 @@ export function SelecteurCentreModal() {
               {centres.avon.description}
             </p>
 
-            <button
-              type="button"
+            <span
               className={centre === 'avon' ? 'hk-btn hk-btn--jaune' : 'hk-btn'}
-              style={{ width: '100%', justifyContent: 'center' }}
+              style={{ width: '100%', justifyContent: 'center', pointerEvents: 'none' }}
             >
               <span className="hk-btn__label">Choisir Fontainebleau-Avon</span>
-            </button>
-          </div>
+            </span>
+          </button>
 
           {/* Option 2 : Bondoufle */}
-          <div
+          <button
+            type="button"
             onClick={() => choisirCentre('bondoufle')}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                choisirCentre('bondoufle');
-              }
-            }}
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -189,9 +176,11 @@ export function SelecteurCentreModal() {
               background: centre === 'bondoufle' ? 'var(--surface)' : 'var(--fond)',
               border: centre === 'bondoufle' ? '2px solid var(--jaune)' : '1px solid var(--filet-doux)',
               cursor: 'pointer',
-              transition: 'transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease',
-              boxShadow: centre === 'bondoufle' ? '0 8px 24px rgba(220, 185, 40, 0.16)' : 'none',
               textAlign: 'left',
+              font: 'inherit',
+              color: 'inherit',
+              boxShadow: centre === 'bondoufle' ? '0 8px 24px rgba(220, 185, 40, 0.16)' : 'none',
+              transition: 'transform 0.15s ease, border-color 0.15s ease',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
@@ -202,7 +191,7 @@ export function SelecteurCentreModal() {
               e.currentTarget.style.borderColor = centre === 'bondoufle' ? 'var(--jaune)' : 'var(--filet-doux)';
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: '14px' }}>
               <span className="hk-tag hk-tag--jaune">{centres.bondoufle.badge}</span>
               {centre === 'bondoufle' && (
                 <span className="prose-note" style={{ color: 'var(--encre)', fontWeight: 600 }}>
@@ -223,14 +212,13 @@ export function SelecteurCentreModal() {
               {centres.bondoufle.description}
             </p>
 
-            <button
-              type="button"
+            <span
               className={centre === 'bondoufle' ? 'hk-btn hk-btn--jaune' : 'hk-btn'}
-              style={{ width: '100%', justifyContent: 'center' }}
+              style={{ width: '100%', justifyContent: 'center', pointerEvents: 'none' }}
             >
               <span className="hk-btn__label">Choisir Bondoufle (En construction)</span>
-            </button>
-          </div>
+            </span>
+          </button>
         </div>
 
         {/* Note sous le choix */}
