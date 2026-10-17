@@ -42,9 +42,16 @@ export function Footer() {
             ))}
           </p>
           <p className="hk-footer__list courant">
+            <strong>Fontainebleau - Avon</strong> (Ouvert)
+            <br />
             {site.adresse.rue}
             <br />
             {site.adresse.codePostal} {site.adresse.ville}
+            <br />
+            <br />
+            <strong>Bondoufle</strong> (En construction)
+            <br />
+            Bondoufle (91) · Grand Paris Sud
           </p>
         </div>
 

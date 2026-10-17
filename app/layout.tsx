@@ -3,13 +3,16 @@ import './styles/tokens.css';
 import './styles/hygie.css';
 import { anton, hanken, jetbrains } from './fonts';
 import { Audience } from '@/components/Audience';
+import { BandeauCentre } from '@/components/BandeauCentre';
 import { BarreMobile } from '@/components/BarreMobile';
 import { Entree } from '@/components/Entree';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { LogoLockup } from '@/components/LogoLockup';
 import { RevealObserver } from '@/components/RevealObserver';
+import { SelecteurCentreModal } from '@/components/SelecteurCentreModal';
 import { TransitionPage } from '@/components/TransitionPage';
+import { CentreProvider } from '@/context/CentreContext';
 import { imagePartage, photos } from '@/content/images';
 import { actionPrincipale, menu } from '@/content/navigation';
 import { site } from '@/content/site';
@@ -44,26 +47,30 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" className={`${anton.variable} ${hanken.variable} ${jetbrains.variable}`} suppressHydrationWarning>
       <body>
-        {/* En tête du document : le rideau couvre la page dès le premier affichage */}
-        <Entree />
-        <a className="skip-link" href="#contenu">
-          Aller au contenu
-        </a>
-        <Header
-          logo={<LogoLockup preload compact />}
-          links={menu}
-          cta={actionPrincipale}
-          telephone={{ affichage: site.telephone.affichage, lien: site.telephone.lien }}
-        />
-        <TransitionPage>
-          <main id="contenu" tabIndex={-1}>
-            {children}
-          </main>
-          <Footer />
-        </TransitionPage>
-        <BarreMobile />
-        <RevealObserver />
-        <Audience />
+        <CentreProvider>
+          {/* En tête du document : le rideau couvre la page dès le premier affichage */}
+          <Entree />
+          <SelecteurCentreModal />
+          <a className="skip-link" href="#contenu">
+            Aller au contenu
+          </a>
+          <BandeauCentre />
+          <Header
+            logo={<LogoLockup preload compact />}
+            links={menu}
+            cta={actionPrincipale}
+            telephone={{ affichage: site.telephone.affichage, lien: site.telephone.lien }}
+          />
+          <TransitionPage>
+            <main id="contenu" tabIndex={-1}>
+              {children}
+            </main>
+            <Footer />
+          </TransitionPage>
+          <BarreMobile />
+          <RevealObserver />
+          <Audience />
+        </CentreProvider>
       </body>
     </html>
   );

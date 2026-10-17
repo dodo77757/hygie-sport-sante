@@ -1,5 +1,8 @@
+'use client';
+
 import type { ReactNode } from 'react';
 import type { Photo } from '@/content/images';
+import { useCentre } from '@/context/CentreContext';
 import { Button } from './ui/Button';
 import { PhotoImg } from './Photo';
 import { PointsLogo } from './ui/Primitives';
@@ -11,12 +14,23 @@ type Lien = { label: string; href: string; variant?: 'solid' | 'contour' | 'jaun
    Surtitre en haut ; le H1 sur toute la largeur (deux lignes sur ordinateur, trois sur mobile) ; sous-titre et boutons en bas.
    La taille du H1 est calculée pour que « en mouvement », la ligne la plus longue, remplisse la largeur du cadre. */
 export function Hero({ surtitre, titre, intro, ctas = [] }: { surtitre?: string; titre: [string, string]; intro: string; ctas?: Lien[] }) {
+  const { centre } = useCentre();
   const [l1, l2] = titre;
+
+  const surtitreAffiche =
+    centre === 'bondoufle'
+      ? 'Santé, sport et récupération · Centre de Bondoufle (En construction)'
+      : surtitre;
+
+  const introAffichee =
+    centre === 'bondoufle'
+      ? 'On mesure d’abord, on construit ensuite. Hygie s’installe à Bondoufle : un nouveau centre dédié à la santé, au sport et à la récupération (en cours d’aménagement).'
+      : intro;
   return (
     <section className="hk-hero" aria-labelledby="titre-accueil">
       <div className="hk-hero__haut">
         <PointsLogo />
-        {surtitre ? <p className="etiquette hk-hero__surtitre">{surtitre}</p> : null}
+        {surtitreAffiche ? <p className="etiquette hk-hero__surtitre">{surtitreAffiche}</p> : null}
       </div>
       <h1 id="titre-accueil" className="hk-hero__title titre-hero titre-hero--serre">
         <span className="hk-hero__ligne">
@@ -27,7 +41,7 @@ export function Hero({ surtitre, titre, intro, ctas = [] }: { surtitre?: string;
         </span>
       </h1>
       <div className="hk-hero__bas">
-        <p className="chapo hk-hero__intro">{intro}</p>
+        <p className="chapo hk-hero__intro">{introAffichee}</p>
         {ctas.length ? (
           <div className="hk-hero__cta">
             {ctas.map((c) => (

@@ -62,3 +62,46 @@ export const site = {
   /** Date de la dernière mise à jour de la politique de confidentialité */
   confidentialiteMiseAJour: '27 septembre 2026',
 } as const;
+
+export type CentreId = 'avon' | 'bondoufle';
+
+export type CentreInfo = {
+  id: CentreId;
+  nom: string;
+  nomCourt: string;
+  ville: string;
+  departement: string;
+  statut: 'ouvert' | 'en_construction';
+  badge: string;
+  adresse: string;
+  description: string;
+  acces?: string;
+};
+
+export const centres: Record<CentreId, CentreInfo> = {
+  avon: {
+    id: 'avon',
+    nom: 'Fontainebleau - Avon',
+    nomCourt: 'Avon',
+    ville: 'Avon',
+    departement: '77',
+    statut: 'ouvert',
+    badge: 'Centre ouvert',
+    adresse: '9, rue de la Petite Vitesse, 77210 Avon',
+    description: '15 praticiens de santé, bilans physiologiques complets, coaching et récupération.',
+    acces: 'Face à la gare de Fontainebleau-Avon (Ligne R).',
+  },
+  bondoufle: {
+    id: 'bondoufle',
+    nom: 'Bondoufle',
+    nomCourt: 'Bondoufle',
+    ville: 'Bondoufle',
+    departement: '91',
+    statut: 'en_construction',
+    badge: 'En construction',
+    adresse: 'Bondoufle (91)',
+    description: 'Nouveau centre de santé, sport et récupération en cours d’aménagement. Ouverture prochaine.',
+    acces: 'Grand Paris Sud.',
+  },
+};
+
