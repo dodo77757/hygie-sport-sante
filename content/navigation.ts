@@ -7,15 +7,7 @@ export const menu: Lien[] = [
   { label: 'Sport', href: '/sport' },
   { label: 'Récupération', href: '/recuperation' },
   { label: 'Bilans', href: '/bilans' },
-  {
-    label: 'Entreprises',
-    href: '/entreprises',
-    enfants: [
-      { label: 'Démarche QVCT', href: '/entreprises' },
-      { label: 'Vos questions', href: '/entreprises/questions' },
-      { label: 'Contact et devis', href: '/entreprises/contact' },
-    ],
-  },
+  { label: 'Entreprises', href: '/entreprises' },
 ];
 
 export const actionPrincipale: Lien = { label: 'Prendre rendez-vous', href: '/rendez-vous' };
@@ -27,7 +19,8 @@ export const navigationPied: Lien[] = [
   { label: 'Sport', href: '/sport' },
   { label: 'Récupération & bien-être', href: '/recuperation' },
   { label: 'Bilans', href: '/bilans' },
-  { label: 'Entreprises et clubs', href: '/entreprises' },
+  { label: 'Entreprises & QVCT', href: '/entreprises' },
+  { label: 'FAQ Entreprises', href: '/entreprises/questions' },
   { label: 'Journal', href: '/journal' },
   { label: 'Contact', href: '/contact' },
 ];

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import type { CSSProperties } from 'react';
+import Link from 'next/link';
 import { ContactForm } from '@/components/ContactForm';
-import { SousNavEntreprises } from '@/components/SousNavEntreprises';
 import { Cell, Row } from '@/components/ui/Row';
 import { Section } from '@/components/ui/Section';
 import { Reveal } from '@/components/ui/Primitives';
@@ -46,7 +46,21 @@ export default function EntreprisesContactPage() {
       {/* En-tête */}
       <Row as="section" className="apropos-hero" aria-labelledby="titre-contact-ent">
         <Cell span={4}>
-          <SousNavEntreprises />
+          <div style={{ marginBottom: '16px' }}>
+            <Link
+              href="/entreprises"
+              className="etiquette"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                color: 'var(--bleu-fonce)',
+                textDecoration: 'none',
+              }}
+            >
+              ← Retour à l’offre Entreprises
+            </Link>
+          </div>
           <h1 id="titre-contact-ent" className="titre-hero">
             <Mots texte="Contact & devis entreprise" />
             <span className="titre-point c-jaune" style={{ '--n': 5 } as CSSProperties} aria-hidden="true" />

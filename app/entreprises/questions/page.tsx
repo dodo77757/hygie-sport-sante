@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import type { CSSProperties } from 'react';
+import Link from 'next/link';
 import { JsonLd } from '@/components/JsonLd';
-import { SousNavEntreprises } from '@/components/SousNavEntreprises';
 import { Button } from '@/components/ui/Button';
 import { Cell, Row } from '@/components/ui/Row';
 import { Section } from '@/components/ui/Section';
@@ -71,7 +71,21 @@ export default function EntreprisesQuestionsPage() {
       {/* En-tête */}
       <Row as="section" className="apropos-hero" aria-labelledby="titre-questions-ent">
         <Cell span={4}>
-          <SousNavEntreprises />
+          <div style={{ marginBottom: '16px' }}>
+            <Link
+              href="/entreprises"
+              className="etiquette"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                color: 'var(--bleu-fonce)',
+                textDecoration: 'none',
+              }}
+            >
+              ← Retour à l’offre Entreprises
+            </Link>
+          </div>
           <h1 id="titre-questions-ent" className="titre-hero">
             <Mots texte="Vos questions sur nos bilans QVCT" />
             <span className="titre-point c-bleu" style={{ '--n': 6 } as CSSProperties} aria-hidden="true" />

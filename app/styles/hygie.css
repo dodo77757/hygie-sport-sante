@@ -201,50 +201,6 @@ a.hk-tag--bleu:hover, a.hk-tag--jaune:hover, a.hk-tag--gris:hover { background: 
 }
 .hk-nav a:hover, .hk-nav a[aria-current="page"] { text-decoration: underline; }
 
-/* Menu déroulant pour sous-onglets (ex: Entreprises) */
-.hk-nav__item--has-sub { position: relative; }
-.hk-nav__chevron { font-size: 10px; opacity: 0.6; margin-left: 2px; }
-.hk-nav__sub {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(8px);
-  background: var(--surface);
-  border: 1px solid var(--filet-doux);
-  border-radius: var(--rayon);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
-  padding: 8px 0;
-  min-width: 190px;
-  list-style: none;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-}
-.hk-nav__item--has-sub:hover .hk-nav__sub,
-.hk-nav__item--has-sub:focus-within .hk-nav__sub {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(2px);
-}
-.hk-nav__sub li { list-style: none; margin: 0; padding: 0; }
-.hk-nav__sub a {
-  padding: 10px 18px !important;
-  display: block;
-  font: 400 13px/1.3 var(--font-texte) !important;
-  color: var(--encre) !important;
-  white-space: nowrap;
-  text-decoration: none !important;
-}
-.hk-nav__sub a:hover, .hk-nav__sub a[aria-current="page"] {
-  background: var(--brume);
-  color: var(--bleu-fonce) !important;
-  text-decoration: none !important;
-}
-.hk-menu__sub { list-style: none; margin: 6px 0 12px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-
 .hk-burger {
   display: none;
   align-content: center;

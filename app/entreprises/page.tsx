@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import type { CSSProperties } from 'react';
 import { JsonLd } from '@/components/JsonLd';
 import { PhotoImg } from '@/components/Photo';
-import { SousNavEntreprises } from '@/components/SousNavEntreprises';
 import { Button } from '@/components/ui/Button';
 import { Cell, Row } from '@/components/ui/Row';
 import { Section } from '@/components/ui/Section';
@@ -135,7 +134,6 @@ export default function EntreprisesPage() {
           />
         </Cell>
         <Cell span={2} className="apropos-hero__texte">
-          <SousNavEntreprises />
           <h1 id="titre-entreprises" className="titre-hero">
             <Mots texte="Prévenir les TMS de vos équipes, mesure à l’appui" />
             <span className="titre-point c-bleu" style={{ '--n': 10 } as CSSProperties} aria-hidden="true" />
@@ -146,10 +144,13 @@ export default function EntreprisesPage() {
           </p>
           <div className="hk-actions" style={{ marginTop: 'calc(24 * var(--u))', display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
             <Button href="/entreprises/contact" variant="jaune">
-              Demander une présentation
+              Demander un devis
+            </Button>
+            <Button href="/entreprises/questions" variant="contour">
+              Vos questions (FAQ)
             </Button>
             <Button href="#deroule" variant="contour">
-              Découvrir le déroulé d’une intervention
+              Découvrir le déroulé
             </Button>
           </div>
         </Cell>
@@ -219,12 +220,8 @@ export default function EntreprisesPage() {
                 {String(i + 1).padStart(2, '0')}
               </span>
               <div>
-                <h3 className="titre-bloc" style={{ marginTop: 0, marginBottom: '8px' }}>
-                  {e.titre}
-                </h3>
-                <p className="courant" style={{ maxWidth: '62ch' }}>
-                  {e.texte}
-                </p>
+                <h3 className="titre-liste">{e.titre}</h3>
+                <p className="courant">{e.texte}</p>
               </div>
             </li>
           ))}

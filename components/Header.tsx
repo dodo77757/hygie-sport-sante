@@ -104,22 +104,10 @@ export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links
             <nav ref={navRef} className={traitPret ? 'hk-nav-zone is-pret' : 'hk-nav-zone'} aria-label="Navigation principale">
               <ul className={trait ? 'hk-nav a-trait' : 'hk-nav'}>
                 {links.map((l) => (
-                  <li key={l.href} className={l.enfants ? 'hk-nav__item hk-nav__item--has-sub' : 'hk-nav__item'}>
+                  <li key={l.href}>
                     <Link href={l.href} aria-current={estActif(pathname, l.href) ? 'page' : undefined}>
                       {l.label}
-                      {l.enfants ? <span className="hk-nav__chevron" aria-hidden="true"> ▾</span> : null}
                     </Link>
-                    {l.enfants ? (
-                      <ul className="hk-nav__sub">
-                        {l.enfants.map((enf) => (
-                          <li key={enf.href}>
-                            <Link href={enf.href} aria-current={pathname === enf.href ? 'page' : undefined}>
-                              {enf.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : null}
                   </li>
                 ))}
               </ul>
@@ -170,22 +158,6 @@ export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links
                   <Link href={l.href} onClick={close} aria-current={estActif(pathname, l.href) ? 'page' : undefined}>
                     {l.label}
                   </Link>
-                  {l.enfants ? (
-                    <ul className="hk-menu__sub">
-                      {l.enfants.map((enf) => (
-                        <li key={enf.href}>
-                          <Link
-                            href={enf.href}
-                            onClick={close}
-                            aria-current={pathname === enf.href ? 'page' : undefined}
-                            style={{ paddingLeft: '24px', fontSize: '0.88em', opacity: 0.88 }}
-                          >
-                            ↳ {enf.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
                 </li>
               ))}
             </ul>
