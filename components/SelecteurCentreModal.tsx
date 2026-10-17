@@ -60,7 +60,7 @@ function IconeInfo() {
 }
 
 export function SelecteurCentreModal() {
-  const { centre, estSelecteurOuvert, choisirCentre, fermerSelecteur } = useCentre();
+  const { centre, estSelecteurOuvert, choisirCentre, fermerSelecteur, aChoisi } = useCentre();
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -70,7 +70,8 @@ export function SelecteurCentreModal() {
     document.body.style.overflow = 'hidden';
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      // Échap ne peut fermer la modale que si l'utilisateur a déjà fait un choix
+      if (e.key === 'Escape' && aChoisi) {
         fermerSelecteur();
       }
     };
@@ -80,7 +81,7 @@ export function SelecteurCentreModal() {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [estSelecteurOuvert, fermerSelecteur]);
+  }, [estSelecteurOuvert, fermerSelecteur, aChoisi]);
 
   if (!estSelecteurOuvert) return null;
 
@@ -91,7 +92,8 @@ export function SelecteurCentreModal() {
       aria-modal="true"
       aria-labelledby="titre-selecteur-centre"
       onClick={(e) => {
-        if (e.target === e.currentTarget) fermerSelecteur();
+        // Le clic sur l'arrière-plan ne ferme que si un choix a déjà été validé
+        if (e.target === e.currentTarget && aChoisi) fermerSelecteur();
       }}
       style={{
         position: 'fixed',
@@ -100,9 +102,9 @@ export function SelecteurCentreModal() {
         display: 'grid',
         placeItems: 'center',
         padding: '24px 16px',
-        background: 'rgba(11, 15, 23, 0.84)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
+        background: 'rgba(19, 19, 19, 0.78)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
         animation: 'hk-apparait 0.25s ease forwards',
         overflowY: 'auto',
       }}
@@ -114,49 +116,51 @@ export function SelecteurCentreModal() {
           position: 'relative',
           width: '100%',
           maxWidth: '840px',
-          background: 'rgba(15, 23, 42, 0.94)',
+          background: '#131313', /* Couleur --encre officielle du design system Hygie */
           borderRadius: '24px',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          boxShadow: '0 32px 80px rgba(0, 0, 0, 0.55)',
+          border: '1px solid rgba(238, 239, 233, 0.12)',
+          boxShadow: '0 32px 80px rgba(0, 0, 0, 0.75)',
           padding: 'clamp(28px, 4vw, 44px)',
-          color: '#FFFFFF',
+          color: '#EEEFE9',
           margin: 'auto',
         }}
       >
-        {/* Bouton de fermeture discret et fin */}
-        <button
-          type="button"
-          onClick={fermerSelecteur}
-          aria-label="Fermer la sélection"
-          style={{
-            position: 'absolute',
-            top: '22px',
-            right: '22px',
-            width: '34px',
-            height: '34px',
-            borderRadius: '50%',
-            background: 'rgba(255, 255, 255, 0.08)',
-            border: '1px solid rgba(255, 255, 255, 0.14)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            color: '#FFFFFF',
-            fontSize: '15px',
-            lineHeight: 1,
-            transition: 'background 0.15s ease, transform 0.15s ease',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.18)';
-            e.currentTarget.style.transform = 'scale(1.06)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-            e.currentTarget.style.transform = 'none';
-          }}
-        >
-          ✕
-        </button>
+        {/* Bouton de fermeture : affiché uniquement si l'utilisateur a déjà choisi son centre (ex: réouverture depuis le header) */}
+        {aChoisi && (
+          <button
+            type="button"
+            onClick={fermerSelecteur}
+            aria-label="Fermer la sélection"
+            style={{
+              position: 'absolute',
+              top: '22px',
+              right: '22px',
+              width: '34px',
+              height: '34px',
+              borderRadius: '50%',
+              background: 'rgba(238, 239, 233, 0.08)',
+              border: '1px solid rgba(238, 239, 233, 0.14)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              color: '#EEEFE9',
+              fontSize: '15px',
+              lineHeight: 1,
+              transition: 'background 0.15s ease, transform 0.15s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(238, 239, 233, 0.18)';
+              e.currentTarget.style.transform = 'scale(1.06)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(238, 239, 233, 0.08)';
+              e.currentTarget.style.transform = 'none';
+            }}
+          >
+            ✕
+          </button>
+        )}
 
         {/* En-tête centré à fort contraste */}
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
@@ -188,7 +192,7 @@ export function SelecteurCentreModal() {
               fontSize: 'clamp(28px, 4.5vw, 42px)',
               letterSpacing: '0.02em',
               lineHeight: 1.1,
-              color: '#FFFFFF',
+              color: '#EEEFE9',
               textTransform: 'uppercase',
             }}
           >
@@ -202,7 +206,7 @@ export function SelecteurCentreModal() {
               fontFamily: 'var(--font-texte)',
               fontSize: '14.5px',
               lineHeight: 1.5,
-              color: '#94A3B8',
+              color: '#BAB9BA',
             }}
           >
             Sélectionnez votre centre pour accéder aux praticiens, consultations et créneaux adaptés à votre lieu.
@@ -237,7 +241,7 @@ export function SelecteurCentreModal() {
               border: centre === 'avon' ? '2px solid #F5C43C' : '1px solid #E2E8F0',
               boxShadow: centre === 'avon' ? '0 12px 32px rgba(245, 196, 60, 0.22)' : '0 6px 20px rgba(0, 0, 0, 0.15)',
               cursor: 'pointer',
-              color: '#0F172A',
+              color: '#131313',
               textAlign: 'left',
               transition: 'transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease',
             }}
@@ -257,7 +261,7 @@ export function SelecteurCentreModal() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   background: '#E2E8F0',
-                  color: '#1E293B',
+                  color: '#131313',
                   fontSize: '11px',
                   fontWeight: 600,
                   letterSpacing: '0.06em',
@@ -273,7 +277,7 @@ export function SelecteurCentreModal() {
                   style={{
                     fontSize: '12px',
                     fontWeight: 600,
-                    color: '#0F172A',
+                    color: '#131313',
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '3px',
@@ -291,7 +295,7 @@ export function SelecteurCentreModal() {
                 fontFamily: 'var(--font-texte)',
                 fontSize: '22px',
                 fontWeight: 700,
-                color: '#0F172A',
+                color: '#131313',
               }}
             >
               Fontainebleau - Avon
@@ -309,7 +313,7 @@ export function SelecteurCentreModal() {
                 fontWeight: 500,
               }}
             >
-              <span style={{ color: '#0F172A', display: 'flex', alignItems: 'center' }}>
+              <span style={{ color: '#131313', display: 'flex', alignItems: 'center' }}>
                 <IconePin />
               </span>
               <span>9, rue de la Petite Vitesse, Avon</span>
@@ -362,7 +366,7 @@ export function SelecteurCentreModal() {
                 padding: '13px 20px',
                 borderRadius: '9999px',
                 background: '#F5C43C',
-                color: '#0F172A',
+                color: '#131313',
                 fontFamily: 'var(--font-mono)',
                 fontSize: '12px',
                 fontWeight: 700,
@@ -396,7 +400,7 @@ export function SelecteurCentreModal() {
               border: centre === 'bondoufle' ? '2px solid #F5C43C' : '1px solid #E2E8F0',
               boxShadow: centre === 'bondoufle' ? '0 12px 32px rgba(245, 196, 60, 0.22)' : '0 6px 20px rgba(0, 0, 0, 0.15)',
               cursor: 'pointer',
-              color: '#0F172A',
+              color: '#131313',
               textAlign: 'left',
               transition: 'transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease',
             }}
@@ -432,7 +436,7 @@ export function SelecteurCentreModal() {
                   style={{
                     fontSize: '12px',
                     fontWeight: 600,
-                    color: '#0F172A',
+                    color: '#131313',
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '3px',
@@ -450,7 +454,7 @@ export function SelecteurCentreModal() {
                 fontFamily: 'var(--font-texte)',
                 fontSize: '22px',
                 fontWeight: 700,
-                color: '#0F172A',
+                color: '#131313',
               }}
             >
               Bondoufle
@@ -468,7 +472,7 @@ export function SelecteurCentreModal() {
                 fontWeight: 500,
               }}
             >
-              <span style={{ color: '#0F172A', display: 'flex', alignItems: 'center' }}>
+              <span style={{ color: '#131313', display: 'flex', alignItems: 'center' }}>
                 <IconePin />
               </span>
               <span>Bondoufle (91) • Grand Paris Sud</span>
@@ -521,8 +525,8 @@ export function SelecteurCentreModal() {
                 padding: '12px 20px',
                 borderRadius: '9999px',
                 background: '#FFFFFF',
-                border: '1.5px solid #0F172A',
-                color: '#0F172A',
+                border: '1.5px solid #131313',
+                color: '#131313',
                 fontFamily: 'var(--font-mono)',
                 fontSize: '12px',
                 fontWeight: 700,
@@ -544,7 +548,7 @@ export function SelecteurCentreModal() {
             justifyContent: 'center',
             gap: '8px',
             marginTop: '28px',
-            color: '#94A3B8',
+            color: '#BAB9BA',
             fontSize: '13px',
             fontFamily: 'var(--font-texte)',
             textAlign: 'center',
