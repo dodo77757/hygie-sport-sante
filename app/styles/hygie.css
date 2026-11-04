@@ -1437,3 +1437,168 @@ html:active-view-transition :is(.w, .titre-point, .hk-hero__haut, .hk-hero__bas,
   .hk-nav__trait, .onglets__trait { transition: none !important; }
   html { scroll-behavior: auto; }
 }
+
+/* ---------- Choix du centre (components/SelecteurCentreModal.tsx) ----------
+   Juste après l'animation du haut de page. Dans la langue du rideau d'entrée : un panneau encre monte du bas,
+   le titre en Anton italique terminé par le point jaune, puis les deux centres en très grand, l'un sous l'autre.
+   Survol : la rangée se remplit de jaune depuis le bas. Choix : le panneau redescend et découvre le site. Aucune ombre. */
+.choix-centre {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--fond);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+.choix-centre:not([open]) { display: none; }
+.choix-centre::backdrop { background: rgba(19, 19, 19, 0.4); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+html:has(.choix-centre[open]) { overflow: hidden; scrollbar-gutter: stable; }
+.choix-centre__panneau {
+  max-height: calc(100svh - 12px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: calc(36 * var(--u)) calc(var(--marge) + 16 * var(--u)) calc(26 * var(--u));
+  margin: 0 var(--marge);
+  border-radius: var(--rayon) var(--rayon) 0 0;
+  background: var(--encre);
+  color: var(--fond);
+}
+.choix-centre__tete { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+.choix-centre__titre { font: italic 400 calc(72 * var(--u))/0.95 var(--font-display); letter-spacing: -0.02em; text-wrap: balance; }
+.choix-centre__titre:focus { outline: none; }
+.choix-centre__point { display: inline-block; width: 0.19em; height: 0.19em; margin-left: 0.06em; border-radius: 50%; background: var(--jaune); }
+.choix-centre__fermer {
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  color: var(--fond);
+  font: 400 max(12px, calc(13 * var(--u)))/1 var(--font-mono);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.choix-centre__fermer:hover, .choix-centre__fermer:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+.choix-centre__liste { margin: calc(34 * var(--u)) 0 0; padding: 0; list-style: none; border-top: 1px solid rgba(238, 239, 233, 0.22); }
+.choix-centre__liste > li { border-bottom: 1px solid rgba(238, 239, 233, 0.22); }
+.choix-centre__option {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: calc(36 * var(--u)) minmax(0, 1fr) calc(330 * var(--u)) auto;
+  align-items: center;
+  gap: calc(24 * var(--u));
+  width: 100%;
+  padding: calc(24 * var(--u)) calc(16 * var(--u));
+  border: 0;
+  background: none;
+  color: var(--fond);
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.35s ease;
+}
+/* Remplissage jaune depuis le bas, à la courbe du rideau */
+.choix-centre__option::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--jaune);
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+  transition: transform 0.55s var(--courbe-rideau);
+}
+.choix-centre__option:is(:hover, :focus-visible, [data-choisi]) { color: var(--encre); }
+.choix-centre__option:is(:hover, :focus-visible, [data-choisi])::before { transform: none; }
+.choix-centre__option:focus-visible { outline: 2px solid var(--fond); outline-offset: -2px; }
+.choix-centre__num { align-self: start; padding-top: 0.5em; font: 400 max(11px, calc(12 * var(--u)))/1 var(--font-mono); opacity: 0.6; }
+/* Nom en très grand ; masque pour l'entrée (l'italique déborde à droite : marge intérieure) */
+.choix-centre__nom { display: block; overflow: hidden; padding: 0.04em 0.12em 0.06em 0; font: italic 400 calc(76 * var(--u))/1 var(--font-display); letter-spacing: -0.02em; text-wrap: balance; }
+.choix-centre__nom > span { display: inline-block; transition: transform 0.6s var(--courbe-sortie); }
+.choix-centre__option:is(:hover, :focus-visible) .choix-centre__nom > span { transform: translateX(calc(14 * var(--u))); }
+.choix-centre__infos { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; }
+.choix-centre__statut { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 4px; font: 400 max(11px, calc(12 * var(--u)))/1 var(--font-mono); text-transform: uppercase; }
+/* Pastille d'état : pleine (centre ouvert), contour (en construction) */
+.choix-centre__statut::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--jaune); transition: background-color 0.35s ease; }
+.choix-centre__option[data-statut="en_construction"] .choix-centre__statut::before { background: none; box-shadow: inset 0 0 0 1.5px currentColor; }
+.choix-centre__option:is(:hover, :focus-visible, [data-choisi]) .choix-centre__statut::before { background: var(--encre); }
+.choix-centre__option[data-statut="en_construction"]:is(:hover, :focus-visible, [data-choisi]) .choix-centre__statut::before { background: none; }
+.choix-centre__ligne { font: 400 max(13px, calc(14 * var(--u)))/1.35 var(--font-texte); opacity: 0.72; }
+.choix-centre__actuel { margin-top: 6px; padding: 5px 9px 4px; border: 1px solid currentColor; border-radius: var(--rayon-pilule); font: 400 10px/1 var(--font-mono); text-transform: uppercase; }
+/* Flèche dans un rond ; au survol, le rond se remplit d'encre et la flèche avance */
+.choix-centre__fleche {
+  position: relative;
+  width: calc(56 * var(--u));
+  height: calc(56 * var(--u));
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  transition: background-color 0.35s ease, border-color 0.35s ease, transform 0.6s var(--courbe-sortie);
+}
+.choix-centre__fleche::before, .choix-centre__fleche::after { content: ""; position: absolute; top: 50%; }
+.choix-centre__fleche::before { left: 30%; right: 30%; height: 1.5px; margin-top: -0.75px; background: currentColor; }
+.choix-centre__fleche::after { right: 31%; width: 22%; height: 22%; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: translateY(-50%) rotate(45deg); transform-origin: 50% 50%; }
+.choix-centre__option:is(:hover, :focus-visible, [data-choisi]) .choix-centre__fleche { border-color: var(--encre); background: var(--encre); color: var(--jaune); transform: translateX(calc(6 * var(--u))); }
+.choix-centre__note { margin-top: calc(18 * var(--u)); font: 400 max(11px, calc(12 * var(--u)))/1.3 var(--font-mono); text-transform: uppercase; opacity: 0.6; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .choix-centre[open]::backdrop { animation: hk-fade 0.6s ease both; }
+  .choix-centre[open] .choix-centre__panneau { animation: hk-choix-monte 0.95s var(--courbe-rideau) both; }
+  .choix-centre[open] .points-logo span { animation: hk-point 0.6s var(--courbe-rebond) both; }
+  .choix-centre[open] .points-logo span:nth-child(1) { animation-delay: 0.45s; }
+  .choix-centre[open] .points-logo span:nth-child(2) { animation-delay: 0.53s; }
+  .choix-centre[open] .points-logo span:nth-child(3) { animation-delay: 0.61s; }
+  .choix-centre[open] .choix-centre__titre { animation: hk-mot 0.9s var(--courbe-sortie) 0.4s both; }
+  .choix-centre[open] .choix-centre__point { animation: hk-point 0.6s var(--courbe-rebond) 0.95s both; }
+  .choix-centre[open] .choix-centre__liste > li { animation: hk-apparait 0.8s var(--courbe-sortie) calc(0.55s + var(--i, 0) * 0.1s) both; }
+  .choix-centre[open] .choix-centre__nom > span { animation: hk-choix-nom 1s var(--courbe-glissement) calc(0.6s + var(--i, 0) * 0.1s) both; }
+  .choix-centre[open] .choix-centre__note, .choix-centre[open] .choix-centre__fermer { animation: hk-fade 0.6s ease 0.9s both; }
+  .choix-centre[data-sortie]::backdrop { animation: hk-choix-voile 0.55s ease 0.1s both; }
+  .choix-centre[data-sortie] .choix-centre__panneau { animation: hk-choix-descend 0.55s var(--courbe-rideau) 0.1s both; }
+}
+@keyframes hk-choix-monte { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes hk-choix-descend { from { transform: none; } to { transform: translateY(100%); } }
+@keyframes hk-choix-voile { from { opacity: 1; } to { opacity: 0; } }
+@keyframes hk-choix-nom { from { transform: translateY(105%); } to { transform: none; } }
+
+@media (max-width: 1023px) {
+  .choix-centre__panneau { margin: 0; padding: 24px 16px calc(18px + env(safe-area-inset-bottom, 0px)); }
+  .choix-centre__titre { font-size: calc(40 * var(--u)); }
+  .choix-centre__liste { margin-top: 22px; }
+  .choix-centre__option { grid-template-columns: 26px minmax(0, 1fr) auto; column-gap: 12px; row-gap: 12px; padding: 18px 4px 18px 6px; }
+  .choix-centre__num { padding-top: 0.6em; }
+  .choix-centre__nom { font-size: calc(38 * var(--u)); }
+  .choix-centre__infos { grid-column: 2 / 3; grid-row: 2; }
+  .choix-centre__fleche { grid-column: 3; grid-row: 1; width: 42px; height: 42px; }
+  .choix-centre__option:is(:hover, :focus-visible) .choix-centre__nom > span { transform: none; }
+  .choix-centre__option:is(:hover, :focus-visible, [data-choisi]) .choix-centre__fleche { transform: none; }
+}
+
+/* Sélecteur de centre de l'en-tête (ouvre le choix du centre) */
+.hk-centre-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: max(30px, calc(34 * var(--u)));
+  padding: 0 max(12px, calc(14 * var(--u)));
+  border: 1px solid var(--filet-doux);
+  border-radius: var(--rayon-pilule);
+  background: transparent;
+  color: var(--encre);
+  font: 400 max(12px, calc(13 * var(--u)))/1 var(--font-mono);
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color var(--duree-survol);
+}
+.hk-centre-btn:hover { border-color: var(--encre); }
+.hk-centre-btn:focus-visible { outline: 2px solid var(--encre); outline-offset: 2px; }
+.hk-centre-btn__point { width: 7px; height: 7px; border-radius: 50%; background: var(--jaune); }
+.hk-centre-btn[data-centre="bondoufle"] .hk-centre-btn__point { background: none; box-shadow: inset 0 0 0 1.5px currentColor; }
+.hk-centre-btn__chevron { width: 6px; height: 6px; margin-left: 2px; border-right: 1.5px solid; border-bottom: 1.5px solid; transform: translateY(-2px) rotate(45deg); }

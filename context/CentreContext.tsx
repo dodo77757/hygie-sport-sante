@@ -61,30 +61,37 @@ export function CentreProvider({ children }: { children: ReactNode }) {
     setPret(true);
   }, []);
 
-  // Déclenchement automatique dès l'animation d'entrée ou dès l'entrée sur le site
+  // Ouverture juste après l'animation du haut de page, tant qu'aucun centre n'a été choisi pendant la visite :
+  // levée du rideau d'entrée, puis fin des entrées du premier écran (titre mot par mot, sous-titre et boutons de l'accueil,
+  // ou titre de la page d'arrivée). Jamais en passant d'une page à l'autre.
   useEffect(() => {
     if (!pret || typeof window === 'undefined') return;
-
-    let timer: number | null = null;
-
-    const ouvrir = () => {
-      if (timer) window.clearTimeout(timer);
-      setEstSelecteurOuvert(true);
-    };
-
-    // 1. Si le rideau d'entrée est déjà levé (ou absent), ouvrir rapidement
-    if (document.documentElement.dataset.rideau === 'leve') {
-      timer = window.setTimeout(ouvrir, 150);
-    } else {
-      // 2. Dès que l'animation d'entrée se lève, ouvrir immédiatement
-      window.addEventListener(RIDEAU_LEVE, ouvrir, { once: true });
-      // 3. Fallback sécurité : au bout de 3,6 s (durée du rideau), ouvrir si l'événement n'a pas été capté
-      timer = window.setTimeout(ouvrir, 3600);
+    try {
+      if (sessionStorage.getItem(SESSION_CHOICE_KEY) === 'true') return;
+    } catch {
+      // Stockage indisponible : on demande le centre
     }
 
+    let annule = false;
+    const attendre = (ms: number) => new Promise<void>((r) => window.setTimeout(r, ms));
+    const rideauLeve = () =>
+      new Promise<void>((resolve) => {
+        if (!document.getElementById('entree') || document.documentElement.dataset.rideau === 'leve') return resolve();
+        window.addEventListener(RIDEAU_LEVE, () => resolve(), { once: true });
+        window.setTimeout(resolve, 6000); // secours
+      });
+
+    (async () => {
+      await rideauLeve();
+      const premierEcran = document.querySelectorAll('.hk-hero__haut, .hk-hero__bas, main h1 .w, main .titre-point');
+      const animations = Array.from(premierEcran).flatMap((el) => el.getAnimations());
+      await Promise.race([Promise.allSettled(animations.map((a) => a.finished)), attendre(4000)]);
+      await attendre(200);
+      if (!annule) setEstSelecteurOuvert(true);
+    })();
+
     return () => {
-      if (timer) window.clearTimeout(timer);
-      window.removeEventListener(RIDEAU_LEVE, ouvrir);
+      annule = true;
     };
   }, [pret]);
 

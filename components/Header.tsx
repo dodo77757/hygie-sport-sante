@@ -126,31 +126,12 @@ export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links
               />
             </nav>
 
-            {/* Sélecteur de centre desktop */}
-            <button
-              type="button"
-              onClick={ouvrirSelecteur}
-              className="hk-centre-btn"
-              title="Changer de centre Hygie"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '6px 14px',
-                borderRadius: 'var(--rayon-pilule)',
-                border: centre === 'bondoufle' ? '1px solid var(--encre)' : '1px solid var(--filet-doux)',
-                background: centre === 'bondoufle' ? 'var(--jaune)' : 'var(--surface)',
-                color: 'var(--encre)',
-                fontSize: '13px',
-                fontFamily: 'var(--font-texte)',
-                fontWeight: 500,
-                cursor: 'pointer',
-                whiteSpace: 'nowrap',
-                transition: 'background 0.2s ease, transform 0.15s ease',
-              }}
-            >
-              <span>📍 {centre === 'bondoufle' ? 'Bondoufle (En construction)' : 'Fontainebleau - Avon'}</span>
-              <span style={{ fontSize: '10px', opacity: 0.6 }} aria-hidden="true">▾</span>
+            {/* Sélecteur de centre : pastille d'état (pleine : ouvert ; contour : en construction), nom du centre */}
+            <button type="button" onClick={ouvrirSelecteur} className="hk-centre-btn" data-centre={centre} aria-haspopup="dialog">
+              <span className="hk-centre-btn__point" aria-hidden="true" />
+              <span className="sr-only">Centre : </span>
+              {centre === 'bondoufle' ? 'Bondoufle' : 'Fontainebleau - Avon'}
+              <span className="hk-centre-btn__chevron" aria-hidden="true" />
             </button>
 
             <Button href={cta.href} variant="jaune">
@@ -188,12 +169,10 @@ export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links
             }}
           >
             <p className="etiquette" style={{ margin: '0 0 6px', color: 'var(--bleu-fonce)' }}>
-              Centre sélectionné :
+              Centre sélectionné :
             </p>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontWeight: 600, fontSize: '14px' }}>
-                📍 {centre === 'bondoufle' ? 'Bondoufle (En construction)' : 'Fontainebleau - Avon'}
-              </span>
+              <span style={{ fontWeight: 600, fontSize: '14px' }}>{centre === 'bondoufle' ? 'Bondoufle (En construction)' : 'Fontainebleau - Avon'}</span>
               <button
                 type="button"
                 onClick={() => {
