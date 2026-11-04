@@ -88,7 +88,7 @@ export const centres: Record<CentreId, CentreInfo> = {
     statut: 'ouvert',
     badge: 'Centre ouvert',
     adresse: '9, rue de la Petite Vitesse, 77210 Avon',
-    description: '15 praticiens de santé, bilans physiologiques complets, coaching et récupération.',
+    description: '16 praticiens de santé, bilans physiologiques complets, coaching et récupération.',
     acces: 'Face à la gare de Fontainebleau-Avon (Ligne R).',
   },
   bondoufle: {

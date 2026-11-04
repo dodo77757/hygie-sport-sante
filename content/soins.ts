@@ -26,7 +26,7 @@ export const poles: Record<
       'Kinésithérapeutes, étiopathe et orthoptiste consultent au centre. Chacun exerce en libéral, avec son propre agenda en ligne. Tous travaillent en lien avec les préparateurs physiques : quand la rééducation se termine, l’entraînement prend le relais sans rupture.',
     seo: {
       title: 'Kiné, étiopathe et orthoptiste à Avon (77) · Hygie',
-      description: '10 kinésithérapeutes, 1 étiopathe et 1 orthoptiste au centre Hygie d’Avon. Rendez-vous en ligne auprès de chaque praticien.',
+      description: '11 kinésithérapeutes, 1 étiopathe et 1 orthoptiste au centre Hygie d’Avon. Rendez-vous en ligne auprès de chaque praticien.',
     },
   },
   sport: {
@@ -107,15 +107,15 @@ export const soins: Soin[] = [
     nom: 'Kinésithérapie',
     carte: {
       extrait: 'Rééducation fonctionnelle et post-opératoire, kinésithérapie du sport, santé de la femme.',
-      meta: '10 kinésithérapeutes · Doctolib',
+      meta: '11 kinésithérapeutes · Doctolib',
     },
     chapo:
-      'Dix kinésithérapeutes consultent au centre, chacun avec ses spécialités, du sport à la santé de la femme. Choisissez le vôtre et réservez directement sur Doctolib.',
+      'Onze kinésithérapeutes consultent au centre, chacun avec ses spécialités, du sport à la santé de la femme. Choisissez le vôtre et réservez directement sur Doctolib.',
     action: { label: 'Choisir un kiné', href: '#praticiens' },
     photo: 'kine',
     seo: {
       title: 'Kinésithérapeute à Avon : rééducation et kiné du sport',
-      description: '10 kinés au centre Hygie d’Avon : rééducation post-opératoire, kiné du sport, périnée, pré et post-partum. Rendez-vous sur Doctolib.',
+      description: '11 kinés au centre Hygie d’Avon : rééducation post-opératoire, kiné du sport, périnée, pré et post-partum. Rendez-vous sur Doctolib.',
     },
     corps: [
       { t: 'h2', texte: 'Pour qui' },
