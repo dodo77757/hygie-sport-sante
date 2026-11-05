@@ -83,7 +83,7 @@ export function CentreProvider({ children }: { children: ReactNode }) {
 
     (async () => {
       await rideauLeve();
-      const premierEcran = document.querySelectorAll('.hk-hero__haut, .hk-hero__bas, main h1 .w, main .titre-point');
+      const premierEcran = document.querySelectorAll('.hk-hero__haut, .hk-hero__bas, .une__anime, .une__lettre > span, main h1 .w, main .titre-point');
       const animations = Array.from(premierEcran).flatMap((el) => el.getAnimations());
       await Promise.race([Promise.allSettled(animations.map((a) => a.finished)), attendre(4000)]);
       await attendre(200);

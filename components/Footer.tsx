@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { site } from '@/content/site';
 import { liensLegaux, navigationPied } from '@/content/navigation';
+import { ChangerCentre } from './ChangerCentre';
 import { IconeReseau } from './IconesReseaux';
 import { LogoTrace } from './LogoTrace';
 import { Pill } from './ui/Primitives';
@@ -53,6 +54,7 @@ export function Footer() {
             <br />
             Bondoufle (91) · Grand Paris Sud
           </p>
+          <ChangerCentre />
         </div>
 
         <div className="hk-footer__col">

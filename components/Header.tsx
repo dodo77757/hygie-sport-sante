@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import type { Lien } from '@/content/navigation';
-import { useCentre } from '@/context/CentreContext';
 import { Button } from './ui/Button';
 
 function estActif(pathname: string, href: string) {
@@ -15,7 +14,6 @@ function estActif(pathname: string, href: string) {
 /* Header fixe : barre en verre flottante, bloc logo, menu et action principale.
    Sous 1 024 px, le menu passe dans un panneau plein écran. */
 export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links: Lien[]; cta: Lien; telephone: { affichage: string; lien: string } }) {
-  const { centre, ouvrirSelecteur } = useCentre();
   const pathname = usePathname() ?? '/';
   const [open, setOpen] = useState(false);
   const [defile, setDefile] = useState(false);
@@ -23,6 +21,10 @@ export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links
   const menuRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const navRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  // Accueil : la barre n'est pas là au premier écran (l'affiche prend tout l'écran) ; elle descend à mesure qu'on fait défiler.
+  const accueil = pathname === '/';
+  const [visible, setVisible] = useState(!accueil);
   // Trait jaune sous l'onglet actif : il glisse d'un onglet à l'autre quand on change de page.
   const [trait, setTrait] = useState<{ x: number; w: number } | null>(null);
   const [traitPret, setTraitPret] = useState(false);
@@ -54,6 +56,34 @@ export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links
     const id = requestAnimationFrame(() => setTraitPret(true));
     return () => cancelAnimationFrame(id);
   }, [trait, traitPret]);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    if (!accueil) {
+      header.style.removeProperty('--apparition');
+      setVisible(true);
+      return;
+    }
+    let image = 0;
+    const suivre = () => {
+      cancelAnimationFrame(image);
+      image = requestAnimationFrame(() => {
+        // Entièrement descendue après un tiers d'écran de défilement
+        const p = Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.33)));
+        header.style.setProperty('--apparition', p.toFixed(3));
+        setVisible(p > 0.6);
+      });
+    };
+    suivre();
+    window.addEventListener('scroll', suivre, { passive: true });
+    window.addEventListener('resize', suivre);
+    return () => {
+      cancelAnimationFrame(image);
+      window.removeEventListener('scroll', suivre);
+      window.removeEventListener('resize', suivre);
+    };
+  }, [accueil]);
 
   useEffect(() => {
     const onScroll = () => setDefile(window.scrollY > 40);
@@ -99,7 +129,11 @@ export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links
 
   return (
     <>
-      <header className={defile ? 'hk-header is-defile' : 'hk-header'}>
+      <header
+        ref={headerRef}
+        className={['hk-header', defile && 'is-defile', accueil && 'hk-header--accueil', accueil && visible && 'is-visible'].filter(Boolean).join(' ')}
+        inert={accueil && !visible ? true : undefined}
+      >
         <div className="hk-header__bar">
           {logo}
           <div className="hk-header__right">
@@ -126,14 +160,6 @@ export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links
               />
             </nav>
 
-            {/* Sélecteur de centre : pastille d'état (pleine : ouvert ; contour : en construction), nom du centre */}
-            <button type="button" onClick={ouvrirSelecteur} className="hk-centre-btn" data-centre={centre} aria-haspopup="dialog">
-              <span className="hk-centre-btn__point" aria-hidden="true" />
-              <span className="sr-only">Centre : </span>
-              {centre === 'bondoufle' ? 'Bondoufle' : 'Fontainebleau - Avon'}
-              <span className="hk-centre-btn__chevron" aria-hidden="true" />
-            </button>
-
             <Button href={cta.href} variant="jaune">
               {cta.label}
             </Button>
@@ -157,43 +183,6 @@ export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links
       {open ? (
         <div ref={menuRef} id="menu-mobile" className="hk-menu" role="dialog" aria-modal="true" aria-label="Menu">
           <button ref={closeRef} type="button" className="hk-menu__close" aria-label="Fermer le menu" onClick={close} />
-
-          {/* Sélecteur de centre mobile */}
-          <div
-            style={{
-              margin: '20px 0',
-              padding: '14px 18px',
-              background: centre === 'bondoufle' ? 'rgba(239, 209, 53, 0.2)' : 'var(--brume)',
-              borderRadius: 'var(--rayon)',
-              border: centre === 'bondoufle' ? '1px solid var(--jaune)' : '1px solid var(--filet-doux)',
-            }}
-          >
-            <p className="etiquette" style={{ margin: '0 0 6px', color: 'var(--bleu-fonce)' }}>
-              Centre sélectionné :
-            </p>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontWeight: 600, fontSize: '14px' }}>{centre === 'bondoufle' ? 'Bondoufle (En construction)' : 'Fontainebleau - Avon'}</span>
-              <button
-                type="button"
-                onClick={() => {
-                  close();
-                  ouvrirSelecteur();
-                }}
-                style={{
-                  background: 'var(--encre)',
-                  color: 'var(--fond)',
-                  border: 'none',
-                  borderRadius: 'var(--rayon-pilule)',
-                  padding: '5px 12px',
-                  fontSize: '12px',
-                  cursor: 'pointer',
-                  fontWeight: 500,
-                }}
-              >
-                Changer
-              </button>
-            </div>
-          </div>
 
           <nav aria-label="Navigation principale">
             <ul className="hk-menu__list">

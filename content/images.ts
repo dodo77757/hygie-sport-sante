@@ -4,7 +4,7 @@
    à la largeur utile et en AVIF ou WebP (voir components/Photo.tsx).
    Portraits de l'équipe : photos d'Hygie (assets/photos/equipe/), reprises en haute définition du site actuel ;
       celles de Marie Couineau, Pierre Becker et Thomas Crasson ont été agrandies (super-résolution) en attendant les originaux.
-   Alexis Ballard, Antoine Gras, Jérémy Escriva : photo de profil Doctolib. Malika Pereira : publication Instagram d'Hygie. */
+   Alexis Ballard, Antoine Gras, Jérémy Escriva : photo de profil Doctolib. Kevin Vautier : portrait fourni par Hygie (novembre 2026). Malika Pereira : publication Instagram d'Hygie. */
 import type { StaticImageData } from 'next/image';
 import johanPereira from '@/assets/photos/johan-pereira.jpg';
 import alexisBallard from '@/assets/photos/equipe/alexis-ballard.jpg';
@@ -13,6 +13,7 @@ import aubinSalmon from '@/assets/photos/equipe/aubin-salmon.jpg';
 import gauthierArcache from '@/assets/photos/equipe/gauthier-arcache.jpg';
 import jeanEtienneBoilot from '@/assets/photos/equipe/jean-etienne-boilot.jpg';
 import jeremyEscriva from '@/assets/photos/equipe/jeremy-escriva.jpg';
+import kevinVautier from '@/assets/photos/equipe/kevin-vautier.jpg';
 import malikaPereira from '@/assets/photos/equipe/malika-pereira.jpg';
 import margotDeOliveira from '@/assets/photos/equipe/margot-de-oliveira.jpg';
 import marieCouineau from '@/assets/photos/equipe/marie-couineau.jpg';
@@ -56,6 +57,7 @@ export const photos = {
   gauthierArcache: { src: gauthierArcache, alt: 'Gauthier Arcache, kinésithérapeute et ostéopathe', position: '50% 24%' } as Photo,
   jeanEtienneBoilot: { src: jeanEtienneBoilot, alt: 'Jean-Étienne Boilot, préparateur physique', position: '50% 28%' } as Photo,
   jeremyEscriva: { src: jeremyEscriva, alt: 'Jérémy Escriva, kinésithérapeute', position: '50% 20%' } as Photo,
+  kevinVautier: { src: kevinVautier, alt: 'Kevin Vautier, kinésithérapeute', position: '50% 24%' } as Photo,
   malikaPereira: { src: malikaPereira, alt: 'Malika Pereira, massages bien-être et conseil en nutrition', position: '50% 30%' } as Photo,
   margotDeOliveira: { src: margotDeOliveira, alt: 'Margot De Oliveira, kinésithérapeute', position: '50% 28%' } as Photo,
   marieCouineau: { src: marieCouineau, alt: 'Marie Couineau, orthoptiste', position: '50% 26%' } as Photo,

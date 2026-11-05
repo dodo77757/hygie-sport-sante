@@ -163,12 +163,13 @@ export const praticiens: Praticien[] = [
     photo: 'mayaMaurer',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/maya-maurer' },
   },
-  /* Ajouté le 4 novembre 2026 (Fontainebleau-Avon). Portrait à venir : en attendant, la carte affiche ses initiales. */
+  /* Ajouté le 4 novembre 2026 (Fontainebleau-Avon) */
   {
     nom: 'Kevin Vautier',
     discipline: 'kinesitherapie',
     fonction: 'Kinésithérapeute',
     specialites: [],
+    photo: 'kevinVautier',
     reservation: { type: 'doctolib', url: 'https://www.doctolib.fr/masseur-kinesitherapeute/avon/kevin-vautier' },
   },
 

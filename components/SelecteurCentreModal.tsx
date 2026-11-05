@@ -121,7 +121,7 @@ function Fenetre({ centre, aChoisi, choisir, fermer }: { centre: CentreId; aChoi
           })}
         </ul>
 
-        <p className="choix-centre__note">Modifiable à tout moment depuis l’en-tête du site.</p>
+        <p className="choix-centre__note">Modifiable à tout moment en bas de page.</p>
       </div>
     </dialog>
   );

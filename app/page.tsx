@@ -90,15 +90,7 @@ export default function Accueil() {
         }}
       />
 
-      <Hero
-        surtitre={site.accroche}
-        titre={['Remettez-vous', 'en mouvement']}
-        intro="On mesure d’abord, on construit ensuite. Seize praticiens de la santé et du sport travaillent ensemble autour de votre parcours, du soin à la performance."
-        ctas={[
-          { label: 'Prendre rendez-vous', href: '/rendez-vous', variant: 'solid' },
-          { label: 'Réserver ma séance d’essai offerte', href: LIEN_ESSAI },
-        ]}
-      />
+      <Hero titre={['Remettez-vous', 'en mouvement']} essai={LIEN_ESSAI} />
 
       {/* Bilans : la planche d'anatomie (squelette sur la photo, muscles par zone) */}
       <Anatomie
