@@ -12,13 +12,11 @@ import { site } from '@/content/site';
 
 export const metadata: Metadata = {
   title: { absolute: 'Bilans QVCT et prévention des TMS en entreprise · Hygie' },
-  description:
-    'Bilans biomécaniques sur site pour prévenir TMS et sédentarité. Mesures objectives, débriefing individuel et rapport RH anonymisé.',
+  description: 'Bilans biomécaniques sur site pour prévenir TMS et sédentarité. Mesures objectives, débriefing individuel et rapport RH anonymisé.',
   alternates: { canonical: '/entreprises' },
   openGraph: {
     title: 'Bilans QVCT et prévention des TMS en entreprise · Hygie',
-    description:
-      'Bilans biomécaniques sur site pour prévenir TMS et sédentarité. Mesures objectives, débriefing individuel et rapport RH anonymisé.',
+    description: 'Bilans biomécaniques sur site pour prévenir TMS et sédentarité. Mesures objectives, débriefing individuel et rapport RH anonymisé.',
     url: `${site.url}/entreprises`,
     type: 'website',
   },
@@ -62,8 +60,7 @@ const pointsSecurisation = [
   },
   {
     titre: 'Une démarche tracée dans le temps',
-    texte:
-      'Mesure, préconisations, actions engagées, nouvelle mesure : votre dossier montre une politique de prévention active et suivie.',
+    texte: 'Mesure, préconisations, actions engagées, nouvelle mesure : votre dossier montre une politique de prévention active et suivie.',
   },
 ];
 
@@ -76,8 +73,7 @@ const engagements = [
   },
   {
     titre: 'En lien avec la santé au travail',
-    texte:
-      'Lorsqu’un bilan révèle une douleur associée à un déséquilibre marqué, nous invitons le salarié, et lui seul, à consulter la médecine du travail.',
+    texte: 'Lorsqu’un bilan révèle une douleur associée à un déséquilibre marqué, nous invitons le salarié, et lui seul, à consulter la médecine du travail.',
   },
   {
     titre: 'Confidentialité',
@@ -86,8 +82,7 @@ const engagements = [
   },
   {
     titre: 'Accessible à tous',
-    texte:
-      'Pas de jargon : chacun repart en comprenant son bilan et en sachant quoi faire.',
+    texte: 'Pas de jargon : chacun repart en comprenant son bilan et en sachant quoi faire.',
   },
 ];
 
@@ -96,8 +91,7 @@ export default function EntreprisesPage() {
     '@context': 'https://schema.org',
     '@type': 'Service',
     name: 'Bilans QVCT et prévention des TMS en entreprise',
-    description:
-      'Bilans biomécaniques sur site pour prévenir TMS et sédentarité. Mesures objectives, débriefing individuel et rapport RH anonymisé.',
+    description: 'Bilans biomécaniques sur site pour prévenir TMS et sédentarité. Mesures objectives, débriefing individuel et rapport RH anonymisé.',
     provider: {
       '@type': 'HealthClub',
       name: site.nom,
@@ -125,13 +119,7 @@ export default function EntreprisesPage() {
       {/* 1. Bandeau d'accroche (Hero) */}
       <Row as="section" className="apropos-hero" aria-labelledby="titre-entreprises">
         <Cell span={2}>
-          <PhotoImg
-            className="hk-media apropos-hero__photo"
-            photo={photos.coachTablette}
-            preload
-            quality={85}
-            sizes="(max-width: 1023px) 92vw, 46vw"
-          />
+          <PhotoImg className="hk-media apropos-hero__photo" photo={photos.coachEcoute} preload quality={85} sizes="(max-width: 1023px) 92vw, 46vw" />
         </Cell>
         <Cell span={2} className="apropos-hero__texte">
           <h1 id="titre-entreprises" className="titre-hero">
@@ -157,22 +145,17 @@ export default function EntreprisesPage() {
       </Row>
 
       {/* 2. Le constat */}
-      <Section
-        titre="Le constat"
-        titreId="titre-constat"
-        sousTitre="Comprendre les signaux faibles"
-        aere
-      >
+      <Section titre="Le constat" titreId="titre-constat" sousTitre="Comprendre les signaux faibles" aere>
         <Reveal as="h3" className="titre-bloc">
           Les TMS ne préviennent pas avant de s’installer
         </Reveal>
         <Reveal as="p" className="courant texte-colonne">
-          Les troubles musculo-squelettiques restent la première cause de maladie professionnelle en France. Ils s’installent lentement : une posture
-          compensée, un déséquilibre, une raideur qu’on ne remarque plus… jusqu’à la douleur, puis l’arrêt.
+          Les troubles musculo-squelettiques restent la première cause de maladie professionnelle en France. Ils s’installent lentement : une posture compensée,
+          un déséquilibre, une raideur qu’on ne remarque plus… jusqu’à la douleur, puis l’arrêt.
         </Reveal>
         <Reveal as="p" className="courant texte-colonne">
-          Que vos collaborateurs portent des charges sur un chantier ou restent assis huit heures devant un écran, le risque existe. La sédentarité, elle
-          aussi, fragilise le dos, les épaules et l’équilibre.
+          Que vos collaborateurs portent des charges sur un chantier ou restent assis huit heures devant un écran, le risque existe. La sédentarité, elle aussi,
+          fragilise le dos, les épaules et l’équilibre.
         </Reveal>
         <Reveal as="p" className="chapo texte-colonne">
           <span style={{ color: 'var(--bleu-fonce)' }}>
@@ -206,13 +189,7 @@ export default function EntreprisesPage() {
       </Section>
 
       {/* 4. Le déroulé (CORRIGÉ : wrapper div pour éviter la colonne écrasée) */}
-      <Section
-        id="deroule"
-        titre="Le déroulé"
-        titreId="titre-deroule"
-        sousTitre="Une intervention en trois temps"
-        aere
-      >
+      <Section id="deroule" titre="Le déroulé" titreId="titre-deroule" sousTitre="Une intervention en trois temps" aere>
         <ol className="mesures">
           {etapes.map((e, i) => (
             <li className="mesures__item" key={e.titre}>
@@ -229,12 +206,7 @@ export default function EntreprisesPage() {
       </Section>
 
       {/* 5. Ce que vous recevez */}
-      <Section
-        titre="Ce que vous recevez"
-        titreId="titre-recevez"
-        sousTitre="Des livrables concrets pour chacun"
-        aere
-      >
+      <Section titre="Ce que vous recevez" titreId="titre-recevez" sousTitre="Des livrables concrets pour chacun" aere>
         <Reveal as="h3" className="titre-bloc">
           Un résultat concret, pour chacun et pour l’entreprise
         </Reveal>
@@ -309,18 +281,13 @@ export default function EntreprisesPage() {
       </Section>
 
       {/* 5 bis. Pour la direction RH */}
-      <Section
-        titre="Pour la direction RH"
-        titreId="titre-rh"
-        sousTitre="Sécurité juridique et obligations DUERP"
-        aere
-      >
+      <Section titre="Pour la direction RH" titreId="titre-rh" sousTitre="Sécurité juridique et obligations DUERP" aere>
         <Reveal as="h3" className="titre-bloc">
           Mesurer, c’est pouvoir démontrer que vous agissez
         </Reveal>
         <Reveal as="p" className="courant texte-colonne">
-          L’employeur a déjà l’obligation d’évaluer les risques professionnels et de les consigner dans le document unique. Ne pas mesurer ne fait pas disparaître
-          un risque : cela prive seulement l’entreprise de la preuve qu’elle l’a pris en charge.
+          L’employeur a déjà l’obligation d’évaluer les risques professionnels et de les consigner dans le document unique. Ne pas mesurer ne fait pas
+          disparaître un risque : cela prive seulement l’entreprise de la preuve qu’elle l’a pris en charge.
         </Reveal>
         <Reveal as="p" className="courant texte-colonne">
           <strong>Notre démarche est conçue pour sécuriser l’employeur, pas pour l’exposer :</strong>
@@ -345,7 +312,7 @@ export default function EntreprisesPage() {
         titre="La technologie"
         titreId="titre-technologie"
         sousTitre="Mesure scientifique de pointe"
-        photo={<PhotoImg className="hk-media apropos-photo apropos-photo--paysage" photo={photos.agilite} sizes="(max-width: 1023px) 92vw, 46vw" />}
+        photo={<PhotoImg className="hk-media apropos-photo apropos-photo--paysage" photo={photos.coachTablette} sizes="(max-width: 1023px) 92vw, 46vw" />}
         aere
       >
         <Reveal as="h3" className="titre-bloc">
@@ -363,12 +330,7 @@ export default function EntreprisesPage() {
       </Section>
 
       {/* 7. Nos engagements */}
-      <Section
-        titre="Nos engagements"
-        titreId="titre-engagements"
-        sousTitre="Déontologie & sérénité"
-        aere
-      >
+      <Section titre="Nos engagements" titreId="titre-engagements" sousTitre="Déontologie & sérénité" aere>
         <Reveal as="h3" className="titre-bloc">
           Une démarche de prévention, en toute confiance
         </Reveal>
@@ -388,12 +350,7 @@ export default function EntreprisesPage() {
       </Section>
 
       {/* Deux cartes d'orientation aérées : Vos questions & Contact et devis */}
-      <Section
-        titre="Aller plus loin"
-        titreId="titre-aller-plus-loin"
-        sousTitre="Questions & contact"
-        aere
-      >
+      <Section titre="Aller plus loin" titreId="titre-aller-plus-loin" sousTitre="Questions & contact" aere>
         <div className="hk-grid" style={{ marginTop: 'calc(16 * var(--u))' }}>
           {/* Carte 1 : Vos questions */}
           <div className="hk-card" style={{ padding: '32px 28px', display: 'flex', flexDirection: 'column' }}>

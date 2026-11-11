@@ -566,7 +566,7 @@ export const soins: Soin[] = [
     chapo:
       'La rééducation vous rend la fonction ; la réathlétisation vous rend le terrain. Nous faisons le lien entre les deux, avec des critères de reprise mesurés.',
     action: appelAccueil,
-    photo: 'traineau',
+    photo: 'sprintDepart',
     seo: {
       title: 'Réathlétisation et retour au sport à Avon · Hygie',
       description:
