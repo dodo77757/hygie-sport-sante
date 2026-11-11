@@ -56,7 +56,10 @@ const objectifs = [
 
 const raisons = [
   { nom: 'Une approche globale', texte: 'Santé, sport et récupération réunis, autour de vos objectifs.' },
-  { nom: 'Une équipe qui se parle', texte: 'Kinés, étiopathe, orthoptiste et préparateurs physiques partagent l’information utile à votre parcours.' },
+  {
+    nom: 'Une équipe qui se parle',
+    texte: 'Kinés, étiopathe, orthoptiste et préparateurs physiques échangent, avec votre accord, l’information utile à votre parcours.',
+  },
   { nom: 'Des mesures, pas des impressions', texte: 'Isocinétisme, plateformes de force, capteurs VALD et KINVENT, PNOE, impédancemètre.' },
   { nom: 'Une ambiance conviviale', texte: 'Un accompagnement exigeant et bienveillant, à tout âge et à tout niveau.' },
 ];

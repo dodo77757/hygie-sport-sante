@@ -47,12 +47,13 @@ export const site = {
     raisonSociale: 'LJ Concept',
     formeJuridique: 'SAS',
     /** Capital social, sans le symbole € (affiché après) */
-    capital: null as string | null,
-    siret: null as string | null,
+    /* Registre national des entreprises (SIREN 893 109 918), vérifié le 12 novembre 2026 */
+    capital: '2 000' as string | null,
+    siret: '893 109 918 00043' as string | null,
     /** Numéro au RCS de Melun */
-    rcs: null as string | null,
+    rcs: '893 109 918' as string | null,
     /** Numéro de TVA intracommunautaire, sans le préfixe FR (affiché avant) */
-    tva: null as string | null,
+    tva: '34893109918' as string | null,
     directeurPublication: 'Johan Pereira, président.',
     /* Adresse vérifiée sur vercel.com/legal (septembre 2026) */
     hebergeur: 'Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com.',
@@ -60,7 +61,7 @@ export const site = {
     mediateur: null as string | null,
   },
   /** Date de la dernière mise à jour de la politique de confidentialité */
-  confidentialiteMiseAJour: '27 septembre 2026',
+  confidentialiteMiseAJour: '13 novembre 2026',
 } as const;
 
 export type CentreId = 'avon' | 'bondoufle';
@@ -104,4 +105,3 @@ export const centres: Record<CentreId, CentreInfo> = {
     acces: 'Grand Paris Sud.',
   },
 };
-

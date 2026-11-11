@@ -380,7 +380,7 @@ export const soins: Soin[] = [
         items: [
           { nom: 'Essentiel', detail: '1 séance individuelle par semaine', prix: '140 € / mois' },
           { nom: 'Avancé', detail: '2 séances individuelles par semaine', prix: '250 € / mois' },
-          { nom: 'Performance', detail: '3 séances individuelles par semaine et accès prioritaire aux praticiens du centre', prix: '300 € / mois' },
+          { nom: 'Performance', detail: '3 séances individuelles par semaine', prix: '300 € / mois' },
         ],
       },
       { t: 'p', texte: 'Le bilan physiologique d’entrée (145 €) est offert pour un engagement de trois mois.' },

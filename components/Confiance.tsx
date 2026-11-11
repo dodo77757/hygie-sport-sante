@@ -22,7 +22,7 @@ export function Confiance() {
     {
       titre: `${nbPraticiens} praticiens sous le même toit`,
       texte:
-        'Kinés, étiopathe, orthoptiste, préparateurs physiques, massages et nutrition : un seul parcours, des professionnels qui se transmettent l’information.',
+        'Kinés, étiopathe, orthoptiste, préparateurs physiques, massages et nutrition : un seul parcours, des professionnels qui se transmettent l’information, avec votre accord.',
       lien: { href: '/soins', label: 'Tous les soins' },
     },
     {
