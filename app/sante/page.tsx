@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 export default function Sante() {
   return (
     <PolePage
+      photo="mainsDos"
       titre={pole.nom}
       chapo={pole.chapo}
       point={pole.couleur}

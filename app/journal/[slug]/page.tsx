@@ -1,5 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Entete } from '@/components/scenes/Entete';
+import { ListeLignes } from '@/components/scenes/Scenes';
+import { Button } from '@/components/ui/Button';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ArticleCard } from '@/components/ArticleCard';
@@ -55,56 +58,67 @@ export default async function ArticlePage({ params }: { params: Params }) {
     .slice(0, 3);
 
   return (
-    <div className="lecture-cadre">
-      <article className="lecture">
-        <Link className="lecture__retour" href="/journal">
-          ← Le journal
-        </Link>
-        <div className="lecture__tete">
-          <span className="lecture__avatar" aria-hidden="true">
-            {avatar ? <Image src={avatar.src} alt="" width={32} height={32} style={{ objectPosition: avatar.position }} /> : a.auteur.initiales}
-          </span>
-          <span>{a.auteur.nom}</span>
-          <span aria-hidden="true">·</span>
-          <time dateTime={a.date}>{dateLongue(a.date)}</time>
-          <span aria-hidden="true">·</span>
-          <span>{tempsDeLecture(a)} min de lecture</span>
-        </div>
-        <h1 className="titre-article lecture__titre">
-          <Mots texte={a.titre} />
-        </h1>
-        <p className="article lecture__chapo">{a.chapo}</p>
-        {photo ? <PhotoImg className="lecture__img" photo={photo} preload quality={85} sizes="(max-width: 1023px) 92vw, 740px" /> : null}
-        <Blocks blocs={a.corps} />
-      </article>
+    <>
+      <Entete
+        id="titre-article"
+        titre={a.titre}
+        chapo={a.chapo}
+        photo={photo}
+        court
+        surtitre={
+          <Link href="/journal">
+            <span aria-hidden="true">← </span>Le journal
+          </Link>
+        }
+      />
 
-      <aside className="lecture__pied" aria-labelledby="articles-recents">
-        <div className="lecture__pied-tete">
-          <Tag href={`/journal/categorie/${a.categorie}`} couleur={couleursCategories[a.categorie]}>
-            {categories[a.categorie]}
-          </Tag>
-          <Link className="libelle lien" href="/journal">
+      <div className="e-lecture">
+        <aside className="e-lecture__repere obs" aria-label="À propos de l’article">
+          <div className="monte">
+            <p className="e-lecture__sur">
+              <Link href={`/journal/categorie/${a.categorie}`}>{categories[a.categorie]}</Link>
+            </p>
+            <p className="e-lecture__auteur">
+              <span className="lecture__avatar" aria-hidden="true">
+                {avatar ? <Image src={avatar.src} alt="" width={44} height={44} style={{ objectPosition: avatar.position }} /> : a.auteur.initiales}
+              </span>
+              <span>{a.auteur.nom}</span>
+            </p>
+            <p className="e-lecture__cle">
+              <time dateTime={a.date}>{dateLongue(a.date)}</time>
+              <br />
+              {tempsDeLecture(a)} min de lecture
+            </p>
+            <Button href="/rendez-vous" variant="jaune" block>
+              Prendre rendez-vous
+            </Button>
+          </div>
+        </aside>
+        <article className="e-lecture__texte">
+          <Blocks blocs={a.corps} />
+        </article>
+      </div>
+
+      <section className="e-proches" aria-labelledby="articles-recents">
+        <div className="e-proches__tete">
+          <h2 id="articles-recents" className="a-h2">
+            Articles récents
+          </h2>
+          <Link className="plus" href="/journal">
             Voir tout
           </Link>
         </div>
-        <h2 id="articles-recents" className="titre-mini" style={{ marginTop: 28 }}>
-          Articles récents
-        </h2>
-        <div className="hk-grid hk-grid--3">
-          {recents.map((r) => (
-            <ArticleCard
-              key={r.slug}
-              variant="mini"
-              href={`/journal/${r.slug}`}
-              photo={r.photo}
-              vignette={r.vignette}
-              meta={dateCourte(r.date)}
-              title={r.titre}
-              headingLevel="h3"
-            />
-          ))}
-        </div>
-      </aside>
+        <ListeLignes
+          items={recents.map((r) => ({
+            href: `/journal/${r.slug}`,
+            etiquette: categories[r.categorie],
+            titre: r.titre,
+            detail: dateLongue(r.date),
+            photo: r.photo,
+            vignette: r.vignette,
+          }))}
+        />
+      </section>
 
       <JsonLd
         data={{
@@ -120,6 +134,6 @@ export default async function ArticlePage({ params }: { params: Params }) {
           ...(partage ? { image: partage.url.startsWith('http') ? partage.url : `${site.url}${partage.url}` } : {}),
         }}
       />
-    </div>
+    </>
   );
 }

@@ -68,7 +68,7 @@ export default function Clubs() {
       {/* Préparation physique : titre, texte, photo */}
       <Section
         titre="Préparation physique"
-        titreId="titre-prepa"
+        titreId="titre-prepa" ton="encre"
         photo={<PhotoImg className="hk-media apropos-photo apropos-photo--paysage" photo={photos.dribble} sizes="(max-width: 1023px) 92vw, 46vw" />}
       >
         <Reveal as="p" className="courant texte-colonne">

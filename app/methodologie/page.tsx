@@ -1,3 +1,4 @@
+import { Entete } from '@/components/scenes/Entete';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import type { CSSProperties } from 'react';
@@ -68,22 +69,14 @@ export default function Methodologie() {
   return (
     <>
       {/* Hero 2 + 2 */}
-      <Row as="section" className="apropos-hero" aria-labelledby="titre-methode">
-        <Cell span={2}>
-          <PhotoImg className="hk-media apropos-hero__photo" photo={photos.coachEcoute} preload quality={85} sizes="(max-width: 1023px) 92vw, 46vw" />
-        </Cell>
-        <Cell span={2} className="apropos-hero__texte">
-          <h1 id="titre-methode" className="titre-hero">
-            <Mots texte="La méthode Hygie" />
-            <span className="titre-point c-jaune" style={{ '--n': 3 } as CSSProperties} aria-hidden="true" />
-          </h1>
-          <p className="chapo apropos-hero__chapo">
-            Il n’y a pas de santé sans mouvement, ni de performance durable sans équilibre. Notre méthode vient du sport de haut niveau et repose sur trois
-            piliers : évaluer, bouger, accompagner.
-          </p>
-          <p className="etiquette apropos-hero__sommaire">Évaluer · Bouger · Accompagner</p>
-        </Cell>
-      </Row>
+      <Entete
+        id="titre-methode"
+        titre="La méthode Hygie"
+        photo={photos.coachEcoute}
+        chapo="Il n’y a pas de santé sans mouvement, ni de performance durable sans équilibre. Notre méthode vient du sport de haut niveau et repose sur trois piliers : évaluer, bouger, accompagner."
+      >
+        <span className="e-hero__cle">Évaluer · Bouger · Accompagner</span>
+      </Entete>
 
       {/* Les trois piliers : numéro et titre à gauche, texte, liste et bouton, photo à droite */}
       <Section
@@ -234,6 +227,7 @@ export default function Methodologie() {
         id="johan-pereira"
         titre="Johan Pereira"
         titreId="titre-johan"
+        ton="encre"
         sousTitre="Fondateur, étiopathe et préparateur physique"
         photo={<PhotoImg className="hk-media apropos-photo" photo={photos.johanPereira} sizes="(max-width: 1023px) 92vw, 46vw" />}
         aere

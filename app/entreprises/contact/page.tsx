@@ -1,3 +1,4 @@
+import { Entete } from '@/components/scenes/Entete';
 import type { Metadata } from 'next';
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
@@ -44,42 +45,20 @@ export default function EntreprisesContactPage() {
   return (
     <>
       {/* En-tête */}
-      <Row as="section" className="apropos-hero" aria-labelledby="titre-contact-ent">
-        <Cell span={4}>
-          <div style={{ marginBottom: '16px' }}>
-            <Link
-              href="/entreprises"
-              className="etiquette"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                color: 'var(--bleu-fonce)',
-                textDecoration: 'none',
-              }}
-            >
-              ← Retour à l’offre Entreprises
-            </Link>
-          </div>
-          <h1 id="titre-contact-ent" className="titre-hero">
-            <Mots texte="Contact & devis entreprise" />
-            <span className="titre-point c-jaune" style={{ '--n': 5 } as CSSProperties} aria-hidden="true" />
-          </h1>
-          <p className="chapo apropos-hero__chapo" style={{ maxWidth: '680px', marginTop: '16px' }}>
-            Parlons de votre contexte : nombre de collaborateurs, types de postes, sites concernés. Nous construisons avec vous une intervention adaptée à vos
-            équipes.
-          </p>
-        </Cell>
-      </Row>
+      <Entete
+        id="titre-contact-ent"
+        titre="Contact & devis entreprise"
+        court
+        chapo="Parlons de votre contexte : nombre de collaborateurs, types de postes, sites concernés. Nous construisons avec vous une intervention adaptée à vos équipes."
+        surtitre={
+          <Link href="/entreprises">
+            <span aria-hidden="true">← </span>Retour à l’offre Entreprises
+          </Link>
+        }
+      />
 
       {/* Formulaire et coordonnées */}
-      <Section
-        id="formulaire"
-        titre="Demande directe"
-        titreId="titre-demande"
-        sousTitre="Réponse sous 48 h ouvrées"
-        aere
-      >
+      <Section id="formulaire" titre="Demande directe" titreId="titre-demande" sousTitre="Réponse sous 48 h ouvrées" aere>
         <div className="hk-grid" style={{ alignItems: 'start', marginTop: 'calc(16 * var(--u))' }}>
           {/* Carte coordonnées */}
           <div className="hk-card" style={{ padding: '32px 28px' }}>
@@ -93,21 +72,27 @@ export default function EntreprisesContactPage() {
 
             <div style={{ marginTop: '28px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div>
-                <p className="etiquette" style={{ color: 'var(--bleu-fonce)' }}>Téléphone direct</p>
+                <p className="etiquette" style={{ color: 'var(--bleu-fonce)' }}>
+                  Téléphone direct
+                </p>
                 <a href={site.telephone.lien} className="titre-liste" style={{ fontSize: '20px', textDecoration: 'none' }}>
                   {site.telephone.affichage}
                 </a>
               </div>
 
               <div>
-                <p className="etiquette" style={{ color: 'var(--bleu-fonce)' }}>E-mail</p>
+                <p className="etiquette" style={{ color: 'var(--bleu-fonce)' }}>
+                  E-mail
+                </p>
                 <a href={`mailto:${site.email}`} className="titre-liste" style={{ fontSize: '18px', textDecoration: 'none' }}>
                   {site.email}
                 </a>
               </div>
 
               <div>
-                <p className="etiquette" style={{ color: 'var(--bleu-fonce)' }}>Zone d’intervention</p>
+                <p className="etiquette" style={{ color: 'var(--bleu-fonce)' }}>
+                  Zone d’intervention
+                </p>
                 <p className="courant" style={{ margin: 0 }}>
                   Directement sur site dans vos locaux (Île-de-France et départements limitrophes) ou dans notre centre à Avon (9, rue de la Petite Vitesse).
                 </p>
@@ -126,12 +111,7 @@ export default function EntreprisesContactPage() {
       </Section>
 
       {/* Les étapes de prise en charge */}
-      <Section
-        titre="Le déroulement"
-        titreId="titre-etapes"
-        sousTitre="Simple, rapide et sans friction"
-        aere
-      >
+      <Section titre="Le déroulement" titreId="titre-etapes" sousTitre="Simple, rapide et sans friction" aere>
         <div className="hk-grid" style={{ marginTop: 'calc(16 * var(--u))' }}>
           {etapesContact.map((et) => (
             <div key={et.num} className="hk-card" style={{ padding: '24px' }}>

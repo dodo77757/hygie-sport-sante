@@ -1,3 +1,4 @@
+import { Entete } from '@/components/scenes/Entete';
 import type { Metadata } from 'next';
 import type { CSSProperties } from 'react';
 import { JsonLd } from '@/components/JsonLd';
@@ -117,32 +118,27 @@ export default function EntreprisesPage() {
       <JsonLd data={schemaService} />
 
       {/* 1. Bandeau d'accroche (Hero) */}
-      <Row as="section" className="apropos-hero" aria-labelledby="titre-entreprises">
-        <Cell span={2}>
-          <PhotoImg className="hk-media apropos-hero__photo" photo={photos.coachEcoute} preload quality={85} sizes="(max-width: 1023px) 92vw, 46vw" />
-        </Cell>
-        <Cell span={2} className="apropos-hero__texte">
-          <h1 id="titre-entreprises" className="titre-hero">
-            <Mots texte="Prévenir les TMS de vos équipes, mesure à l’appui" />
-            <span className="titre-point c-bleu" style={{ '--n': 10 } as CSSProperties} aria-hidden="true" />
-          </h1>
-          <p className="chapo apropos-hero__chapo">
+      <Entete
+        id="titre-entreprises"
+        titre="Prévenir les TMS de vos équipes, mesure à l’appui"
+        photo={photos.coachEcoute}
+        chapo={
+          <>
             Hygie Sport Santé &amp; Performance réalise dans vos locaux des bilans biomécaniques individuels et vous remet un plan de prévention documenté,
             fondé sur des mesures objectives et des données collectives anonymisées.
-          </p>
-          <div className="hk-actions" style={{ marginTop: 'calc(24 * var(--u))', display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-            <Button href="/entreprises/contact" variant="jaune">
-              Demander un devis
-            </Button>
-            <Button href="/entreprises/questions" variant="contour">
-              Vos questions (FAQ)
-            </Button>
-            <Button href="#deroule" variant="contour">
-              Découvrir le déroulé
-            </Button>
-          </div>
-        </Cell>
-      </Row>
+          </>
+        }
+      >
+        <Button href="/entreprises/contact" variant="jaune">
+          Demander un devis
+        </Button>
+        <Button href="/entreprises/questions" variant="contour">
+          Vos questions (FAQ)
+        </Button>
+        <Button href="#deroule" variant="contour">
+          Découvrir le déroulé
+        </Button>
+      </Entete>
 
       {/* 2. Le constat */}
       <Section titre="Le constat" titreId="titre-constat" sousTitre="Comprendre les signaux faibles" aere>
@@ -330,7 +326,7 @@ export default function EntreprisesPage() {
       </Section>
 
       {/* 7. Nos engagements */}
-      <Section titre="Nos engagements" titreId="titre-engagements" sousTitre="Déontologie & sérénité" aere>
+      <Section titre="Nos engagements" titreId="titre-engagements" ton="encre" sousTitre="Déontologie & sérénité" aere>
         <Reveal as="h3" className="titre-bloc">
           Une démarche de prévention, en toute confiance
         </Reveal>

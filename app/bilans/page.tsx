@@ -1,3 +1,5 @@
+import { SceneRail } from '@/components/scenes/Scenes';
+import { Entete } from '@/components/scenes/Entete';
 import type { Metadata } from 'next';
 import type { CSSProperties } from 'react';
 import { ArticleCard } from '@/components/ArticleCard';
@@ -39,44 +41,16 @@ export default function Bilans() {
   return (
     <>
       {/* Hero 2 + 2 */}
-      <Row as="section" className="apropos-hero" aria-labelledby="titre-bilans">
-        <Cell span={2}>
-          <PhotoImg className="hk-media apropos-hero__photo" photo={photos.agilite} preload quality={85} sizes="(max-width: 1023px) 92vw, 46vw" />
-        </Cell>
-        <Cell span={2} className="apropos-hero__texte">
-          <h1 id="titre-bilans" className="titre-hero">
-            <Mots texte="Mesurer avant d’entraîner" />
-            <span className={`titre-point c-${pole.couleur}`} style={{ '--n': 3 } as CSSProperties} aria-hidden="true" />
-          </h1>
-          <p className="chapo apropos-hero__chapo">{pole.chapo}</p>
-        </Cell>
-      </Row>
+      <Entete id="titre-bilans" titre="Mesurer avant d’entraîner" photo={photos.agilite} chapo={pole.chapo} />
 
       {/* Nos bilans : section déjà en place, absente des textes du site (titre, texte, bouton, les fiches) */}
-      <Section titre="Nos bilans" titreId="titre-nos-bilans">
-        <Reveal as="p" className="courant texte-colonne">
-          Beaucoup de sportifs s’entraînent sans connaître leurs asymétries ni leurs limites. Nos bilans, issus du haut niveau, vous donnent un rapport clair et
-          vos axes de travail prioritaires.
-        </Reveal>
-        <Button href="#tarifs">Voir les tarifs</Button>
-        <div className="hk-grid">
-          {fiches.map((s) => (
-            <ArticleCard
-              key={s.slug}
-              variant="blog"
-              href={cheminSoin(s)}
-              photo={s.photo}
-              vignette={s.nom}
-              meta={s.carte.meta}
-              tag="Bilans"
-              tagCouleur={pole.couleur}
-              title={s.nom}
-              excerpt={s.carte.extrait}
-              entier
-            />
-          ))}
-        </div>
-      </Section>
+      <SceneRail
+        id="titre-nos-bilans"
+        titre="Nos bilans"
+        texte="Beaucoup de sportifs s’entraînent sans connaître leurs asymétries ni leurs limites. Nos bilans, issus du haut niveau, vous donnent un rapport clair et vos axes de travail prioritaires."
+        lien={{ label: 'Voir les tarifs', href: '#tarifs' }}
+        items={fiches.map((s) => ({ href: cheminSoin(s), nom: s.nom, detail: s.carte.meta, photo: s.photo }))}
+      />
 
       {/* Quel bilan choisir ? : votre situation et le bilan conseillé */}
       <Section titre="Quel bilan choisir ?" titreId="titre-choisir" aere>
@@ -99,7 +73,7 @@ export default function Bilans() {
       </Section>
 
       {/* Tarifs : tableau (durée, tarif, réservation), prise en charge, bilan d'entrée */}
-      <Section id="tarifs" titre="Tarifs" titreId="titre-tarifs" aere>
+      <Section id="tarifs" titre="Tarifs" titreId="titre-tarifs" ton="encre" aere>
         <ListeTarifs fluide items={lignesTarifsBilans()} />
         <p className="courant texte-colonne">Aucun bilan n’est pris en charge par la Sécurité sociale.</p>
         <h3 className="titre-bloc">Bilan physiologique d’entrée</h3>

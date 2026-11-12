@@ -1,17 +1,16 @@
 import Link from 'next/link';
-import { ArticleCard } from '../ArticleCard';
 import { Blocks } from '../Blocks';
 import { JsonLd } from '../JsonLd';
-import { PhotoImg } from '../Photo';
 import { Button } from '../ui/Button';
-import { Tag } from '../ui/Primitives';
+import { Entete } from '../scenes/Entete';
+import { ListeLignes } from '../scenes/Scenes';
 import { photos } from '@/content/images';
 import { cheminSoin, poles, soinParChemin, type Soin } from '@/content/soins';
 import { site } from '@/content/site';
-import { Mots } from '../ui/Mots';
 
-/* Gabarit « Article » pour une fiche de soin ou de bilan : colonne de lecture de 740 px.
-   L'essentiel (tarif ou format, action principale) est donné dès le haut de la fiche. */
+/* Fiche d'un soin ou d'un bilan : la carte photo en haut de page (titre, chapo, l'essentiel et l'action principale),
+   puis la lecture sur deux colonnes : à gauche, un repère qui reste à l'écran (l'essentiel, l'action, le pôle) ; à droite, le texte.
+   En bas, les soins proches en grandes lignes. */
 export function FichePage({ soin }: { soin: Soin }) {
   const pole = poles[soin.pole];
   const photo = soin.photo ? photos[soin.photo] : null;
@@ -20,43 +19,59 @@ export function FichePage({ soin }: { soin: Soin }) {
   const questions = soin.corps.flatMap((b) => (b.t === 'faq' ? b.items : []));
 
   return (
-    <div className="lecture-cadre">
-      <article className="lecture">
-        <div className="lecture__tete">
-          <Tag href={pole.href} couleur={pole.couleur}>
+    <>
+      <Entete
+        id="titre-fiche"
+        titre={soin.nom}
+        chapo={soin.chapo}
+        photo={photo}
+        court
+        surtitre={
+          <Link href={pole.href}>
+            <span aria-hidden="true">← </span>
             {pole.etiquette}
-          </Tag>
-        </div>
-        <h1 className="titre-article lecture__titre">
-          <Mots texte={soin.nom} />
-        </h1>
-        <p className="article lecture__chapo">{soin.chapo}</p>
-        <div className="lecture__cle">
-          <p>{soin.carte.meta}</p>
-          <Button href={soin.action.href} variant="jaune">
-            {soin.action.label}
-          </Button>
-        </div>
-        {photo ? <PhotoImg className="lecture__img" photo={photo} preload quality={85} sizes="(max-width: 1023px) 92vw, 740px" /> : null}
-        <Blocks blocs={soin.corps} />
-      </article>
+          </Link>
+        }
+      >
+        <Button href={soin.action.href} variant="jaune">
+          {soin.action.label}
+        </Button>
+        <span className="e-hero__cle">{soin.carte.meta}</span>
+      </Entete>
+
+      <div className="e-lecture">
+        <aside className="e-lecture__repere obs" aria-label="L’essentiel">
+          <div className="monte">
+            <p className="e-lecture__sur">{pole.etiquette}</p>
+            <p className="e-lecture__nom">{soin.nom}</p>
+            <p className="e-lecture__cle">{soin.carte.meta}</p>
+            <Button href={soin.action.href} variant="jaune" block>
+              {soin.action.label}
+            </Button>
+            <a className="e-lecture__tel" href={site.telephone.lien}>
+              {site.telephone.affichage}
+            </a>
+          </div>
+        </aside>
+        <article className="e-lecture__texte">
+          <Blocks blocs={soin.corps} />
+        </article>
+      </div>
 
       {proches.length ? (
-        <aside className="lecture__pied" aria-labelledby="soins-proches">
-          <div className="lecture__pied-tete">
-            <h2 id="soins-proches" className="titre-mini">
+        <section className="e-proches" aria-labelledby="soins-proches">
+          <div className="e-proches__tete">
+            <h2 id="soins-proches" className="a-h2">
               Soins proches
             </h2>
-            <Link className="libelle lien" href={pole.href}>
+            <Link className="plus" href={pole.href}>
               Tout le pôle {pole.etiquette.toLowerCase()}
             </Link>
           </div>
-          <div className="hk-grid hk-grid--3">
-            {proches.map((p) => (
-              <ArticleCard key={p.slug} variant="mini" href={cheminSoin(p)} photo={p.photo} vignette={p.nom} title={p.nom} headingLevel="h3" />
-            ))}
-          </div>
-        </aside>
+          <ListeLignes
+            items={proches.map((p) => ({ href: cheminSoin(p), etiquette: poles[p.pole].etiquette, titre: p.nom, detail: p.carte.meta, photo: p.photo }))}
+          />
+        </section>
       ) : null}
 
       {questions.length ? (
@@ -83,6 +98,6 @@ export function FichePage({ soin }: { soin: Soin }) {
           ],
         }}
       />
-    </div>
+    </>
   );
 }

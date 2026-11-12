@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 export default function Sport() {
   return (
     <PolePage
+      photo="sprintDepart"
       titre={pole.nom}
       chapo={pole.chapo}
       point={pole.couleur}

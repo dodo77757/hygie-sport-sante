@@ -1,11 +1,11 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { cx } from '@/lib/cx';
-import { Reveal } from './Primitives';
 import { Cell, Row } from './Row';
 
-/* Section ordonnée : le titre occupe toujours la première colonne, tout le reste (texte, boutons, cartes, photo)
-   est empilé dans les trois colonnes de droite, dans le même ordre d'une section à l'autre.
-   Avec `photo`, le corps se partage en texte (colonne 2) et photo (colonnes 3-4) ; avec `photoEtroite`, texte (colonnes 2-3) et photo (colonne 4). */
+/* Section des pages intérieures, dans la langue de l'accueil : une carte arrondie, le titre à gauche (il reste à l'écran
+   pendant qu'on lit la colonne de droite, et se dévoile par un masque à l'arrivée), le contenu à droite, qui monte bloc après bloc.
+   Avec `photo`, la photo prend la forme à encoche des cartes de l'accueil.
+   `ton` : « encre » (carte sombre) ou « nu » (sans carte, sur le fond de page). Sans précision, les tons alternent d'eux-mêmes. */
 export function Section({
   id,
   numero,
@@ -17,6 +17,7 @@ export function Section({
   children,
   aere,
   className,
+  ton,
 }: {
   id?: string;
   /** Numéro d'étape affiché au-dessus du titre (« 01 ») */
@@ -25,26 +26,37 @@ export function Section({
   titreId: string;
   /** Ligne d'étiquette sous le titre */
   sousTitre?: ReactNode;
-  /** Photo affichée sur les deux colonnes de droite, le texte restant en colonne 2 */
   photo?: ReactNode;
-  /** Photo sur la seule colonne 4, le texte sur les colonnes 2 et 3 */
   photoEtroite?: boolean;
   children: ReactNode;
   aere?: boolean;
   className?: string;
+  ton?: 'encre' | 'nu' | 'blanc';
 }) {
   return (
-    <Row as="section" id={id} aria-labelledby={titreId} aere={aere} className={cx('section', className)}>
+    <Row
+      as="section"
+      id={id}
+      aria-labelledby={titreId}
+      aere={aere}
+      className={cx('section obs', ton && `section--${ton}`, photo ? 'section--photo' : null, className)}
+    >
       <Cell className="section__tete">
         {numero ? (
           <p className="section__numero" aria-hidden="true">
             {numero}
           </p>
         ) : null}
-        <Reveal as="h2" id={titreId} className="titre-section">
-          {titre}
-        </Reveal>
-        {sousTitre ? <p className="etiquette section__sous-titre">{sousTitre}</p> : null}
+        <h2 id={titreId} className="titre-section">
+          <span className="l">
+            <span>{titre}</span>
+          </span>
+        </h2>
+        {sousTitre ? (
+          <p className="etiquette section__sous-titre monte" style={{ '--n': 2 } as CSSProperties}>
+            {sousTitre}
+          </p>
+        ) : null}
       </Cell>
       {photo ? (
         <>
@@ -52,7 +64,9 @@ export function Section({
             {children}
           </Cell>
           <Cell span={photoEtroite ? 1 : 2} className="section__photo">
-            {photo}
+            <div className="section__cadre" data-p="">
+              {photo}
+            </div>
           </Cell>
         </>
       ) : (

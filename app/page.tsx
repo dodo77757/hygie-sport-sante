@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
-import { Mouvement } from '@/components/accueil/Mouvement';
 import { Preuves } from '@/components/accueil/Preuves';
 import { ContactForm } from '@/components/ContactForm';
 import { JsonLd } from '@/components/JsonLd';
@@ -131,17 +130,6 @@ export default function Accueil() {
           sameAs: site.reseaux.map((r) => r.url),
         }}
       />
-      <Mouvement />
-
-      {/* Forme à encoche des cartes photo */}
-      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false">
-        <clipPath id="encoche" clipPathUnits="objectBoundingBox">
-          <path
-            transform="scale(.0033333 .0025)"
-            d="M30 0H196Q226 0 226 30V32Q226 58 252 58H270Q300 58 300 88V370Q300 400 270 400H106Q76 400 76 370V368Q76 342 50 342H30Q0 342 0 312V30Q0 0 30 0Z"
-          />
-        </clipPath>
-      </svg>
 
       {/* 1. Haut de page */}
       <section className="a-hero" aria-labelledby="titre-accueil">

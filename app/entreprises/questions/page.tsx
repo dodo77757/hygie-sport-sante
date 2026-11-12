@@ -1,3 +1,4 @@
+import { Entete } from '@/components/scenes/Entete';
 import type { Metadata } from 'next';
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
@@ -69,33 +70,17 @@ export default function EntreprisesQuestionsPage() {
       <JsonLd data={schemaFaq} />
 
       {/* En-tête */}
-      <Row as="section" className="apropos-hero" aria-labelledby="titre-questions-ent">
-        <Cell span={4}>
-          <div style={{ marginBottom: '16px' }}>
-            <Link
-              href="/entreprises"
-              className="etiquette"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                color: 'var(--bleu-fonce)',
-                textDecoration: 'none',
-              }}
-            >
-              ← Retour à l’offre Entreprises
-            </Link>
-          </div>
-          <h1 id="titre-questions-ent" className="titre-hero">
-            <Mots texte="Vos questions sur nos bilans QVCT" />
-            <span className="titre-point c-bleu" style={{ '--n': 6 } as CSSProperties} aria-hidden="true" />
-          </h1>
-          <p className="chapo apropos-hero__chapo" style={{ maxWidth: '680px', marginTop: '16px' }}>
-            Tout ce que les directions, les ressources humaines et les collaborateurs doivent savoir sur le déroulement de nos interventions sur site, la
-            confidentialité des données et la sécurisation juridique de la démarche.
-          </p>
-        </Cell>
-      </Row>
+      <Entete
+        id="titre-questions-ent"
+        titre="Vos questions sur nos bilans QVCT"
+        court
+        chapo="Tout ce que les directions, les ressources humaines et les collaborateurs doivent savoir sur le déroulement de nos interventions sur site, la confidentialité des données et la sécurisation juridique de la démarche."
+        surtitre={
+          <Link href="/entreprises">
+            <span aria-hidden="true">← </span>Retour à l’offre Entreprises
+          </Link>
+        }
+      />
 
       {/* Liste des questions */}
       <Row as="section" aria-labelledby="titre-liste-faq" aere>
@@ -124,12 +109,7 @@ export default function EntreprisesQuestionsPage() {
       </Row>
 
       {/* Une question spécifique ? */}
-      <Section
-        titre="Une autre question ?"
-        titreId="titre-autre-question"
-        sousTitre="Échange direct"
-        aere
-      >
+      <Section titre="Une autre question ?" titreId="titre-autre-question" sousTitre="Échange direct" aere>
         <Reveal as="h3" className="titre-bloc">
           Chaque entreprise a ses spécificités
         </Reveal>

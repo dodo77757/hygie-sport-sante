@@ -9,6 +9,7 @@ import { BarreMobile } from '@/components/BarreMobile';
 import { Entree } from '@/components/Entree';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { Mouvement } from '@/components/Mouvement';
 import { RevealObserver } from '@/components/RevealObserver';
 import { SelecteurCentreModal } from '@/components/SelecteurCentreModal';
 import { TransitionPage } from '@/components/TransitionPage';
@@ -51,6 +52,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* En tête du document : le rideau couvre la page dès le premier affichage */}
           <Entree />
           <SelecteurCentreModal />
+          {/* Forme à encoche des cartes photo (accueil, scènes, sections) */}
+          <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false">
+            <clipPath id="encoche" clipPathUnits="objectBoundingBox">
+              <path
+                transform="scale(.0033333 .0025)"
+                d="M30 0H196Q226 0 226 30V32Q226 58 252 58H270Q300 58 300 88V370Q300 400 270 400H106Q76 400 76 370V368Q76 342 50 342H30Q0 342 0 312V30Q0 0 30 0Z"
+              />
+            </clipPath>
+          </svg>
           <a className="skip-link" href="#contenu">
             Aller au contenu
           </a>
@@ -64,6 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </TransitionPage>
           <BarreMobile />
           <RevealObserver />
+          <Mouvement />
           <Audience />
         </CentreProvider>
       </body>
