@@ -807,7 +807,7 @@ export const soins: Soin[] = [
     chapo:
       'Le bilan isocinétique mesure la force de vos muscles pendant un mouvement à vitesse constante. C’est l’examen de référence pour décider d’un retour au sport, notamment après une rupture du ligament croisé.',
     action: bilanAction('isocinetique'),
-    photo: 'extensionJambe',
+    photo: 'bilanIsocinetique',
     seo: {
       title: 'Bilan isocinétique à Avon : 80 €, 1 h 30',
       description:
@@ -908,7 +908,7 @@ export const soins: Soin[] = [
     chapo:
       'Mesurez votre force et vos asymétries pour vous entraîner plus juste. Nous utilisons les capteurs VALD et KINVENT, présents dans les clubs professionnels et les centres de rééducation.',
     action: bilanAction('forces-complet'),
-    photo: 'souleve',
+    photo: 'bilanForces',
     seo: {
       title: 'Bilan des forces musculaires à Avon, dès 80 €',
       description: 'Force et asymétries musculaires mesurées sur capteurs VALD et KINVENT à Avon. Bilan complet 120 €, membres supérieurs ou inférieurs 80 €.',
@@ -969,7 +969,7 @@ export const soins: Soin[] = [
     chapo:
       'Un état des lieux pour bouger mieux, plus fort et plus longtemps. Que vous repreniez une activité, perdiez en mobilité ou cherchiez la performance, il révèle ce qui vous limite.',
     action: bilanAction('fonctionnel'),
-    photo: 'coachSouleve',
+    photo: 'bilanFonctionnel',
     seo: {
       title: 'Bilan fonctionnel à Avon : mobilité, équilibre, force · 60 €',
       description:
@@ -1027,7 +1027,7 @@ export const soins: Soin[] = [
     chapo:
       'Deux bilans sur plateformes de force pour mesurer ce qui fait la différence sur le terrain : la puissance, l’explosivité et l’équilibre entre force et vitesse.',
     action: bilanAction('sauts'),
-    photo: 'boxJump',
+    photo: 'bilanSauts',
     seo: {
       title: 'Bilan des sauts et profil force-vitesse à Avon · 80 €',
       description:
@@ -1089,7 +1089,7 @@ export const soins: Soin[] = [
     chapo:
       'Un masque relié à l’analyseur métabolique PNOE mesure l’oxygène que vous consommez et le CO2 que vous rejetez pendant un effort progressif. On en déduit vos seuils et vos zones d’entraînement réelles, au lieu de formules théoriques.',
     action: bilanAction('aerobie'),
-    photo: 'course',
+    photo: 'bilanAerobie',
     seo: {
       title: 'Bilan aérobie PNOE à Avon : vos zones d’entraînement',
       description:

@@ -47,6 +47,11 @@ function unsplash(chemin: string, width: number, height: number, alt: string, co
   };
 }
 
+/* Photo Unsplash dont l'auteur reste à relever (licence Unsplash : attribution facultative) */
+function unsplashAnonyme(chemin: string, width: number, height: number, alt: string, couleur: string, position?: string): Photo {
+  return { src: `https://images.unsplash.com/${chemin}`, width, height, alt, position, couleur };
+}
+
 export const photos = {
   johanPereira: { src: johanPereira, alt: 'Johan Pereira, fondateur d’Hygie', position: '50% 22%' } as Photo,
 
@@ -339,6 +344,14 @@ export const photos = {
     '50% 40%',
   ),
   etirement: unsplash('photo-1597586594276-456f8c50b82d', 5466, 3644, 'Une femme s’étire au sol dans un loft', '#262626', 'Alex Shaw', 'matt909', '40% 55%'),
+
+  /* Refonte (novembre 2026) : accueil et bilans */
+  coureuse: unsplashAnonyme('photo-1648863397001-cd77a7e98bd8', 6000, 4000, 'Une coureuse à contre-jour, dans une lumière dorée', '#3a2c1c', '60% 40%'),
+  bilanIsocinetique: unsplashAnonyme('photo-1743944701179-487518476c3a', 6453, 4300, 'Une jambe en extension sur une machine de test', '#3b3b3b', '50% 50%'),
+  bilanForces: unsplashAnonyme('photo-1770664612843-b44e26070024', 3741, 4676, 'Un sportif en plein effort de force', '#2e2a28', '50% 40%'),
+  bilanFonctionnel: unsplashAnonyme('photo-1540360659264-3b079dde8890', 5472, 3648, 'Un mouvement de mobilité, au sol', '#4a4a48', '50% 50%'),
+  bilanSauts: unsplashAnonyme('photo-1589104666851-dffe3a15aace', 4000, 2815, 'Un athlète en plein saut', '#40403c', '50% 45%'),
+  bilanAerobie: unsplashAnonyme('photo-1709601415546-dcd24c912e56', 4418, 5523, 'Un coureur à l’effort', '#35322e', '50% 35%'),
 } satisfies Record<string, Photo>;
 
 export type PhotoKey = keyof typeof photos;

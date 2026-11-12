@@ -106,6 +106,8 @@ export function ContactForm({ type, submitLabel = 'Envoyer', motif, motifDepuisU
 
       {type === 'rappel' ? (
         <>
+          <Field id={id('nom')} name="nom" label="Nom" autoComplete="name" variant="line" />
+          <Field id={id('structure')} name="structure" label="Entreprise" autoComplete="organization" variant="line" />
           <Field id={id('email')} name="email" type="email" label="E-mail professionnel" required autoComplete="email" variant="line" />
           <Field id={id('telephone')} name="telephone" type="tel" label="Téléphone" required autoComplete="tel" variant="line" />
         </>

@@ -12,8 +12,8 @@ export const anton = localFont({
 
 /* Remplaçant libre d'Alliance No.2 (licence web à acheter pour l'original) */
 export const hanken = localFont({
-  src: './fonts/hanken-grotesk-latin-400-normal.woff2',
-  weight: '400',
+  src: './fonts/hanken-grotesk-latin-wght-normal.woff2',
+  weight: '100 900',
   style: 'normal',
   variable: '--font-hanken',
   display: 'swap',
@@ -27,4 +27,14 @@ export const jetbrains = localFont({
   variable: '--font-jetbrains',
   display: 'swap',
   fallback: ['ui-monospace', 'Menlo', 'monospace'],
+});
+
+/* Grands mots à empattements (titres de page, noms des pôles) */
+export const bodoni = localFont({
+  src: './fonts/bodoni-moda-latin-wght-normal.woff2',
+  weight: '400 900',
+  style: 'normal',
+  variable: '--font-bodoni',
+  display: 'swap',
+  fallback: ['Didot', 'Bodoni MT', 'Georgia', 'serif'],
 });

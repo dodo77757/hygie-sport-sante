@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from 'next';
 import './styles/tokens.css';
 import './styles/hygie.css';
-import { anton, hanken, jetbrains } from './fonts';
+import './styles/refonte.css';
+import { anton, bodoni, hanken, jetbrains } from './fonts';
 import { Audience } from '@/components/Audience';
 import { BandeauCentre } from '@/components/BandeauCentre';
 import { BarreMobile } from '@/components/BarreMobile';
 import { Entree } from '@/components/Entree';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { LogoLockup } from '@/components/LogoLockup';
 import { RevealObserver } from '@/components/RevealObserver';
 import { SelecteurCentreModal } from '@/components/SelecteurCentreModal';
 import { TransitionPage } from '@/components/TransitionPage';
@@ -45,7 +45,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${anton.variable} ${hanken.variable} ${jetbrains.variable}`} suppressHydrationWarning>
+    <html lang="fr" className={`${anton.variable} ${hanken.variable} ${jetbrains.variable} ${bodoni.variable}`} suppressHydrationWarning>
       <body>
         <CentreProvider>
           {/* En tête du document : le rideau couvre la page dès le premier affichage */}
@@ -55,12 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             Aller au contenu
           </a>
           <BandeauCentre />
-          <Header
-            logo={<LogoLockup preload compact />}
-            links={menu}
-            cta={actionPrincipale}
-            telephone={{ affichage: site.telephone.affichage, lien: site.telephone.lien }}
-          />
+          <Header links={menu} cta={actionPrincipale} telephone={{ affichage: site.telephone.affichage, lien: site.telephone.lien }} />
           <TransitionPage>
             <main id="contenu" tabIndex={-1}>
               {children}

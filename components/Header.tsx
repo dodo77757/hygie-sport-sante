@@ -2,95 +2,57 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Lien } from '@/content/navigation';
-import { Button } from './ui/Button';
+import { site } from '@/content/site';
+import { LogoTrace } from './LogoTrace';
 
 function estActif(pathname: string, href: string) {
   if (href === '/') return pathname === '/';
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-/* Header fixe : barre en verre flottante, bloc logo, menu et action principale.
-   Sous 1 024 px, le menu passe dans un panneau plein écran. */
-export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links: Lien[]; cta: Lien; telephone: { affichage: string; lien: string } }) {
+/* Liens affichés dans la barre ; le menu complet s'ouvre par le bouton rond. */
+const DANS_LA_BARRE = ['/sante', '/sport', '/recuperation', '/bilans'];
+const SECONDAIRES: Lien[] = [
+  { label: 'Journal', href: '/journal' },
+  { label: 'Contact', href: '/contact' },
+];
+
+/* En-tête : quelques liens à gauche, le logo au centre, le rendez-vous et le bouton du menu à droite.
+   Sur l'accueil, il est posé en clair sur la photo ; dès qu'on défile, il passe en encre sur une pastille de verre.
+   Il s'efface quand on descend et revient quand on remonte.
+   Le menu complet s'ouvre en plein écran, depuis le bouton rond. */
+export function Header({ links, cta, telephone }: { links: Lien[]; cta: Lien; telephone: { affichage: string; lien: string } }) {
   const pathname = usePathname() ?? '/';
+  const accueil = pathname === '/';
   const [open, setOpen] = useState(false);
   const [defile, setDefile] = useState(false);
+  const [cache, setCache] = useState(false);
+  const dernierY = useRef(0);
   const burgerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
-  const navRef = useRef<HTMLElement>(null);
-  const headerRef = useRef<HTMLElement>(null);
-  // Accueil : la barre n'est pas là au premier écran (l'affiche prend tout l'écran) ; elle descend à mesure qu'on fait défiler.
-  const accueil = pathname === '/';
-  const [visible, setVisible] = useState(!accueil);
-  // Trait jaune sous l'onglet actif : il glisse d'un onglet à l'autre quand on change de page.
-  const [trait, setTrait] = useState<{ x: number; w: number } | null>(null);
-  const [traitPret, setTraitPret] = useState(false);
-
-  useLayoutEffect(() => {
-    const nav = navRef.current;
-    if (!nav) return;
-    const mesurer = () => {
-      const actif = nav.querySelector<HTMLElement>('a[aria-current="page"]');
-      if (!actif || !actif.offsetWidth) {
-        setTrait((t) => (t ? { ...t, w: 0 } : null));
-        return;
-      }
-      const retrait = parseFloat(getComputedStyle(actif).paddingLeft) || 0;
-      setTrait({
-        x: actif.offsetLeft + retrait,
-        w: actif.offsetWidth - 2 * retrait,
-      });
-    };
-    mesurer();
-    const ro = new ResizeObserver(mesurer);
-    ro.observe(nav);
-    return () => ro.disconnect();
-  }, [pathname]);
-
-  // Première mise en place sans glissement ; les suivantes glissent.
-  useEffect(() => {
-    if (!trait || traitPret) return;
-    const id = requestAnimationFrame(() => setTraitPret(true));
-    return () => cancelAnimationFrame(id);
-  }, [trait, traitPret]);
 
   useEffect(() => {
-    const header = headerRef.current;
-    if (!header) return;
-    if (!accueil) {
-      header.style.removeProperty('--apparition');
-      setVisible(true);
-      return;
-    }
-    let image = 0;
     const suivre = () => {
-      cancelAnimationFrame(image);
-      image = requestAnimationFrame(() => {
-        // Entièrement descendue après un tiers d'écran de défilement
-        const p = Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.33)));
-        header.style.setProperty('--apparition', p.toFixed(3));
-        setVisible(p > 0.6);
-      });
+      const y = window.scrollY;
+      setDefile(y > 40);
+      // La barre s'efface quand on descend, revient dès qu'on remonte.
+      if (y < 240 || y < dernierY.current - 6) setCache(false);
+      else if (y > dernierY.current + 6) setCache(true);
+      dernierY.current = y;
     };
     suivre();
     window.addEventListener('scroll', suivre, { passive: true });
     window.addEventListener('resize', suivre);
     return () => {
-      cancelAnimationFrame(image);
       window.removeEventListener('scroll', suivre);
       window.removeEventListener('resize', suivre);
     };
   }, [accueil]);
 
-  useEffect(() => {
-    const onScroll = () => setDefile(window.scrollY > 40);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -98,7 +60,6 @@ export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links
     const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     closeRef.current?.focus();
-
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setOpen(false);
@@ -126,88 +87,94 @@ export function Header({ logo, links, cta, telephone }: { logo: ReactNode; links
   }, [open]);
 
   const close = () => setOpen(false);
+  const barre = links.filter((l) => DANS_LA_BARRE.includes(l.href));
 
   return (
     <>
-      <header
-        ref={headerRef}
-        className={['hk-header', defile && 'is-defile', accueil && 'hk-header--accueil', accueil && visible && 'is-visible'].filter(Boolean).join(' ')}
-        inert={accueil && !visible ? true : undefined}
-      >
-        <div className="hk-header__bar">
-          {logo}
-          <div className="hk-header__right">
-            <nav ref={navRef} className={traitPret ? 'hk-nav-zone is-pret' : 'hk-nav-zone'} aria-label="Navigation principale">
-              <ul className={trait ? 'hk-nav a-trait' : 'hk-nav'}>
-                {links.map((l) => (
-                  <li key={l.href}>
-                    <Link href={l.href} aria-current={estActif(pathname, l.href) ? 'page' : undefined}>
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <span
-                className="hk-nav__trait"
-                aria-hidden="true"
-                style={
-                  {
-                    '--x': `${trait?.x ?? 0}px`,
-                    width: trait?.w ?? 0,
-                    opacity: trait?.w ? 1 : 0,
-                  } as CSSProperties
-                }
-              />
-            </nav>
-
-            <Button href={cta.href} variant="jaune">
+      <header className={['tete2', defile && 'is-defile', cache && !open && 'is-cache', accueil && 'tete2--clair'].filter(Boolean).join(' ')}>
+        <div className="tete2__barre">
+          <nav className="tete2__liens" aria-label="Navigation principale">
+            {barre.map((l) => (
+              <Link key={l.href} href={l.href} aria-current={estActif(pathname, l.href) ? 'page' : undefined}>
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+          <Link href="/" className="tete2__logo" aria-label="Hygie, accueil">
+            <LogoTrace />
+          </Link>
+          <div className="tete2__droite">
+            <Link href={cta.href} className="tete2__rdv">
               {cta.label}
-            </Button>
+            </Link>
+            <button
+              ref={burgerRef}
+              type="button"
+              className="tete2__burger"
+              aria-label="Ouvrir le menu"
+              aria-expanded={open}
+              aria-controls="menu-complet"
+              onClick={() => setOpen(true)}
+            >
+              <i />
+              <i />
+            </button>
           </div>
-          <button
-            ref={burgerRef}
-            type="button"
-            className="hk-burger"
-            aria-label="Ouvrir le menu"
-            aria-expanded={open}
-            aria-controls="menu-mobile"
-            onClick={() => setOpen(true)}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
         </div>
       </header>
-
-      {open ? (
-        <div ref={menuRef} id="menu-mobile" className="hk-menu" role="dialog" aria-modal="true" aria-label="Menu">
-          <button ref={closeRef} type="button" className="hk-menu__close" aria-label="Fermer le menu" onClick={close} />
-
-          <nav aria-label="Navigation principale">
-            <ul className="hk-menu__list">
-              <li>
-                <Link href="/" onClick={close} aria-current={pathname === '/' ? 'page' : undefined}>
-                  Accueil
+      <div
+        ref={menuRef}
+        id="menu-complet"
+        className={open ? 'menu2 is-ouvert' : 'menu2'}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu"
+        inert={open ? undefined : true}
+      >
+        <button ref={closeRef} type="button" className="menu2__fermer" aria-label="Fermer le menu" onClick={close} />
+        <nav aria-label="Menu complet">
+          <ul className="menu2__liste">
+            {links.map((l, i) => (
+              <li key={l.href} style={{ '--n': i } as CSSProperties}>
+                <Link href={l.href} onClick={close} aria-current={estActif(pathname, l.href) ? 'page' : undefined}>
+                  {l.label}
                 </Link>
               </li>
-              {links.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} onClick={close} aria-current={estActif(pathname, l.href) ? 'page' : undefined}>
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <Link href={cta.href} className="hk-btn hk-btn--jaune hk-menu__cta" onClick={close}>
+            ))}
+          </ul>
+          <ul className="menu2__seconds">
+            <li>
+              <Link href="/" onClick={close} aria-current={pathname === '/' ? 'page' : undefined}>
+                Accueil
+              </Link>
+            </li>
+            {SECONDAIRES.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} onClick={close} aria-current={estActif(pathname, l.href) ? 'page' : undefined}>
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <aside className="menu2__infos">
+          <p>
+            <strong>
+              {site.adresse.rue}, {site.adresse.codePostal} {site.adresse.ville}
+            </strong>
+            Face à la gare de Fontainebleau-Avon
+          </p>
+          <p>
+            <strong>
+              <a href={telephone.lien}>{telephone.affichage}</a>
+            </strong>
+            {site.horaires.map((h) => h.court).join(', ')}
+          </p>
+          <Link href={cta.href} className="hk-btn hk-btn--jaune" onClick={close}>
             <span className="hk-btn__label">{cta.label}</span>
           </Link>
-          <a className="hk-menu__tel" href={telephone.lien}>
-            {telephone.affichage}
-          </a>
-        </div>
-      ) : null}
+        </aside>
+      </div>
     </>
   );
 }

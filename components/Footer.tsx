@@ -4,35 +4,41 @@ import { liensLegaux, navigationPied } from '@/content/navigation';
 import { ChangerCentre } from './ChangerCentre';
 import { IconeReseau } from './IconesReseaux';
 import { LogoTrace } from './LogoTrace';
-import { Pill } from './ui/Primitives';
 
-/* Pied de page : bloc encre nettement séparé de la page par un trait jaune, texte clair, logo en traits clairs.
-   Quatre colonnes filetées : marque, horaires, navigation, contact. */
+/* Pied de page : bloc encre arrondi. « Rendez-vous chez » puis le logo en grand, qui se trace à l'arrivée
+   (traits, puis les trois points), et le bouton de rendez-vous. Dessous : quatre colonnes d'informations. */
 export function Footer() {
   const annee = new Date().getFullYear();
   return (
-    <footer className="hk-footer-cadre">
-      <div className="hk-footer">
-        <div className="hk-footer__col">
-          <Link href="/" className="hk-footer__logo" aria-label="Hygie, accueil">
-            <LogoTrace className="hk-footer__marque" />
-            <span className="hk-lockup__meta">
-              <span className="hk-lockup__pills">
-                <Pill>Sport</Pill>
-                <Pill>Santé</Pill>
-                <Pill>Performance</Pill>
-              </span>
-              <span className="hk-lockup__sign">Avon · 77</span>
-            </span>
-          </Link>
-          <p className="hk-footer__tagline courant">
+    <footer className="pied2">
+      <div className="pied2__tete hk-reveal hk-reveal--direct">
+        <h2 aria-label="Rendez-vous chez Hygie">
+          <span className="pied2__sur">Rendez-vous chez</span>
+          <LogoTrace className="pied2__logo" />
+        </h2>
+        <Link href="/rendez-vous" className="hk-btn hk-btn--jaune pied2__cta">
+          <span className="hk-btn__label">Prendre rendez-vous</span>
+        </Link>
+      </div>
+      <div className="pied2__grille">
+        <div>
+          <p className="pied2__texte">
             Santé, sport et récupération au même endroit, à Avon. Un parcours personnalisé, encadré par des professionnels de la santé et du sport.
           </p>
+          <p className="pied2__titre">Suivez-nous</p>
+          <ul className="pied2__reseaux">
+            {site.reseaux.map((r) => (
+              <li key={r.nom}>
+                <a href={r.url} aria-label={`${r.nom} (nouvel onglet)`} title={r.nom} target="_blank" rel="noopener noreferrer">
+                  <IconeReseau reseau={r.nom} />
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
-
-        <div className="hk-footer__col">
-          <p className="titre-pied">Horaires</p>
-          <p className="hk-footer__list courant">
+        <div>
+          <p className="pied2__titre">Horaires</p>
+          <p className="pied2__liste">
             {site.horaires.map((h) => (
               <span key={h.jours}>
                 {h.jours}
@@ -42,7 +48,7 @@ export function Footer() {
               </span>
             ))}
           </p>
-          <p className="hk-footer__list courant">
+          <p className="pied2__liste">
             <strong>Fontainebleau - Avon</strong> (Ouvert)
             <br />
             {site.adresse.rue}
@@ -56,50 +62,36 @@ export function Footer() {
           </p>
           <ChangerCentre />
         </div>
-
-        <div className="hk-footer__col">
-          <p className="titre-pied">Navigation</p>
-          <ul className="hk-footer__list courant">
+        <div>
+          <p className="pied2__titre">Navigation</p>
+          <ul className="pied2__liste pied2__nav">
             {navigationPied.map((l) => (
               <li key={l.href}>
                 <Link href={l.href}>{l.label}</Link>
               </li>
             ))}
           </ul>
-          <p className="hk-footer__legal etiquette">
-            {liensLegaux.map((l, i) => (
-              <span key={l.href}>
-                {i ? <br /> : null}
-                <Link href={l.href}>{l.label}</Link>
-              </span>
-            ))}
-          </p>
         </div>
-
-        <div className="hk-footer__col">
-          <p className="titre-pied">Contact</p>
-          <address className="hk-footer__list courant" style={{ fontStyle: 'normal' }}>
+        <div>
+          <p className="pied2__titre">Contact</p>
+          <address className="pied2__liste pied2__nav">
             <a href={site.telephone.lien}>{site.telephone.affichage}</a>
             <br />
             <a href={`mailto:${site.email}`}>{site.email}</a>
           </address>
-          <Link href="/rendez-vous" className="hk-btn hk-btn--jaune hk-footer__cta">
-            Prendre rendez-vous
-          </Link>
-          <p className="titre-pied hk-footer__spaced">Suivez-nous</p>
-          <ul className="hk-footer__socials">
-            {site.reseaux.map((r) => (
-              <li key={r.nom}>
-                <a href={r.url} aria-label={`${r.nom} (nouvel onglet)`} title={r.nom} target="_blank" rel="noopener noreferrer">
-                  <IconeReseau reseau={r.nom} />
-                </a>
-              </li>
-            ))}
-          </ul>
-          <p className="hk-footer__legal etiquette">
-            © {site.anneeCreation}–{annee} Hygie
-          </p>
         </div>
+      </div>
+      <div className="pied2__bas">
+        <span>
+          © {site.anneeCreation}–{annee} {site.nom}
+        </span>
+        <span>
+          {liensLegaux.map((l) => (
+            <Link key={l.href} href={l.href}>
+              {l.label}
+            </Link>
+          ))}
+        </span>
       </div>
     </footer>
   );
