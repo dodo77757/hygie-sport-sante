@@ -4,14 +4,12 @@ import './styles/hygie.css';
 import './styles/refonte.css';
 import { anton, bodoni, hanken, jetbrains } from './fonts';
 import { Audience } from '@/components/Audience';
-import { BandeauCentre } from '@/components/BandeauCentre';
 import { BarreMobile } from '@/components/BarreMobile';
 import { Entree } from '@/components/Entree';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Mouvement } from '@/components/Mouvement';
 import { RevealObserver } from '@/components/RevealObserver';
-import { SelecteurCentreModal } from '@/components/SelecteurCentreModal';
 import { TransitionPage } from '@/components/TransitionPage';
 import { CentreProvider } from '@/context/CentreContext';
 import { imagePartage, photos } from '@/content/images';
@@ -51,7 +49,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CentreProvider>
           {/* En tête du document : le rideau couvre la page dès le premier affichage */}
           <Entree />
-          <SelecteurCentreModal />
           {/* Forme à encoche des cartes photo (accueil, scènes, sections) */}
           <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false">
             <clipPath id="encoche" clipPathUnits="objectBoundingBox">
@@ -64,7 +61,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <a className="skip-link" href="#contenu">
             Aller au contenu
           </a>
-          <BandeauCentre />
           <Header links={menu} cta={actionPrincipale} telephone={{ affichage: site.telephone.affichage, lien: site.telephone.lien }} />
           <TransitionPage>
             <main id="contenu" tabIndex={-1}>

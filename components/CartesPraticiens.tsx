@@ -24,46 +24,16 @@ export function CartesPraticiens({ discipline, compacte, titreNiveau = 'h3' }: {
 
   if (centre === 'bondoufle') {
     return (
-      <div
-        className="hk-card"
-        style={{
-          padding: '28px 24px',
-          background: 'var(--surface)',
-          borderRadius: 'var(--rayon)',
-          border: '1px solid var(--filet-doux)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span className="hk-tag hk-tag--jaune">Centre de Bondoufle · En construction</span>
-        </div>
-        <h4 className="titre-bloc" style={{ margin: 0, fontSize: '18px' }}>
-          Praticiens en cours de constitution
-        </h4>
-        <p className="courant" style={{ margin: 0, maxWidth: '58ch' }}>
-          L’équipe de professionnels de santé et du sport du centre de Bondoufle est en cours de recrutement pour l’ouverture du centre. Les profils et les plannings de consultation seront affichés ici très prochainement.
+      <div className="praticiens-attente">
+        <p className="praticiens-attente__statut">Bondoufle · En construction</p>
+        <p className="praticiens-attente__titre">Praticiens en cours de constitution</p>
+        <p className="praticiens-attente__texte">
+          L’équipe du centre de Bondoufle est en cours de recrutement pour l’ouverture. Les profils et les plannings de consultation seront affichés ici très
+          prochainement.
         </p>
-        <div style={{ marginTop: '6px' }}>
-          <button
-            type="button"
-            onClick={() => choisirCentre('avon')}
-            style={{
-              background: 'none',
-              border: 'none',
-              padding: 0,
-              color: 'var(--bleu-fonce)',
-              font: 'inherit',
-              fontWeight: 500,
-              fontSize: '14px',
-              textDecoration: 'underline',
-              cursor: 'pointer',
-            }}
-          >
-            Consulter les praticiens au centre de Fontainebleau-Avon →
-          </button>
-        </div>
+        <button type="button" className="plus" onClick={() => choisirCentre('avon')}>
+          Voir les praticiens de Fontainebleau - Avon
+        </button>
       </div>
     );
   }

@@ -2,11 +2,11 @@
 
 import { useCentre } from '@/context/CentreContext';
 
-/* Pied de page : rouvre le choix du centre (Fontainebleau - Avon ou Bondoufle). */
+/* Pied de page : ouvre la carte du choix du centre, sous la pastille de l'en-tête (CentrePastille). */
 export function ChangerCentre() {
   const { ouvrirSelecteur } = useCentre();
   return (
-    <button type="button" className="hk-footer__centre" aria-haspopup="dialog" onClick={ouvrirSelecteur}>
+    <button type="button" className="hk-footer__centre" aria-controls="centre-carte" onClick={ouvrirSelecteur}>
       Changer de centre
     </button>
   );

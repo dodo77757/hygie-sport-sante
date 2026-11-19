@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Lien } from '@/content/navigation';
 import { site } from '@/content/site';
+import { CentrePastille } from './CentrePastille';
 import { LogoTrace } from './LogoTrace';
 
 function estActif(pathname: string, href: string) {
@@ -29,6 +30,7 @@ export function Header({ links, cta, telephone }: { links: Lien[]; cta: Lien; te
   const [open, setOpen] = useState(false);
   const [defile, setDefile] = useState(false);
   const [cache, setCache] = useState(false);
+  const [centreOuvert, setCentreOuvert] = useState(false);
   const dernierY = useRef(0);
   const burgerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -91,7 +93,7 @@ export function Header({ links, cta, telephone }: { links: Lien[]; cta: Lien; te
 
   return (
     <>
-      <header className={['tete2', defile && 'is-defile', cache && !open && 'is-cache', accueil && 'tete2--clair'].filter(Boolean).join(' ')}>
+      <header className={['tete2', defile && 'is-defile', cache && !open && !centreOuvert && 'is-cache', accueil && 'tete2--clair'].filter(Boolean).join(' ')}>
         <div className="tete2__barre">
           <nav className="tete2__liens" aria-label="Navigation principale">
             {barre.map((l) => (
@@ -104,6 +106,7 @@ export function Header({ links, cta, telephone }: { links: Lien[]; cta: Lien; te
             <LogoTrace />
           </Link>
           <div className="tete2__droite">
+            <CentrePastille onOuvert={setCentreOuvert} />
             <Link href={cta.href} className="tete2__rdv">
               {cta.label}
             </Link>
