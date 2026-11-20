@@ -34,11 +34,10 @@ const Diagonale = () => (
   </svg>
 );
 
-const poles: Array<{ href: string; nom: string; titre: string; extrait: string; photo: PhotoKey; soins: string[] }> = [
+const poles: Array<{ href: string; nom: string; extrait: string; photo: PhotoKey; soins: string[] }> = [
   {
     href: '/sante',
     nom: 'Santé',
-    titre: 'Traiter la cause',
     extrait: 'Kinésithérapeutes, étiopathe et orthoptiste consultent au centre. Rendez-vous en ligne sur Doctolib ou Calendly.',
     photo: 'mainsDos',
     soins: ['Kinésithérapie', 'Étiopathie', 'Orthoptie'],
@@ -46,7 +45,6 @@ const poles: Array<{ href: string; nom: string; titre: string; extrait: string; 
   {
     href: '/sport',
     nom: 'Sport',
-    titre: 'Bouger avec méthode',
     extrait: 'Coaching individuel, sport-santé et cross training, encadrés par nos préparateurs physiques diplômés, toujours à partir d’un bilan.',
     photo: 'sprintDepart',
     soins: ['Coaching individuel', 'Sport-santé', 'Cross training', 'Réathlétisation'],
@@ -54,7 +52,6 @@ const poles: Array<{ href: string; nom: string; titre: string; extrait: string; 
   {
     href: '/recuperation',
     nom: 'Récupération',
-    titre: 'Relâcher, recharger',
     extrait: 'Pressothérapie, massages et conseil en nutrition, pour récupérer entre deux séances ou deux semaines chargées.',
     photo: 'pressotherapie',
     soins: ['Pressothérapie', 'Massages', 'Nutrition'],
@@ -203,7 +200,7 @@ export default function Accueil() {
                 </div>
                 <div className="a-carte__nom verre">
                   <b>{p.nom}</b>
-                  <span>{p.titre}</span>
+                  <span>{p.soins.join(', ')}</span>
                 </div>
               </Link>
             ))}
@@ -229,10 +226,7 @@ export default function Accueil() {
                 </span>
                 <span className="a-poles-m__photo">
                   <PhotoImg photo={photos[p.photo]} decorative sizes="92vw" />
-                  <span className="verre">
-                    <b>{p.titre}</b>
-                    {p.soins.join(', ')}
-                  </span>
+                  <span className="verre">{p.soins.join(', ')}</span>
                 </span>
                 <span className="a-poles-m__texte">{p.extrait}</span>
               </Link>
@@ -248,13 +242,10 @@ export default function Accueil() {
             <div className="a-bilans__texte">
               <h2 id="titre-bilans">
                 <span className="l" style={n(0)}>
-                  <span>Des bilans</span>
+                  <span>Mesurer avant</span>
                 </span>{' '}
                 <span className="l" style={n(1)}>
-                  <span>qui mesurent,</span>
-                </span>{' '}
-                <span className="l" style={n(2)}>
-                  <span>pas qui estiment</span>
+                  <span>d’entraîner</span>
                 </span>
               </h2>
               <p className="monte" style={n(3)}>

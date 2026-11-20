@@ -11,7 +11,6 @@ export function Section({
   numero,
   titre,
   titreId,
-  sousTitre,
   photo,
   photoEtroite,
   children,
@@ -24,7 +23,7 @@ export function Section({
   numero?: string;
   titre: ReactNode;
   titreId: string;
-  /** Ligne d'étiquette sous le titre */
+  /** Ancienne ligne d'accroche sous le titre : n'est plus affichée (gardée pour ne pas toucher aux pages) */
   sousTitre?: ReactNode;
   photo?: ReactNode;
   photoEtroite?: boolean;
@@ -52,11 +51,6 @@ export function Section({
             <span>{titre}</span>
           </span>
         </h2>
-        {sousTitre ? (
-          <p className="etiquette section__sous-titre monte" style={{ '--n': 2 } as CSSProperties}>
-            {sousTitre}
-          </p>
-        ) : null}
       </Cell>
       {photo ? (
         <>

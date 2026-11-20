@@ -61,7 +61,7 @@ const raisons = [
     nom: 'Une équipe qui se parle',
     texte: 'Kinés, étiopathe, orthoptiste et préparateurs physiques échangent, avec votre accord, l’information utile à votre parcours.',
   },
-  { nom: 'Des mesures, pas des impressions', texte: 'Isocinétisme, plateformes de force, capteurs VALD et KINVENT, PNOE, impédancemètre.' },
+  { nom: 'Des mesures chiffrées', texte: 'Isocinétisme, plateformes de force, capteurs VALD et KINVENT, PNOE, impédancemètre.' },
   { nom: 'Une ambiance conviviale', texte: 'Un accompagnement exigeant et bienveillant, à tout âge et à tout niveau.' },
 ];
 
@@ -74,9 +74,7 @@ export default function Methodologie() {
         titre="La méthode Hygie"
         photo={photos.coachEcoute}
         chapo="Il n’y a pas de santé sans mouvement, ni de performance durable sans équilibre. Notre méthode vient du sport de haut niveau et repose sur trois piliers : évaluer, bouger, accompagner."
-      >
-        <span className="e-hero__cle">Évaluer · Bouger · Accompagner</span>
-      </Entete>
+      />
 
       {/* Les trois piliers : numéro et titre à gauche, texte, liste et bouton, photo à droite */}
       <Section
@@ -150,11 +148,8 @@ export default function Methodologie() {
           dimensions :
         </Reveal>
         <ol className="mesures">
-          {mesures.map((m, i) => (
+          {mesures.map((m) => (
             <li className="mesures__item" key={m.nom}>
-              <span className="mesures__numero" aria-hidden="true">
-                {String(i + 1).padStart(2, '0')}
-              </span>
               <div>
                 <h3 className="titre-liste">{m.nom}</h3>
                 <p className="courant">{m.texte}</p>
@@ -169,7 +164,6 @@ export default function Methodologie() {
       <Section titre="Deux parcours, une même exigence" titreId="titre-parcours" aere>
         <div className="section__deux parcours">
           <div>
-            <p className="etiquette">Parcours</p>
             <h3 className="titre-bloc">Bien-être</h3>
             <p className="parcours__promesse">Retrouver énergie, mobilité et confiance, en douceur.</p>
             <p className="courant">
@@ -181,7 +175,6 @@ export default function Methodologie() {
             </Link>
           </div>
           <div>
-            <p className="etiquette">Parcours</p>
             <h3 className="titre-bloc">Performance</h3>
             <p className="parcours__promesse">Progresser sans se blesser.</p>
             <p className="courant">
@@ -209,11 +202,8 @@ export default function Methodologie() {
 
       <Section titre="Pourquoi choisir Hygie ?" titreId="titre-pourquoi" aere>
         <ol className="raisons">
-          {raisons.map((r, i) => (
+          {raisons.map((r) => (
             <li className="raisons__item" key={r.nom}>
-              <span className="raisons__numero" aria-hidden="true">
-                {String(i + 1).padStart(2, '0')}
-              </span>
               <h3 className="titre-bloc">{r.nom}</h3>
               <p className="courant">{r.texte}</p>
             </li>

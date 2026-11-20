@@ -50,7 +50,7 @@ const pointsSecurisation = [
       'Le résultat nominatif reste entre le salarié et nous. Vous recevez des tendances collectives, calculées sur des groupes assez larges pour qu’aucun salarié ne soit identifiable.',
   },
   {
-    titre: 'Des constats fonctionnels, pas médicaux',
+    titre: 'Aucun diagnostic médical',
     texte:
       'Nous mesurons une fonction (équilibre, mobilité, force), pas une pathologie. Aucun bilan ne pose de diagnostic, ni ne se prononce sur l’origine professionnelle d’une gêne.',
   },
@@ -68,7 +68,7 @@ const pointsSecurisation = [
 /* 7. Nos engagements */
 const engagements = [
   {
-    titre: 'Prévention, pas diagnostic',
+    titre: 'Un outil de prévention',
     texte:
       'Nos bilans identifient des facteurs de risque. Ils ne constituent pas un avis médical et ne justifient en aucun cas un arrêt de travail, que seul un médecin peut prescrire.',
   },
@@ -169,7 +169,7 @@ export default function EntreprisesPage() {
         aere
       >
         <Reveal as="h3" className="titre-bloc">
-          Des mesures objectives, pas seulement un questionnaire
+          Des mesures objectives en plus du questionnaire
         </Reveal>
         <Reveal as="p" className="courant texte-colonne">
           La plupart des démarches QVCT reposent sur du déclaratif. Nous allons plus loin : chaque salarié passe une courte batterie de tests sur plateforme de
@@ -209,7 +209,7 @@ export default function EntreprisesPage() {
         <div className="hk-grid" style={{ marginTop: 'calc(16 * var(--u))' }}>
           {/* Carte 1 : Pour chaque salarié */}
           <div className="hk-card" style={{ padding: '32px 28px' }}>
-            <span className="hk-tag hk-tag--bleu">Pour chaque salarié</span>
+            <p className="carte-pour">Pour chaque salarié</p>
             <h4 className="titre-bloc" style={{ marginTop: '16px' }}>
               Profil de prévention individuel
             </h4>
@@ -223,7 +223,7 @@ export default function EntreprisesPage() {
 
           {/* Carte 2 : Pour la direction et les RH */}
           <div className="hk-card" style={{ padding: '32px 28px' }}>
-            <span className="hk-tag hk-tag--jaune">Pour la direction et les RH</span>
+            <p className="carte-pour">Pour la direction et les RH</p>
             <h4 className="titre-bloc" style={{ marginTop: '16px' }}>
               Rapport &amp; plan d’actions collectif
             </h4>
@@ -239,6 +239,7 @@ export default function EntreprisesPage() {
 
         {/* Bloc exemples — deux boutons de téléchargement */}
         <div
+          className="exemples"
           style={{
             marginTop: 'calc(32 * var(--u))',
             padding: '32px',
@@ -286,7 +287,7 @@ export default function EntreprisesPage() {
           disparaître un risque : cela prive seulement l’entreprise de la preuve qu’elle l’a pris en charge.
         </Reveal>
         <Reveal as="p" className="courant texte-colonne">
-          <strong>Notre démarche est conçue pour sécuriser l’employeur, pas pour l’exposer :</strong>
+          <strong>Notre démarche est conçue pour sécuriser l’employeur :</strong>
         </Reveal>
 
         <div className="hk-grid" style={{ marginTop: 'calc(16 * var(--u))' }}>
@@ -350,7 +351,6 @@ export default function EntreprisesPage() {
         <div className="hk-grid" style={{ marginTop: 'calc(16 * var(--u))' }}>
           {/* Carte 1 : Vos questions */}
           <div className="hk-card" style={{ padding: '32px 28px', display: 'flex', flexDirection: 'column' }}>
-            <span className="hk-tag hk-tag--gris">Foire aux questions</span>
             <h4 className="titre-bloc" style={{ marginTop: '16px' }}>
               Vos questions fréquentes
             </h4>
@@ -366,7 +366,6 @@ export default function EntreprisesPage() {
 
           {/* Carte 2 : Contact et devis */}
           <div className="hk-card" style={{ padding: '32px 28px', display: 'flex', flexDirection: 'column' }}>
-            <span className="hk-tag hk-tag--jaune">Échange direct</span>
             <h4 className="titre-bloc" style={{ marginTop: '16px' }}>
               Contact &amp; devis entreprise
             </h4>

@@ -62,7 +62,7 @@ export default function EntreprisesContactPage() {
         <div className="hk-grid" style={{ alignItems: 'start', marginTop: 'calc(16 * var(--u))' }}>
           {/* Carte coordonnées */}
           <div className="hk-card" style={{ padding: '32px 28px' }}>
-            <span className="hk-tag hk-tag--gris">Votre interlocuteur direct</span>
+            <p className="carte-pour">Votre interlocuteur direct</p>
             <h3 className="titre-bloc" style={{ marginTop: '16px' }}>
               Johan Pereira
             </h3>

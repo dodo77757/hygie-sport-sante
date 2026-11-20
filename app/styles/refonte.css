@@ -1155,3 +1155,54 @@ main .rdv2 .praticiens > .praticien, main .e-lecture__texte .praticiens > .prati
   .centre__pastille { font-size: 14px; }
   .centre__carte { right: -58px; }
 }
+
+/* ═════════════ Moins de codes « générés » : pas de pastilles, pas de grilles de cartes symétriques ═════════════ */
+
+/* Étiquettes : du texte, plus des pastilles */
+main .hk-tag, main .hk-tag--jaune, main .hk-tag--bleu, main .hk-tag--gris {
+  height: auto; padding: 0; border: 0; border-radius: 0; background: none;
+  font: 500 13.5px/1.3 var(--font-sans); color: var(--doux); text-transform: none;
+}
+main .carte-pour { margin: 0 0 6px; font: 500 14px/1.3 var(--font-sans); color: var(--doux); }
+.e-hero__cle { padding: 0; border: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; font-size: 14.5px; color: rgba(255, 255, 255, 0.82); }
+main .praticien__specialites { display: block; margin-top: 6px; font: 400 12.5px/1.45 var(--font-sans); color: var(--doux); }
+main .praticien__specialites > li, main .rdv2 .praticien__specialites > li, main .section .praticien__specialites > li { display: inline; padding: 0; border: 0; border-radius: 0; background: none; font: inherit; }
+main .praticien__specialites > li + li::before { content: ", "; }
+
+/* Cartes d'information dans les sections : une liste éditoriale (titre à gauche, texte à droite, filets), plus une grille 2 × 2 */
+main .section .hk-grid:has(> div.hk-card) { display: block; margin-top: 18px !important; border-top: 1px solid var(--trait); }
+main .section .hk-grid > div.hk-card {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: calc(40 * var(--u)); align-items: start;
+  padding: 24px 0 26px !important; border-radius: 0; background: none !important; border-bottom: 1px solid var(--trait);
+  transform: none !important; box-shadow: none !important;
+}
+main .section .hk-grid > div.hk-card > * { grid-column: 2; margin-top: 0 !important; }
+main .section .hk-grid > div.hk-card > :is(h3, h4, .carte-pour) { grid-column: 1; }
+main .section .hk-grid > div.hk-card > .carte-pour { grid-row: 2; margin-top: 4px !important; }
+main .section .hk-grid > div.hk-card > :is(h3, h4) { grid-row: 1; font-size: max(18px, calc(21 * var(--u))) !important; line-height: 1.2; color: inherit !important; }
+main .section .hk-grid > div.hk-card > :is(p, ul, div):not(.carte-pour) { grid-row: 1 / span 3; }
+main .section .hk-grid > div.hk-card > :is(p, ul, div):not(.carte-pour) + :is(p, ul, div) { grid-row: auto; margin-top: 18px !important; }
+main .section .hk-grid > div.hk-card .puces { margin-top: 0 !important; }
+
+/* « Pourquoi choisir Hygie » et « Pour quels objectifs » : la même liste, sans numéros ni cartes */
+main .raisons { display: block; border-top: 1px solid var(--trait); }
+main .raisons__item, main > .section:nth-of-type(3n):not(.section--encre):not(.section--blanc) .raisons__item {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: calc(40 * var(--u)); align-items: baseline;
+  padding: 22px 0; border-radius: 0; background: none; border-bottom: 1px solid var(--trait);
+}
+main .raisons__item .titre-bloc { font-size: max(18px, calc(21 * var(--u))); }
+main .raisons__item .courant { margin: 0; }
+main .objectifs { grid-template-columns: minmax(0, 1fr); column-gap: 0; }
+main .objectifs__item { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: calc(40 * var(--u)); align-items: baseline; }
+main .objectifs__item .courant { margin: 0; }
+/* Ce que mesure le bilan : pas une suite, donc pas de numéros */
+main .mesures__item:not(:has(.mesures__numero)) { grid-template-columns: minmax(0, 1fr); }
+
+@media (max-width: 1023px) {
+  main .section .hk-grid > div.hk-card, main .raisons__item, main > .section:nth-of-type(3n):not(.section--encre):not(.section--blanc) .raisons__item, main .objectifs__item { grid-template-columns: minmax(0, 1fr); row-gap: 8px; }
+  main .section .hk-grid > div.hk-card > * , main .section .hk-grid > div.hk-card > :is(h3, h4, .carte-pour), main .section .hk-grid > div.hk-card > :is(p, ul, div):not(.carte-pour) { grid-column: 1; grid-row: auto; }
+  main .section .hk-grid > div.hk-card > :is(p, ul, div):not(.carte-pour) { margin-top: 6px !important; }
+}
+/* Entreprises, « Voyez par vous-même » : les libellés longs passent à la ligne */
+main .exemples .hk-btn { height: auto; min-height: 46px; padding-block: 12px; white-space: normal; text-align: center; line-height: 1.25; }
+@media (max-width: 1023px) { main .exemples { padding: 22px 18px !important; } main .exemples .hk-grid { grid-template-columns: minmax(0, 1fr); } }

@@ -88,7 +88,6 @@ export default function EntreprisesQuestionsPage() {
           <Reveal as="h2" id="titre-liste-faq" className="titre-section">
             Questions fréquentes
           </Reveal>
-          <p className="etiquette section__sous-titre">Transparence &amp; méthode</p>
         </Cell>
         <Cell span={3}>
           <div className="faq">
